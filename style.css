@@ -1,0 +1,125 @@
+/* Variables */
+:root {
+    --dark-green: #1b3022;
+    --cream: #f9f8f3;
+    --text-muted: #6c757d;
+}
+
+/* Base Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #ffffff;
+    color: var(--dark-green);
+    overflow-x: hidden; /* Evita scroll orizzontale */
+}
+
+h1, h2, h3, .navbar-brand {
+    font-family: 'Playfair Display', serif;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), 
+                url('https://images.unsplash.com/photo-1540555700478-4be289fbecee?q=80&w=2070') center/cover;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+}
+
+/* Features Section */
+.features {
+    background-color: var(--cream);
+    padding: 100px 0;
+}
+
+.feature-icon {
+    width: 42px;
+    height: 42px;
+    stroke-width: 1.2px;
+    color: var(--dark-green);
+    margin-bottom: 15px;
+}
+
+/* Product Cards */
+.product-card {
+    border: none;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    background-color: var(--cream);
+    border-radius: 0; /* Design più moderno/luxury */
+    cursor: pointer;
+    height: 100%;
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+}
+
+.product-img-wrapper {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-img-wrapper img {
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.6s ease;
+}
+
+/* Buttons */
+.btn-outline-dark-green {
+    border: 1px solid var(--dark-green);
+    color: var(--dark-green);
+    padding: 14px 40px;
+    border-radius: 0;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    transition: 0.3s;
+}
+
+.btn-outline-dark-green:hover {
+    background-color: var(--dark-green);
+    color: white;
+}
+
+/* Footer */
+footer {
+    background-color: var(--dark-green);
+    color: rgba(255,255,255,0.6);
+    padding: 80px 0 40px;
+}
+
+footer h4, footer h6 {
+    letter-spacing: 1px;
+}
+
+.footer-link {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: 0.3s;
+    display: inline-block;
+}
+
+.footer-link:hover {
+    color: white;
+    transform: translateX(5px);
+}
+
+/* Responsive fixes */
+@media (max-width: 991px) {
+    .features .border-start, .features .border-end {
+        border: none !important;
+    }
+}
