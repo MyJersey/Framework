@@ -20,7 +20,7 @@ h1, h2, h3, .navbar-brand {
 /* Hero Section */
 .hero-section {
     background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), 
-                url('https://images.unsplash.com/photo-1540555700478-4be289fbecee?q=80&w=2070') center/cover;
+                url("https://i.postimg.cc/kG77KdhM/Forest-Natural-Skincare-Hero-Image-1.webp") center/cover;
     height: 70vh;
     display: flex;
     align-items: center;
