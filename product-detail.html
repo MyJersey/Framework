@@ -1,51 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Details | Natural Skincare</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
-   <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 sticky-top shadow-sm">
-    <div class="container-fluid px-lg-5"> 
-        <a class="navbar-brand fs-3 m-0" href="index.html">Natural Skincare</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 sticky-top shadow-sm">
+        <div class="container-fluid px-lg-5">
+            <a class="navbar-brand fs-3 m-0" href="index.html">Natural Skincare</a>
 
-        <div class="collapse navbar-collapse justify-content-center order-lg-2" id="navbarNav">
-            <ul class="navbar-nav gap-3">
-                <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="shop.html">Shop</a></li>
-            </ul>
+            <div class="collapse navbar-collapse justify-content-center order-lg-2" id="navbarNav">
+                <ul class="navbar-nav gap-3">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="shop.html">Shop</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                </ul>
+            </div>
+
+            <div class="d-flex align-items-center gap-3 order-lg-3 ms-auto ms-lg-0">
+                <a href="login.html" class="text-dark" id="login-icon">
+                    <i class="bi bi-person fs-4"></i>
+                </a>
+
+                <div id="user-greeting"></div>
+
+                <a href="cart.html" class="text-dark position-relative me-2">
+                    <i class="bi bi-bag fs-5"></i>
+                    <span id="cart-badge"
+                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
         </div>
-
-        <div class="d-flex align-items-center gap-3 order-lg-3 ms-auto ms-lg-0">
-            <a href="login.html" class="text-dark" id="login-icon">
-                <i class="bi bi-person fs-4"></i>
-            </a>
-            
-            <div id="user-greeting"></div>
-
-            <a href="#" class="text-dark"><i class="bi bi-search"></i></a>
-            <a href="cart.html" class="text-dark position-relative me-2">
-                <i class="bi bi-bag fs-5"></i>
-                <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
-            </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </div>
-</nav>
+    </nav>
 
     <div class="container my-5 py-5">
         <div class="row" id="product-detail-container">
-            </div>
+        </div>
     </div>
 
     <footer>
@@ -53,24 +59,24 @@
             <div class="row">
                 <div class="col-lg-4 col-md-12 mb-4">
                     <h4 class="text-white mb-4">Natural Skincare</h4>
-                    <p class="small pe-lg-5">Beauty that is honest, sustainable, and effective. Crafted to bring out your natural glow.</p>
+                    <p class="small pe-lg-5">Beauty that is honest, sustainable, and effective. Crafted to bring out
+                        your natural glow.</p>
                 </div>
                 <div class="col-lg-2 col-md-4 col-6 mb-4">
                     <h6 class="text-white fw-bold mb-4 text-uppercase small">Products</h6>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="footer-link">All Products</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">Bestsellers</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">New Arrivals</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">Special Offers</a></li>
+                        <li class="mb-2"><a href="shop.html" class="footer-link">All Products</a></li>
+                        <li class="mb-2"><a href="shop.html?filter=bestsellers" class="footer-link">Bestsellers</a></li>
+                        <li class="mb-2"><a href="shop.html?filter=new" class="footer-link">New Arrivals</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-2 col-md-4 col-6 mb-4">
                     <h6 class="text-white fw-bold mb-4 text-uppercase small">Support</h6>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="footer-link">About us</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">Contact</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">Shipping</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">Returns</a></li>
+                        <li class="mb-2"><a href="about.html" class="footer-link">About Us</a></li>
+                        <li class="mb-2"><a href="contact.html" class="footer-link">Contact</a></li>
+                        <li class="mb-2"><a href="shipping.html" class="footer-link">Shipping</a></li>
+                        <li class="mb-2"><a href="returns.html" class="footer-link">Returns</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-4 col-md-4 mb-4">
@@ -89,9 +95,11 @@
         </div>
     </footer>
 
-    
 
-    <script src="js/product.js"></script> <script src="js/shop.js"></script>    <script>
+
+    <script src="js/product.js"></script>
+    <script src="js/shop.js"></script>
+    <script>
         document.addEventListener('DOMContentLoaded', () => {
             const productId = localStorage.getItem('selectedProductId');
             const container = document.getElementById('product-detail-container');
@@ -103,30 +111,64 @@
             // 2. Renderizza Dettaglio Prodotto
             if (product) {
                 container.innerHTML = `
-                    <div class="col-md-6 mb-4 text-center">
-                        <img src="${product.image}" class="img-fluid rounded shadow-lg" style="max-height: 600px; object-fit: cover;" alt="${product.name}">
+                <div class="col-md-6 mb-4 text-center">
+                    <div class="bg-light p-4 rounded shadow-sm d-flex align-items-center justify-content-center" style="height: 500px;">
+                        <img src="${product.image}" class="img-fluid" style="max-height: 100%; object-fit: contain;" alt="${product.name}">
                     </div>
-                    <div class="col-md-6 px-lg-5">
-                        <nav aria-label="breadcrumb" class="mb-4">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="shop.html" class="text-decoration-none text-muted">Shop</a></li>
-                                <li class="breadcrumb-item active">${product.category}</li>
-                            </ol>
-                        </nav>
-                        <h1 class="display-4 fw-bold mb-3">${product.name}</h1>
-                        <h2 class="text-success mb-4 fw-light">€ ${product.price.toFixed(2)}</h2>
-                        <p class="lead text-muted mb-4">${product.description}</p>
-                        
-                        <div class="p-3 bg-light border-start border-4 border-success mb-5">
-                            <small class="text-uppercase fw-bold text-muted d-block">Ideal for:</small>
-                            <span class="fs-5">${product.skinType} Skin</span>
-                        </div>
+                </div>
+                <div class="col-md-6 px-lg-5">
+                    <nav aria-label="breadcrumb" class="mb-4">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="shop.html" class="text-decoration-none text-muted">Shop</a></li>
+                            <li class="breadcrumb-item active">${product.category}</li>
+                        </ol>
+                    </nav>
+                    <h1 class="display-4 fw-bold mb-3">${product.name}</h1>
+                    <h2 class="text-success mb-4 fw-light">€ ${product.price.toFixed(2)}</h2>
+                    <p class="lead text-muted mb-4">${product.description}</p>
+                    
+                    <div class="p-3 bg-light border-start border-4 border-success mb-4">
+                        <small class="text-uppercase fw-bold text-muted d-block">Ideal for:</small>
+                        <span class="fs-5">${product.skinType} Skin</span>
+                    </div>
 
-                        <button class="btn btn-dark btn-lg w-100 py-3 rounded-0 shadow" onclick="addToCartDetail(${product.id})">
-                            ADD TO CART
-                        </button>
+                    <div class="accordion mb-5 border-0" id="productAccordion">
+                        <div class="accordion-item border-0 border-bottom rounded-0">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed px-0 bg-transparent fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                                    Ingredients
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#productAccordion">
+                                <div class="accordion-body px-0 text-muted small">
+                                    ${product.ingredients || 'Natural botanical extracts.'}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item border-0 border-bottom rounded-0">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed px-0 bg-transparent fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                                    How to Use
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#productAccordion">
+                                <div class="accordion-body px-0 text-muted small">
+                                    ${product.howToUse || 'Apply uniformly to skin as needed.'}
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                `;
+
+                    <div class="d-flex align-items-center mb-4 gap-3">
+                        <label for="detail-qty" class="fw-bold mb-0">Quantity:</label>
+                        <input type="number" id="detail-qty" class="form-control rounded-0 text-center" value="1" min="1" max="10" style="width: 80px;">
+                    </div>
+
+                    <button class="btn btn-dark btn-lg w-100 py-3 rounded-0 shadow" onclick="addToCartDetail(${product.id})">
+                        ADD TO CART
+                    </button>
+                </div>
+            `;
             } else {
                 container.innerHTML = "<div class='text-center py-5'><h2>Product not found.</h2><a href='shop.html' class='btn btn-outline-dark mt-3'>Back to Shop</a></div>";
             }
@@ -135,14 +177,25 @@
         // Funzione dedicata alla pagina dettaglio per mostrare l'alert
         function addToCartDetail(id) {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const product = products.find(p => p.id === id);
-            if (product) {
-                cart.push(product);
-                localStorage.setItem('cart', JSON.stringify(cart));
-                updateCartBadge(); // Aggiorna il badge nella navbar subito
-                alert("Wonderful choice! The product has been added to your cart.");
+
+            const qtyInput = document.getElementById('detail-qty');
+            const quantityToAdd = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
+
+            const existingIndex = cart.findIndex(p => p.id === id);
+            if (existingIndex > -1) {
+                cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + quantityToAdd;
+            } else {
+                const product = products.find(p => p.id === id);
+                if (product) {
+                    product.quantity = quantityToAdd;
+                    cart.push(product);
+                }
             }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartBadge(); // Aggiorna il badge nella navbar subito
+            alert("Wonderful choice! The product has been added to your cart.");
         }
     </script>
 </body>
+
 </html>

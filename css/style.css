@@ -10,17 +10,21 @@ body {
     font-family: 'Inter', sans-serif;
     background-color: #ffffff;
     color: var(--dark-green);
-    overflow-x: hidden; /* Evita scroll orizzontale */
+    overflow-x: hidden;
+    /* Evita scroll orizzontale */
 }
 
-h1, h2, h3, .navbar-brand {
+h1,
+h2,
+h3,
+.navbar-brand {
     font-family: 'Playfair Display', serif;
 }
 
 /* Hero Section */
 .hero-section {
-    background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), 
-                url("https://i.postimg.cc/kG77KdhM/Forest-Natural-Skincare-Hero-Image-1.webp") center/cover;
+    background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
+        url("https://i.postimg.cc/kG77KdhM/Forest-Natural-Skincare-Hero-Image-1.webp") center/cover;
     height: 70vh;
     display: flex;
     align-items: center;
@@ -48,14 +52,21 @@ h1, h2, h3, .navbar-brand {
     border: none;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     background-color: var(--cream);
-    border-radius: 0; /* Design più moderno/luxury */
+    border-radius: 0;
+    /* Design più moderno/luxury */
     cursor: pointer;
     height: 100%;
 }
 
 .product-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+}
+
+.product-card .badge {
+    /* Assicura che la label "New in" sia sempre visibile */
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 .product-img-wrapper {
@@ -67,6 +78,7 @@ h1, h2, h3, .navbar-brand {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .product-img-wrapper img {
@@ -96,16 +108,17 @@ h1, h2, h3, .navbar-brand {
 /* Footer */
 footer {
     background-color: var(--dark-green);
-    color: rgba(255,255,255,0.6);
+    color: rgba(255, 255, 255, 0.6);
     padding: 80px 0 40px;
 }
 
-footer h4, footer h6 {
+footer h4,
+footer h6 {
     letter-spacing: 1px;
 }
 
 .footer-link {
-    color: rgba(255,255,255,0.6);
+    color: rgba(255, 255, 255, 0.6);
     text-decoration: none;
     font-size: 0.85rem;
     transition: 0.3s;
@@ -119,13 +132,15 @@ footer h4, footer h6 {
 
 
 .container-fluid {
-    max-width: 1920px; 
+    max-width: 1920px;
     margin: 0 auto;
 }
 
 /* Responsive fixes */
 @media (max-width: 991px) {
-    .features .border-start, .features .border-end {
+
+    .features .border-start,
+    .features .border-end {
         border: none !important;
     }
 }

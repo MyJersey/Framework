@@ -27,7 +27,8 @@ const products = [
         skinType: "Dry",
         image: "img/Deep_Hydration_Face_Cream.jpg",
         description: "24h deep hydration with plant-based hyaluronic acid.",
-        isNew: false
+        isNew: false,
+        isBestseller: true
     },
     {
         id: 4,
@@ -47,7 +48,8 @@ const products = [
         skinType: "All types",
         image: "img/Midnight_Recovery_Oil.jpg",
         description: "Regenerating night oil to wake up with rested skin.",
-        isNew: false
+        isNew: false,
+        isBestseller: true
     },
     {
         id: 6,
@@ -67,7 +69,8 @@ const products = [
         skinType: "Mature",
         image: "img/retinol_Alternative_Cream.jpg",
         description: "Natural anti-aging treatment with Bakuchiol.",
-        isNew: false
+        isNew: false,
+        isBestseller: true
     },
     {
         id: 8,
@@ -117,7 +120,8 @@ const products = [
         skinType: "Oily",
         image: "img/Niacinamide_pore_Shrinker.jpg",
         description: "Specific treatment to reduce enlarged pores and excess sebum.",
-        isNew: false
+        isNew: false,
+        isBestseller: true
     },
     {
         id: 13,

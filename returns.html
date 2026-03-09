@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop | Natural Skincare</title>
+    <title>Returns & Refunds | Natural Skincare</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link
@@ -23,7 +23,7 @@
             <div class="collapse navbar-collapse justify-content-center order-lg-2" id="navbarNav">
                 <ul class="navbar-nav gap-3">
                     <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="shop.html">Shop</a></li>
+                    <li class="nav-item"><a class="nav-link" href="shop.html">Shop</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                     <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
                 </ul>
@@ -49,74 +49,56 @@
         </div>
     </nav>
 
-
-    <div class="container my-5">
-        <div class="row">
-            <aside class="col-lg-3 mb-5">
-                <div class="p-4 bg-light shadow-sm">
-                    <h5 class="fw-bold mb-4">Filter Products</h5>
-
-                    <div class="mb-4">
-                        <label class="form-label fw-semibold">Category</label>
-                        <select class="form-select" id="categoryFilter">
-                            <option value="all">All Products</option>
-                            <option value="Cleansers">Cleansers</option>
-                            <option value="Serums">Serums</option>
-                            <option value="Creams">Creams</option>
-                            <option value="Masks">Masks</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="form-label fw-semibold">Skin Type</label>
-                        <div class="form-check">
-                            <input class="form-check-input skin-filter" type="checkbox" value="Sensitive" id="skinSens">
-                            <label class="form-check-label" for="skinSens">Sensitive Skin</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input skin-filter" type="checkbox" value="Dry" id="skinDry">
-                            <label class="form-check-label" for="skinDry">Dry Skin</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input skin-filter" type="checkbox" value="Combination"
-                                id="skinMix">
-                            <label class="form-check-label" for="skinMix">Combination Skin</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input skin-filter" type="checkbox" value="Oily" id="skinOily">
-                            <label class="form-check-label" for="skinOily">Oily Skin</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input skin-filter" type="checkbox" value="Mature" id="skinMature">
-                            <label class="form-check-label" for="skinMature">Mature Skin</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input skin-filter" type="checkbox" value="All types" id="skinAll">
-                            <label class="form-check-label" for="skinAll">All types</label>
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="form-label fw-semibold">Collections</label>
-                        <div class="form-check">
-                            <input class="form-check-input collection-filter" type="checkbox" value="bestsellers"
-                                id="colBestsellers">
-                            <label class="form-check-label" for="colBestsellers">Bestsellers</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input collection-filter" type="checkbox" value="new"
-                                id="colNewArrivals">
-                            <label class="form-check-label" for="colNewArrivals">New Arrivals</label>
-                        </div>
-                    </div>
-                </div>
-            </aside>
-
-            <main class="col-lg-9">
-                <div class="row g-4" id="productGrid">
-                </div>
-            </main>
+    <header class="py-5 bg-light text-center">
+        <div class="container py-4">
+            <h1 class="display-3 fw-bold mb-3">Returns & Refunds</h1>
+            <p class="lead text-muted max-w-lg mx-auto">We want you to love your skincare routine. If you're not
+                satisfied, we're here to help.</p>
         </div>
+    </header>
+
+    <div class="container my-5 py-5 max-w-lg mx-auto" style="max-width: 800px;">
+        <h3 class="fw-bold mb-4">Our 30-Day Guarantee</h3>
+        <p class="text-muted mb-5">We stand behind the quality of our botanical formulas. If you try a product and it
+            isn't the perfect fit for your skin, you can return it within 30 days of purchase for a full refund or
+            exchange, even if it's been gently used.</p>
+
+        <div class="row g-4 mb-5">
+            <div class="col-md-4 text-center">
+                <div class="bg-light p-4 rounded h-100 border">
+                    <i class="bi bi-1-circle display-5 text-success mb-3 d-block"></i>
+                    <h5 class="fw-bold">Contact Us</h5>
+                    <p class="small text-muted mb-0">Submit a return request via our <a href="contact.html"
+                            class="text-dark text-decoration-none border-bottom border-dark">Contact Form</a> with your
+                        order number.</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="bg-light p-4 rounded h-100 border">
+                    <i class="bi bi-2-circle display-5 text-success mb-3 d-block"></i>
+                    <h5 class="fw-bold">Get Label</h5>
+                    <p class="small text-muted mb-0">We will email you a prepaid return shipping label (for domestic
+                        orders).</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="bg-light p-4 rounded h-100 border">
+                    <i class="bi bi-3-circle display-5 text-success mb-3 d-block"></i>
+                    <h5 class="fw-bold">Refund</h5>
+                    <p class="small text-muted mb-0">Your refund will be processed within 5-7 days after we receive your
+                        package.</p>
+                </div>
+            </div>
+        </div>
+
+        <h4 class="fw-bold mt-5 mb-3">Exceptions & Details</h4>
+        <ul class="text-muted">
+            <li class="mb-2">Original shipping costs are non-refundable.</li>
+            <li class="mb-2">Products must be returned in their original packaging components (even if empty) for
+                recycling purposes.</li>
+            <li class="mb-2">Gift cards and promotional items are strictly non-refundable.</li>
+            <li class="mb-2">For international orders, the customer is responsible for return shipping costs.</li>
+        </ul>
     </div>
 
     <footer>
@@ -163,11 +145,9 @@
     <script src="js/product.js"></script>
     <script src="js/shop.js"></script>
     <script>
-        // Inizializzazione della pagina
         document.addEventListener('DOMContentLoaded', () => {
-            updateCartBadge(); // Mostra badge e nome utente
-            if (typeof displayProducts === 'function') {
-                displayProducts(); // Carica i prodotti iniziali
+            if (typeof updateCartBadge === 'function') {
+                updateCartBadge();
             }
         });
     </script>

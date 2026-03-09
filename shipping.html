@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop | Natural Skincare</title>
+    <title>Shipping Policy | Natural Skincare</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link
@@ -23,7 +23,7 @@
             <div class="collapse navbar-collapse justify-content-center order-lg-2" id="navbarNav">
                 <ul class="navbar-nav gap-3">
                     <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="shop.html">Shop</a></li>
+                    <li class="nav-item"><a class="nav-link" href="shop.html">Shop</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                     <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
                 </ul>
@@ -49,73 +49,64 @@
         </div>
     </nav>
 
+    <header class="py-5 bg-light text-center">
+        <div class="container py-4">
+            <h1 class="display-3 fw-bold mb-3">Shipping Rates & Policies</h1>
+            <p class="lead text-muted max-w-lg mx-auto">Everything you need to know about getting your Natural Skincare
+                products delivered.</p>
+        </div>
+    </header>
 
-    <div class="container my-5">
-        <div class="row">
-            <aside class="col-lg-3 mb-5">
-                <div class="p-4 bg-light shadow-sm">
-                    <h5 class="fw-bold mb-4">Filter Products</h5>
+    <div class="container my-5 py-5 max-w-lg mx-auto" style="max-width: 800px;">
+        <h3 class="fw-bold mb-4">Domestic Shipping Options</h3>
+        <p class="text-muted mb-4">We ship all domestic orders via eco-friendly carriers to ensure the lowest carbon
+            footprint possible. You will receive a tracking number as soon as your order leaves our warehouse.</p>
 
-                    <div class="mb-4">
-                        <label class="form-label fw-semibold">Category</label>
-                        <select class="form-select" id="categoryFilter">
-                            <option value="all">All Products</option>
-                            <option value="Cleansers">Cleansers</option>
-                            <option value="Serums">Serums</option>
-                            <option value="Creams">Creams</option>
-                            <option value="Masks">Masks</option>
-                        </select>
-                    </div>
+        <table class="table table-bordered mb-5">
+            <thead class="bg-light">
+                <tr>
+                    <th scope="col">Shipping Method</th>
+                    <th scope="col">Estimated Time</th>
+                    <th scope="col">Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Standard Eco Delivery</td>
+                    <td>3-5 Business Days</td>
+                    <td>€ 4.90 (Free over € 50)</td>
+                </tr>
+                <tr>
+                    <td>Express Delivery</td>
+                    <td>1-2 Business Days</td>
+                    <td>€ 9.90</td>
+                </tr>
+            </tbody>
+        </table>
 
-                    <div class="mb-4">
-                        <label class="form-label fw-semibold">Skin Type</label>
-                        <div class="form-check">
-                            <input class="form-check-input skin-filter" type="checkbox" value="Sensitive" id="skinSens">
-                            <label class="form-check-label" for="skinSens">Sensitive Skin</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input skin-filter" type="checkbox" value="Dry" id="skinDry">
-                            <label class="form-check-label" for="skinDry">Dry Skin</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input skin-filter" type="checkbox" value="Combination"
-                                id="skinMix">
-                            <label class="form-check-label" for="skinMix">Combination Skin</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input skin-filter" type="checkbox" value="Oily" id="skinOily">
-                            <label class="form-check-label" for="skinOily">Oily Skin</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input skin-filter" type="checkbox" value="Mature" id="skinMature">
-                            <label class="form-check-label" for="skinMature">Mature Skin</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input skin-filter" type="checkbox" value="All types" id="skinAll">
-                            <label class="form-check-label" for="skinAll">All types</label>
-                        </div>
-                    </div>
+        <h3 class="fw-bold mb-4">International Shipping</h3>
+        <p class="text-muted mb-4">We are thrilled to send our skincare across Europe and select international
+            destinations. Delivery times and customs duties may vary based on your location.</p>
 
-                    <div class="mb-4">
-                        <label class="form-label fw-semibold">Collections</label>
-                        <div class="form-check">
-                            <input class="form-check-input collection-filter" type="checkbox" value="bestsellers"
-                                id="colBestsellers">
-                            <label class="form-check-label" for="colBestsellers">Bestsellers</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input collection-filter" type="checkbox" value="new"
-                                id="colNewArrivals">
-                            <label class="form-check-label" for="colNewArrivals">New Arrivals</label>
-                        </div>
-                    </div>
-                </div>
-            </aside>
+        <ul class="list-group list-group-flush mb-5">
+            <li class="list-group-item px-0 py-3 d-flex justify-content-between">
+                <span class="text-muted">European Union (Standard)</span>
+                <strong>5-7 Business Days (from € 9.00)</strong>
+            </li>
+            <li class="list-group-item px-0 py-3 d-flex justify-content-between">
+                <span class="text-muted">United Kingdom</span>
+                <strong>5-8 Business Days (from € 12.00)</strong>
+            </li>
+            <li class="list-group-item px-0 py-3 d-flex justify-content-between">
+                <span class="text-muted">United States & Canada</span>
+                <strong>7-14 Business Days (from € 25.00)</strong>
+            </li>
+        </ul>
 
-            <main class="col-lg-9">
-                <div class="row g-4" id="productGrid">
-                </div>
-            </main>
+        <div class="p-4 bg-light border-start border-4 border-success mt-4">
+            <h5 class="fw-bold"><i class="bi bi-box-seam text-success me-2"></i> Our Packaging Commitment</h5>
+            <p class="text-muted mb-0 mt-2">All our shipping materials are composed of 100% recycled fibers and are
+                fully biodegradable. We say no to plastic bubble wrap and synthetic filling.</p>
         </div>
     </div>
 
@@ -163,11 +154,9 @@
     <script src="js/product.js"></script>
     <script src="js/shop.js"></script>
     <script>
-        // Inizializzazione della pagina
         document.addEventListener('DOMContentLoaded', () => {
-            updateCartBadge(); // Mostra badge e nome utente
-            if (typeof displayProducts === 'function') {
-                displayProducts(); // Carica i prodotti iniziali
+            if (typeof updateCartBadge === 'function') {
+                updateCartBadge();
             }
         });
     </script>
