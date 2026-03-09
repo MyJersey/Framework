@@ -43,6 +43,7 @@
         </div>
     </div>
 </nav>
+
     <header class="hero-section">
         <div class="container">
             <h1 class="display-2 fw-bold mb-3">Natural Skincare</h1>
@@ -126,14 +127,21 @@
     </footer>
 
     
-    <script src="js/product.js"></script>
+   <script src="js/product.js"></script>
+    
+    <script src="js/shop.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
+            // Inizializza icone
+            if (typeof lucide !== 'undefined') lucide.createIcons();
             
-            
+            // 3. ESEGUI l'aggiornamento della Navbar
+            updateCartBadge(); 
+
+            // Caricamento prodotti Featured
             const grid = document.getElementById('featured-grid');
-            if (typeof products !== 'undefined') {
+            if (grid && typeof products !== 'undefined') {
                 const featured = products.filter(p => p.isNew).slice(0, 4);
                 featured.forEach(p => {
                     grid.innerHTML += `
@@ -148,13 +156,6 @@
                         </div>`;
                 });
             }
-
-            
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            document.getElementById('cart-badge').innerText = cart.length;
-
-            
-           
         });
 
         function goToDetail(id) {

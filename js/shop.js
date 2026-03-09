@@ -78,25 +78,44 @@ function addToCart(event, id) {
     alert("Product added to cart!");
 }
 
+
+
 function updateCartBadge() {
-    // 1. Gestione Carrello
+    // 1. Gestione del numero nel Carrello
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const badge = document.getElementById('cart-badge');
-    if(badge) badge.innerText = cart.length;
+    if (badge) {
+        badge.innerText = cart.length;
+    }
 
-    // 2. Gestione Login (Icona vs Nome)
+    // 2. Gestione della Navbar (Login vs Saluto)
     const user = localStorage.getItem('userName');
     const loginIcon = document.getElementById('login-icon');
     const greeting = document.getElementById('user-greeting');
 
     if (user && greeting && loginIcon) {
-        // Se l'utente è loggato: nascondi icona, mostra nome
-        loginIcon.classList.add('d-none');
-        greeting.innerHTML = `<span class="text-success fw-bold">Hi, ${user}</span>`;
-        greeting.classList.remove('d-none');
+        // Se l'utente è loggato
+        loginIcon.style.setProperty('display', 'none', 'important'); // Nasconde l'icona omino
+        greeting.style.display = 'block'; // Mostra il contenitore del saluto
+        
+        // Inseriamo il nome con un cursore a puntatore per far capire che è cliccabile (per il logout)
+        greeting.innerHTML = `
+            <span class="text-success fw-bold" style="cursor: pointer;" onclick="logoutUser()">
+                Hi, ${user}
+            </span>`;
     } else if (loginIcon && greeting) {
-        // Se non è loggato: mostra icona, nascondi nome
-        loginIcon.classList.remove('d-none');
-        greeting.classList.add('d-none');
+        // Se non c'è nessun utente loggato
+        loginIcon.style.display = 'block';
+        greeting.style.display = 'none';
+        greeting.innerHTML = '';
+    }
+}
+
+// Funzione di Logout per pulire il localStorage e resettare la vista
+function logoutUser() {
+    if (confirm("Do you want to log out?")) {
+        localStorage.removeItem('userName');
+        // Ricarichiamo la pagina per aggiornare la navbar istantaneamente
+        window.location.reload();
     }
 }

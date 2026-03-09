@@ -12,29 +12,36 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 sticky-top shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fs-3" href="index.html">Natural Skincare</a>
+   <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 sticky-top shadow-sm">
+    <div class="container-fluid px-lg-5"> 
+        <a class="navbar-brand fs-3 m-0" href="index.html">Natural Skincare</a>
+
+        <div class="collapse navbar-collapse justify-content-center order-lg-2" id="navbarNav">
+            <ul class="navbar-nav gap-3">
+                <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="shop.html">Shop</a></li>
+            </ul>
+        </div>
+
+        <div class="d-flex align-items-center gap-3 order-lg-3 ms-auto ms-lg-0">
+            <a href="login.html" class="text-dark" id="login-icon">
+                <i class="bi bi-person fs-4"></i>
+            </a>
+            
+            <div id="user-greeting"></div>
+
+            <a href="#" class="text-dark"><i class="bi bi-search"></i></a>
+            <a href="cart.html" class="text-dark position-relative me-2">
+                <i class="bi bi-bag fs-5"></i>
+                <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+            </a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                <ul class="navbar-nav gap-3">
-                    <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="shop.html">Shop</a></li>
-                    <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
-                    <li class="nav-item" id="user-greeting"></li>
-                </ul>
-            </div>
-            <div class="d-flex align-items-center gap-3">
-                <a href="#" class="text-dark"><i class="bi bi-search"></i></a>
-                <a href="cart.html" class="text-dark position-relative">
-                    <i class="bi bi-bag fs-5"></i>
-                    <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
-                </a>
-            </div>
         </div>
-    </nav>
+    </div>
+</nav>
 
     <div class="container my-5 py-5">
         <div class="row" id="product-detail-container">
@@ -42,7 +49,7 @@
     </div>
 
     <footer>
-        <div class="container">
+        <div class="container-fluid px-lg-5">
             <div class="row">
                 <div class="col-lg-4 col-md-12 mb-4">
                     <h4 class="text-white mb-4">Natural Skincare</h4>
@@ -84,60 +91,56 @@
 
     
 
-    <script src="js/product.js"></script>
-    <script>
+    <script src="js/product.js"></script> <script src="js/shop.js"></script>    <script>
         document.addEventListener('DOMContentLoaded', () => {
             const productId = localStorage.getItem('selectedProductId');
             const container = document.getElementById('product-detail-container');
             const product = products.find(p => p.id == productId);
 
+            // 1. Aggiorna Navbar (Badge e Nome Utente)
+            updateCartBadge();
+
+            // 2. Renderizza Dettaglio Prodotto
             if (product) {
                 container.innerHTML = `
-                    <div class="col-md-6 mb-4">
-                        <img src="${product.image}" class="img-fluid rounded shadow" alt="${product.name}">
+                    <div class="col-md-6 mb-4 text-center">
+                        <img src="${product.image}" class="img-fluid rounded shadow-lg" style="max-height: 600px; object-fit: cover;" alt="${product.name}">
                     </div>
-                    <div class="col-md-6">
-                        <nav aria-label="breadcrumb">
+                    <div class="col-md-6 px-lg-5">
+                        <nav aria-label="breadcrumb" class="mb-4">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="shop.html">Shop</a></li>
+                                <li class="breadcrumb-item"><a href="shop.html" class="text-decoration-none text-muted">Shop</a></li>
                                 <li class="breadcrumb-item active">${product.category}</li>
                             </ol>
                         </nav>
                         <h1 class="display-4 fw-bold mb-3">${product.name}</h1>
-                        <h2 class="text-success mb-4">€ ${product.price.toFixed(2)}</h2>
-                        <p class="lead mb-4">${product.description}</p>
-                        <div class="alert alert-light border">
-                            <strong>Skin Type:</strong> ${product.skinType}
+                        <h2 class="text-success mb-4 fw-light">€ ${product.price.toFixed(2)}</h2>
+                        <p class="lead text-muted mb-4">${product.description}</p>
+                        
+                        <div class="p-3 bg-light border-start border-4 border-success mb-5">
+                            <small class="text-uppercase fw-bold text-muted d-block">Ideal for:</small>
+                            <span class="fs-5">${product.skinType} Skin</span>
                         </div>
-                        <button class="btn btn-dark btn-lg px-5 py-3 mt-3" onclick="addToCartDetail(${product.id})">
+
+                        <button class="btn btn-dark btn-lg w-100 py-3 rounded-0 shadow" onclick="addToCartDetail(${product.id})">
                             ADD TO CART
                         </button>
                     </div>
                 `;
             } else {
-                container.innerHTML = "<h2>Product not found.</h2>";
+                container.innerHTML = "<div class='text-center py-5'><h2>Product not found.</h2><a href='shop.html' class='btn btn-outline-dark mt-3'>Back to Shop</a></div>";
             }
-            updateBadge();
         });
 
+        // Funzione dedicata alla pagina dettaglio per mostrare l'alert
         function addToCartDetail(id) {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
             const product = products.find(p => p.id === id);
-            cart.push(product);
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateBadge();
-            alert("Product added to cart!");
-        }
-
-        function updateBadge() {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const badge = document.getElementById('cart-badge');
-            if(badge) badge.innerText = cart.length;
-
-            const user = localStorage.getItem('userName');
-            const greeting = document.getElementById('user-greeting');
-            if (user && greeting) {
-                greeting.innerHTML = `<span class="nav-link text-success fw-bold">Hi, ${user}</span>`;
+            if (product) {
+                cart.push(product);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartBadge(); // Aggiorna il badge nella navbar subito
+                alert("Wonderful choice! The product has been added to your cart.");
             }
         }
     </script>
