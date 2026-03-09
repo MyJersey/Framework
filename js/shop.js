@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const productGrid = document.getElementById('productGrid');
     const categoryFilter = document.getElementById('categoryFilter');
     const skinFilters = document.querySelectorAll('.skin-filter'); // Selects all checkboxes
+    updateCartBadge();
 
     function displayProducts(filteredProducts) {
         productGrid.innerHTML = '';
@@ -78,13 +79,24 @@ function addToCart(event, id) {
 }
 
 function updateCartBadge() {
+    // 1. Gestione Carrello
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const badge = document.getElementById('cart-badge');
     if(badge) badge.innerText = cart.length;
 
+    // 2. Gestione Login (Icona vs Nome)
     const user = localStorage.getItem('userName');
+    const loginIcon = document.getElementById('login-icon');
     const greeting = document.getElementById('user-greeting');
-    if (user && greeting) {
-        greeting.innerHTML = `<span class="nav-link text-success fw-bold">Hi, ${user}</span>`;
+
+    if (user && greeting && loginIcon) {
+        // Se l'utente è loggato: nascondi icona, mostra nome
+        loginIcon.classList.add('d-none');
+        greeting.innerHTML = `<span class="text-success fw-bold">Hi, ${user}</span>`;
+        greeting.classList.remove('d-none');
+    } else if (loginIcon && greeting) {
+        // Se non è loggato: mostra icona, nascondi nome
+        loginIcon.classList.remove('d-none');
+        greeting.classList.add('d-none');
     }
 }

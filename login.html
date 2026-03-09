@@ -56,32 +56,22 @@
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const nameInput = document.getElementById('username').value;
+            const nameInput = document.getElementById('username').value.trim();
             
-            if (nameInput.trim().length < 2) {
+            if (nameInput.length < 2) {
                 alert("Please enter a valid name.");
                 return;
             }
 
-            // Save user name to localStorage (Requirement 11)
+            // SALVATAGGIO: Usa 'userName' (con la N maiuscola)
             localStorage.setItem('userName', nameInput);
             
-            // Redirect to home or shop
-            alert(`Welcome, ${nameInput}!`);
+            // Feedback e reindirizzamento
+            // Non c'è bisogno di alert se vuoi un'esperienza più fluida
             window.location.href = 'index.html';
         });
 
-        // Check if user is already logged in
-        window.onload = function() {
-            if (localStorage.getItem('userName')) {
-                const logout = confirm("You are already logged in. Do you want to logout?");
-                if (logout) {
-                    localStorage.removeItem('userName');
-                } else {
-                    window.location.href = 'index.html';
-                }
-            }
-        };
+       
     </script>
 </body>
 </html>
