@@ -8,8 +8,9 @@ const products = [
         image: "img/GentleRose_Cleanser.jpg",
         description: "A delicate rose petal cleanser, perfect for skin that reddens easily.",
         isNew: true,
-        ingredients: ["Rose centifolia oil, Allantoin", "Eriobotrya japonica extract", "Chondrus crispus extract", "Mild cleansing agents, Glycerin"],
-        howToUse: "Apply a small amount to damp skin and massage genlty to remove impuritises. Rinse thoroughly with water"
+        isBestseller: false,
+        ingredients: ["Rose centifolia oil", "Allantoin", "Eriobotrya japonica extract", "Chondrus crispus extract", "Mild cleansing agents, Glycerin"],
+        howToUse: "Apply a small amount to damp skin and massage genlty to remove impuritises. Rinse thoroughly with water."
     },
     {
         id: 2,
@@ -19,7 +20,10 @@ const products = [
         skinType: "All types",
         image: "img/VitaminC_Brightening_Serum.jpg",
         description: "Brightening serum for radiant and even-toned skin.",
-        isNew: true
+        isNew: true,
+        isBestseller: false,
+        ingredients: ["Vitamin C (Ascorbic Acid)", "Hyaluronic Acid", "Niacinamide", "Glycerin", "Water"],
+        howToUse: "Apply a few drops to clean skin in the morning before moisturizer and sunscreen."
     },
     {
         id: 3,
@@ -30,7 +34,9 @@ const products = [
         image: "img/Deep_Hydration_Face_Cream.jpg",
         description: "24h deep hydration with plant-based hyaluronic acid.",
         isNew: false,
-        isBestseller: true
+        isBestseller: true,
+        ingredients: ["Rose water", "Hyaluronic acid", "Squalane", "Glycerin", "Vitamin E", "Botanical extracts"],
+        howToUse: "Apply to clean face and neck. Massage gently until absorbed. Use morning and evening."
     },
     {
         id: 4,
@@ -40,18 +46,23 @@ const products = [
         skinType: "Oily",
         image: "img/PurifyingDetoxClay_Mask.jpeg",
         description: "Green clay mask to deeply purify pores.",
-        isNew: false
+        isNew: false,
+        isBestseller: false,
+        ingredients: ["Kaolin Clay", "Bentonite Clay", "Activated Charcoal", "Glycerin", "Aloe Extract"],
+        howToUse: "Apply an even layer to clean skin. Leave on 10–15 minutes, then rinse thoroughly with warm water."
     },
     {
         id: 5,
         name: "Midnight Recovery Oil",
-        price: 65.00,
+        price: 65.00,   
         category: "Serums",
         skinType: "All types",
         image: "img/Midnight_Recovery_Oil.jpg",
         description: "Regenerating night oil to wake up with rested skin.",
         isNew: false,
-        isBestseller: true
+        isBestseller: true,
+        ingredients: ["Squalane", "Evening Primrose Oil", "Lavender Essential Oil", "Coriander Seed Oil", "Rosehip Oil", "Tocopherol (Vitamin E)"],
+        howToUse: "Apply 2–3 drops to clean skin at night. Gently press into face and neck as the last step of your evening skincare routine."
     },
     {
         id: 6,
@@ -61,7 +72,10 @@ const products = [
         skinType: "Combination",
         image: "img/Ocean_Mist_Toner.jpeg",
         description: "Refreshing toner with marine extracts and brown algae.",
-        isNew: true
+        isNew: true,
+        isBestseller: false,
+        ingredients: ["Sea water minerals", "Aloe vera extract", "Glycerin", "Botanical extracts", "Water"],
+        howToUse: "Spray lightly onto face after cleansing. Pat gently until absorbed or use with cotton pad."
     },
     {
         id: 7,
@@ -72,7 +86,9 @@ const products = [
         image: "img/retinol_Alternative_Cream.jpg",
         description: "Natural anti-aging treatment with Bakuchiol.",
         isNew: false,
-        isBestseller: true
+        isBestseller: true,
+        ingredients: ["Bakuchiol (retinol alternative)", "Peptides", "Hyaluronic Acid", "Shea Butter", "Vitamin E"],
+        howToUse: "Apply a small amount to face in the evening skincare routine. Follow with moisturizer if needed"
     },
     {
         id: 8,
@@ -82,7 +98,10 @@ const products = [
         skinType: "All types",
         image: "img/DailySun_Shield_SPF50.jpg",
         description: "Invisible, non-greasy mineral sun protection.",
-        isNew: true
+        isNew: true,
+        isBestseller: false,
+        ingredients: ["Broad-spectrum UV filters", "Hyaluronic acid", "Glycerin", "Antioxidants", "Moisturizing base ingredients"],
+        howToUse: "Apply evenly to face and neck as the final step of morning skincare. Reapply during the day if exposed to sunlight."
     },
     {
         id: 9,
@@ -92,7 +111,10 @@ const products = [
         skinType: "Combination",
         image: "img/bamboo_exfoliating_scrub.jpg",
         description: "Bamboo micro-granules for gentle mechanical exfoliation.",
-        isNew: false
+        isNew: false,
+        isBestseller: false,   
+        ingredients: ["Bamboo stem powder", "Aloe vera extract", "Witch hazel extract", "Cucumber extract", "Sage extract", "Avocado oil", "Glycerin", "Propylene glycol", "Water", "Cleansing agents"], 
+        howToUse: "Apply a small amount to damp skin and massage gently in circular motions, avoiding the eye area. Rinse thoroughly with warm water. Use 2–3 times per week."
     },
     {
         id: 10,
@@ -102,7 +124,10 @@ const products = [
         skinType: "Dry",
         image: "img/Hyaluronic_Acid_Booster.jpg",
         description: "Pure hydration concentrate to plump the skin tissues.",
-        isNew: false
+        isNew: false,
+        isBestseller: false,
+        ingredients: ["Hyaluronic acid", "Glycerin", "Water", "Humectants", "Preservatives"],
+        howToUse: "Apply a few drops to clean skin before moisturizer. Use morning and night."
     },
     {
         id: 11,
@@ -112,7 +137,10 @@ const products = [
         skinType: "Sensitive",
         image: "img/calm_chamomile_eye.jpg",
         description: "Soothing eye contour balm with chamomile and blueberry.",
-        isNew: false
+        isNew: false,
+        isBestseller: false,
+        ingredients: ["Chamomile extract", "Vitamin E", "Vitamin C", "Jojoba oi", "Glycerin", "Aloe vera extract", "Water", "Emollients"],
+        howToUse: "Apply a small amount around the eye area using the ring finger. Gently pat until absorbed. Use morning and night."
     },
     {
         id: 12,
@@ -123,7 +151,9 @@ const products = [
         image: "img/Niacinamide_pore_Shrinker.jpg",
         description: "Specific treatment to reduce enlarged pores and excess sebum.",
         isNew: false,
-        isBestseller: true
+        isBestseller: true,
+        ingredients: ["Niacinamide (10%)", "Hyaluronic Acid (2%)", "Zinc PCA", "Glycerin", "Water"],
+        howToUse: "Apply 2–3 drops to clean skin before moisturizer. Use morning and night."
     },
     {
         id: 13,
@@ -133,7 +163,10 @@ const products = [
         skinType: "Combination",
         image: "img/Matcha_Tea_GlowMask.jpg",
         description: "Antioxidant matcha tea mask to brighten the face.",
-        isNew: true
+        isNew: true,
+        isBestseller: false,
+        ingredients: ["Matcha tea extract", "Botanical oils", "Hyaluronic acid", "Conditioning agents", "Plant extracts"],
+        howToUse: "Apply to clean damp hair after shampooing. Leave on for 5–10 minutes, then rinse thoroughly."
     },
     {
         id: 14,
@@ -143,7 +176,10 @@ const products = [
         skinType: "Sensitive",
         image: "img/Lavander_Sleeping_faceOil.jpg",
         description: "Relaxing lavender oil to nourish the skin while you sleep.",
-        isNew: false
+        isNew: false,
+        isBestseller: false,
+        ingredients: ["Abyssinian oil", "Chamomile extract", "Lavender oil", "Vitamin E", "Botanical oils"],
+        howToUse: "Apply a few drops to the face as the last step of your nighttime skincare routine. Leave on overnight."
     },
     {
         id: 15,
@@ -153,7 +189,10 @@ const products = [
         skinType: "Oily",
         image: "img/Citrus_Refreshing_Foam.jpg",
         description: "Energizing cleansing mousse with Sicilian citrus fruits.",
-        isNew: false
+        isNew: false,
+        isBestseller: false,
+        ingredients: ["Citrus fruit extracts", "Plant-derived surfactants", "Glycerin", "Botanical extracts", "Water", "Fragrance"],
+        howToUse: "Pump a small amount onto wet hands or body. Massage to create foam and cleanse the skin. Rinse thoroughly with water."
     },
     {
         id: 16,
@@ -163,7 +202,10 @@ const products = [
         skinType: "Mature",
         image: "img/Peptide_Firming_Cream.jpg",
         description: "Firming cream with plant peptides for a lifting effect.",
-        isNew: true
+        isNew: true,
+        isBestseller: false,
+        ingredients: ["Peptides", "Hyaluronic Acid", "Ceramides", "Glycerin", "Shea Butter", "Vitamin E"],
+        howToUse: "Apply a small amount to clean face and neck. Use morning and evening as a moisturizer."
     },
     {
         id: 17,
@@ -173,7 +215,10 @@ const products = [
         skinType: "All types",
         image: "img/Priobiotic_Balacing_Mist.jpg",
         description: "Probiotic spray mist to balance the skin microbiome.",
-        isNew: false
+        isNew: false,
+        isBestseller: false,
+        ingredients: ["Prebiotic complex", "Glycerin", "Panthenol", "Botanical extracts", "Water"],
+        howToUse: "Spray evenly on face after cleansing or throughout the day to hydrate and balance skin."
     },
     {
         id: 18,
@@ -183,7 +228,10 @@ const products = [
         skinType: "Mature",
         image: "img/gold_infused_SheetMask.jpg",
         description: "Single-use sheet mask with gold particles and collagen.",
-        isNew: false
+        isNew: false,
+        isBestseller: false,
+        ingredients: ["Gold extract", "Hyaluronic acid", "Glycerin", "Botanical extracts", "Hydrating serum base"],
+        howToUse: "Place the mask on clean skin and leave on for 15–20 minutes. Remove and gently massage the remaining serum into the skin."
     },
     {
         id: 19,
@@ -193,7 +241,10 @@ const products = [
         skinType: "Sensitive",
         image: "img/nature-republic-soothing-amp-moisture-aloe-vera-92-soothing-gel.jpg",
         description: "Soothing multipurpose gel for post-sun exposure or irritation.",
-        isNew: false
+        isNew: false,
+        isBestseller: false,
+        ingredients: ["Aloe Barbadensis Leaf Extract (92%)", "Glycerin", "Water", "Betaine", "Carbomer", "Fragrance"],
+        howToUse: "Apply a generous amount to face or body and gently massage until absorbed. Can be used as a moisturizer, soothing gel, or mask."
     },
     {
         id: 20,
@@ -203,6 +254,9 @@ const products = [
         skinType: "Dry",
         image: "img/SqualoneFacialOil.jpg",
         description: "Pure olive-derived squalane for hydration without weight.",
-        isNew: false
+        isNew: false,
+        isBestseller: false,
+        ingredients: ["Squalane (90%)", "Vitamin C", "Vitamin E", "Botanical oils"],
+        howToUse: "Apply 2–3 drops to face after serum or moisturizer to seal in hydration."
     }
 ];
