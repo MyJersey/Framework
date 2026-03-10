@@ -1,20 +1,31 @@
-function loadComponent(url, elementId) {
-    fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            return response.text();
-        })
-        .then(data => {
-            document.getElementById(elementId).innerHTML = data;
-        })
-        .catch(error => {
-            console.error(`There was a problem loading the component from ${url}:`, error);
-        });
+async function loadComponent(url, elementId) {
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error(`Failed to load ${url}`);
+    }
+    const html = await response.text();
+    document.getElementById(elementId).innerHTML = html;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    loadComponent('navbar.html', 'nav');  // Load the navbar
-    loadComponent('footer.html', 'footer'); // Load the footer
-});
+async function initLayout() {
+    await Promise.all([
+        loadComponent('navbar.html', 'nav'),
+        loadComponent('footer.html', 'footer')
+    ]);
+
+    if (typeof updateCartBadge === 'function') {
+        updateCartBadge();
+    }
+
+    setActiveNavLink();
+}
+
+function setActiveNavLink() {
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('#nav .nav-link').forEach(link => {
+        const href = link.getAttribute('href');
+        link.classList.toggle('active', href === currentPage);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', initLayout);
