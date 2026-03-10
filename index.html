@@ -84,7 +84,7 @@
         <div class="container my-5">
             <h2 class="text-center mb-5 display-5 fw-bold">New Arrivals</h2>
             <div class="row g-4 justify-content-center" id="new-arrivals-grid">
-                <!-- Prodotti iniettati via JS -->
+            
             </div>
             <div class="text-center mt-5">
                 <a href="shop.html?filter=new" class="btn btn-outline-dark px-4 py-2">Discover New in</a>
@@ -96,7 +96,7 @@
         <div class="container my-5">
             <h2 class="text-center mb-5 display-5 fw-bold">Bestsellers</h2>
             <div class="row g-4 justify-content-center" id="bestseller-grid">
-                <!-- Prodotti iniettati via JS -->
+                
             </div>
             <div class="text-center mt-5">
                 <a href="shop.html?filter=bestsellers" class="btn btn-outline-dark px-4 py-2">Shop All Bestsellers</a>
@@ -108,7 +108,7 @@
         <div class="container my-5">
             <h2 class="text-center mb-5 display-5 fw-bold">Featured Products</h2>
             <div class="row g-4 justify-content-center" id="featured-grid">
-                <!-- Prodotti iniettati via JS -->
+                
             </div>
             <div class="text-center mt-5">
                 <a href="shop.html" class="btn btn-outline-dark px-4 py-2">View All Products</a>
@@ -164,13 +164,13 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Inizializza icone
+            
             if (typeof lucide !== 'undefined') lucide.createIcons();
 
-            // 3. ESEGUI l'aggiornamento della Navbar
+            
             updateCartBadge();
 
-            // Caricamento prodotti New Arrivals (top 4)
+            
             const newArrivalsGrid = document.getElementById('new-arrivals-grid');
             if (newArrivalsGrid && typeof products !== 'undefined') {
                 const newArrivals = products.filter(p => p.isNew).slice(0, 4);
@@ -190,7 +190,7 @@
                 });
             }
 
-            // Caricamento prodotti Bestsellers (top 4 che NON sono 'new in')
+            
             const bestsellerGrid = document.getElementById('bestseller-grid');
             if (bestsellerGrid && typeof products !== 'undefined') {
                 const bestsellers = products.filter(p => p.isBestseller && !p.isNew).slice(0, 4);
@@ -209,7 +209,6 @@
                 });
             }
 
-            // Caricamento prodotti Featured (tutti gli altri e a caso, o selezionati manualmente)
             const featuredGrid = document.getElementById('featured-grid');
             if (featuredGrid && typeof products !== 'undefined') {
                 const featured = products.filter(p => !p.isBestseller && !p.isNew).slice(0, 4);
