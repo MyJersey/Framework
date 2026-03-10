@@ -109,70 +109,62 @@
             updateCartBadge();
 
             // 2. Renderizza Dettaglio Prodotto
-            if (product) {
-                container.innerHTML = `
-                <div class="col-md-6 mb-4 text-center">
-                    <div class="bg-light p-4 rounded shadow-sm d-flex align-items-center justify-content-center" style="height: 500px;">
-                        <img src="${product.image}" class="img-fluid" style="max-height: 100%; object-fit: contain;" alt="${product.name}">
-                    </div>
-                </div>
-                <div class="col-md-6 px-lg-5">
-                    <nav aria-label="breadcrumb" class="mb-4">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="shop.html" class="text-decoration-none text-muted">Shop</a></li>
-                            <li class="breadcrumb-item active">${product.category}</li>
-                        </ol>
-                    </nav>
-                    <h1 class="display-4 fw-bold mb-3">${product.name}</h1>
-                    <h2 class="text-success mb-4 fw-light">€ ${product.price.toFixed(2)}</h2>
-                    <p class="lead text-muted mb-4">${product.description}</p>
-                    
-                    <div class="p-3 bg-light border-start border-4 border-success mb-4">
-                        <small class="text-uppercase fw-bold text-muted d-block">Ideal for:</small>
-                        <span class="fs-5">${product.skinType} Skin</span>
-                    </div>
+           if (product) {
+    container.innerHTML = `
+    <div class="col-md-6 mb-4 text-center">
+        <div class="bg-light p-4 rounded shadow-sm d-flex align-items-center justify-content-center" style="height: 500px;">
+            <img src="${product.image}" class="img-fluid" style="max-height: 100%; object-fit: contain;" alt="${product.name}">
+        </div>
+    </div>
+    <div class="col-md-6 px-lg-5">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="shop.html" class="text-decoration-none text-muted">Shop</a></li>
+                <li class="breadcrumb-item active">${product.category}</li>
+            </ol>
+        </nav>
+        <h1 class="display-4 fw-bold mb-3">${product.name}</h1>
+        <h2 class="text-success mb-4 fw-light">€ ${product.price.toFixed(2)}</h2>
+        <p class="lead text-muted mb-4">${product.description}</p>
+        
+        <div class="p-3 bg-light border-start border-4 border-success mb-4">
+            <small class="text-uppercase fw-bold text-muted d-block">Ideal for:</small>
+            <span class="fs-5">${product.skinType} Skin</span>
+        </div>
 
-                    <div class="accordion mb-5 border-0" id="productAccordion">
-                        <div class="accordion-item border-0 border-bottom rounded-0">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed px-0 bg-transparent fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-                                    Ingredients
-                                </button>
-                            </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#productAccordion">
-                                <div class="accordion-body px-0 text-muted small">
-                                    ${product.ingredients || 'Natural botanical extracts.'}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item border-0 border-bottom rounded-0">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed px-0 bg-transparent fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
-                                    How to Use
-                                </button>
-                            </h2>
-                            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#productAccordion">
-                                <div class="accordion-body px-0 text-muted small">
-                                    ${product.howToUse || 'Apply uniformly to skin as needed.'}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Displaying Ingredients -->
+        <div class="mb-4">
+            <h5 class="fw-bold">Ingredients:</h5>
+            <p class="text-muted small">
+                ${Array.isArray(product.ingredients) && product.ingredients.length > 0 
+                    ? product.ingredients.join(', ') 
+                    : 'Natural botanical extracts.'}
+            </p>
+        </div>
 
-                    <div class="d-flex align-items-center mb-4 gap-3">
-                        <label for="detail-qty" class="fw-bold mb-0">Quantity:</label>
-                        <input type="number" id="detail-qty" class="form-control rounded-0 text-center" value="1" min="1" max="10" style="width: 80px;">
-                    </div>
+        <!-- Displaying How to Use -->
+        <div class="mb-4">
+            <h5 class="fw-bold">How to Use:</h5>
+            <p class="text-muted small">
+                ${product.howToUse || 'Apply uniformly to skin as needed.'}
+            </p>
+        </div>
 
-                    <button class="btn btn-dark btn-lg w-100 py-3 rounded-0 shadow" onclick="addToCartDetail(${product.id})">
-                        ADD TO CART
-                    </button>
-                </div>
-            `;
-            } else {
-                container.innerHTML = "<div class='text-center py-5'><h2>Product not found.</h2><a href='shop.html' class='btn btn-outline-dark mt-3'>Back to Shop</a></div>";
-            }
-        });
+        <div class="d-flex align-items-center mb-4 gap-3">
+            <label for="detail-qty" class="fw-bold mb-0">Quantity:</label>
+            <input type="number" id="detail-qty" class="form-control rounded-0 text-center" value="1" min="1" max="10" style="width: 80px;">
+        </div>
+
+        <button class="btn btn-dark btn-lg w-100 py-3 rounded-0 shadow" onclick="addToCartDetail(${product.id})">
+            ADD TO CART
+        </button>
+    </div>
+    `;
+} else {
+    container.innerHTML = "<div class='text-center py-5'><h2>Product not found.</h2><a href='shop.html' class='btn btn-outline-dark mt-3'>Back to Shop</a></div>";
+}
+
+            });
 
         // Funzione dedicata alla pagina dettaglio per mostrare l'alert
         function addToCartDetail(id) {

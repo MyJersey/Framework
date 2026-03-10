@@ -7,7 +7,9 @@ const products = [
         skinType: "Sensitive",
         image: "img/GentleRose_Cleanser.jpg",
         description: "A delicate rose petal cleanser, perfect for skin that reddens easily.",
-        isNew: true
+        isNew: true,
+        ingredients: ["Rose water", "Chamomile extract", "Glycerin", "Aloe vera"],
+        howToUse: "Apply a small amount to damp skin, massage gently in circular motions, then rinse with lukewarm water. Use morning and evening for best results."
     },
     {
         id: 2,
@@ -17,7 +19,10 @@ const products = [
         skinType: "All types",
         image: "img/VitaminC_Brightening_Serum.jpg",
         description: "Brightening serum for radiant and even-toned skin.",
-        isNew: true
+        isNew: true,
+        ingredients: ["Rose water", "Chamomile extract", "Glycerin", "Aloe vera"],
+        howToUse: "After cleansing and toning, apply 3-4 drops to the face and neck. Gently pat until fully absorbed. Follow with moisturizer and sunscreen during the day."
+
     },
     {
         id: 3,
@@ -28,7 +33,9 @@ const products = [
         image: "img/Deep_Hydration_Face_Cream.jpg",
         description: "24h deep hydration with plant-based hyaluronic acid.",
         isNew: false,
-        isBestseller: true
+        isBestseller: true,
+        ingredients: ["Rose water", "Chamomile extract", "Glycerin", "Aloe vera"],
+        howToUse: "Apply a generous amount to the face and neck after cleansing and serum application. Use morning and night for optimal hydration."
     },
     {
         id: 4,
@@ -38,7 +45,9 @@ const products = [
         skinType: "Oily",
         image: "img/PurifyingDetoxClay_Mask.jpeg",
         description: "Green clay mask to deeply purify pores.",
-        isNew: false
+        isNew: false,
+        ingredients: ["Rose water", "Chamomile extract", "Glycerin", "Aloe vera"],
+        howToUse: "Apply a thin layer to clean, dry skin, avoiding the eye area. Leave on for 10-15 minutes until completely dry, then rinse with warm water."
     },
     {
         id: 5,
@@ -49,7 +58,10 @@ const products = [
         image: "img/Midnight_Recovery_Oil.jpg",
         description: "Regenerating night oil to wake up with rested skin.",
         isNew: false,
-        isBestseller: true
+        isBestseller: true,
+        ingredients: ["Rose water", "Chamomile extract", "Glycerin", "Aloe vera"],
+
+        howToUse: "Apply a few drops to the face and neck after cleansing and serum application. Gently pat until fully absorbed. Use at night for optimal results."
     },
     {
         id: 6,
@@ -59,7 +71,10 @@ const products = [
         skinType: "Combination",
         image: "img/Ocean_Mist_Toner.jpeg",
         description: "Refreshing toner with marine extracts and brown algae.",
-        isNew: true
+        isNew: true,
+        ingredients: ["Rose water", "Chamomile extract", "Glycerin", "Aloe vera"],
+        howToUse: "After cleansing, spray the toner onto the face and neck or apply with a cotton pad. Use morning and evening before serum and moisturizer."
+
     },
     {
         id: 7,
@@ -70,7 +85,9 @@ const products = [
         image: "img/retinol_Alternative_Cream.jpg",
         description: "Natural anti-aging treatment with Bakuchiol.",
         isNew: false,
-        isBestseller: true
+        isBestseller: true,
+        ingredients: ["Rose water", "Chamomile extract", "Glycerin", "Aloe vera"],
+        howToUse: "Apply a small amount to the face and neck in the evening after cleansing and serum application. Use 2-3 times a week, gradually increasing frequency as tolerated."
     },
     {
         id: 8,
@@ -80,7 +97,9 @@ const products = [
         skinType: "All types",
         image: "img/DailySun_Shield_SPF50.jpg",
         description: "Invisible, non-greasy mineral sun protection.",
-        isNew: true
+        isNew: true,
+        ingredients: ["Rose water", "Chamomile extract", "Glycerin", "Aloe vera"],
+        howToUse: "Apply generously to the face and neck 15 minutes before sun exposure. Reapply every 2 hours, or immediately after swimming or sweating."
     },
     {
         id: 9,
@@ -90,7 +109,9 @@ const products = [
         skinType: "Combination",
         image: "img/bamboo_exfoliating_scrub.jpg",
         description: "Bamboo micro-granules for gentle mechanical exfoliation.",
-        isNew: false
+        isNew: false,
+        ingredients: ["Rose water", "Chamomile extract", "Glycerin", "Aloe vera"],
+        howToUse: "Apply a small amount to damp skin, massage gently in circular motions for 30 seconds, then rinse thoroughly with lukewarm water. Use 1-2 times per week."
     },
     {
         id: 10,
@@ -100,7 +121,9 @@ const products = [
         skinType: "Dry",
         image: "img/Hyaluronic_Acid_Booster.jpg",
         description: "Pure hydration concentrate to plump the skin tissues.",
-        isNew: false
+        isNew: false,
+        ingredients: ["Rose water", "Chamomile extract", "Glycerin", "Aloe vera"],
+        howToUse: "Apply 2-3 drops to the face and neck after cleansing and toning. Gently pat until fully absorbed. Follow with moisturizer for enhanced hydration."
     },
     {
         id: 11,
@@ -110,7 +133,9 @@ const products = [
         skinType: "Sensitive",
         image: "img/calm_chamomile_eye.jpg",
         description: "Soothing eye contour balm with chamomile and blueberry.",
-        isNew: false
+        isNew: false,
+        ingredients: ["Rose water", "Chamomile extract", "Glycerin", "Aloe vera"],
+        howToUse: "Apply a small amount to the ring finger and gently pat around the eye contour area, avoiding direct contact with the eyes. Use morning and evening for best results."
     },
     {
         id: 12,
@@ -121,7 +146,10 @@ const products = [
         image: "img/Niacinamide_pore_Shrinker.jpg",
         description: "Specific treatment to reduce enlarged pores and excess sebum.",
         isNew: false,
-        isBestseller: true
+        isBestseller: true,
+        ingredients: ["Rose water", "Chamomile extract", "Glycerin", "Aloe vera"],
+        howToUse: "Apply 2-3 drops to the face and neck after cleansing and toning. Gently pat until fully absorbed. Use morning and evening for optimal results."
+
     },
     {
         id: 13,
@@ -131,7 +159,9 @@ const products = [
         skinType: "Combination",
         image: "img/Matcha_Tea_GlowMask.jpg",
         description: "Antioxidant matcha tea mask to brighten the face.",
-        isNew: true
+        isNew: true,
+        ingredients: ["Rose water", "Chamomile extract", "Glycerin", "Aloe vera"],
+        howToUse: "Apply a generous layer to clean, dry skin, avoiding the eye area. Leave on for 10-15 minutes, then rinse with warm water. Use 1-2 times per week for best results."
     },
     {
         id: 14,
@@ -141,7 +171,9 @@ const products = [
         skinType: "Sensitive",
         image: "img/Lavander_Sleeping_faceOil.jpg",
         description: "Relaxing lavender oil to nourish the skin while you sleep.",
-        isNew: false
+        isNew: false,
+        ingredients: ["Rose water", "Chamomile extract", "Glycerin", "Aloe vera"],
+        howToUse: "Apply a few drops to the face and neck after cleansing and serum application. Gently pat until fully absorbed. Use at night for optimal results."
     },
     {
         id: 15,
@@ -151,7 +183,9 @@ const products = [
         skinType: "Oily",
         image: "img/Citrus_Refreshing_Foam.jpg",
         description: "Energizing cleansing mousse with Sicilian citrus fruits.",
-        isNew: false
+        isNew: false,
+        ingredients: ["Rose water", "Chamomile extract", "Glycerin", "Aloe vera"],
+        howToUse: "Pump a small amount of foam into the hands and apply to damp skin. Massage gently in circular motions, then rinse thoroughly with lukewarm water. Use morning and evening for best results."
     },
     {
         id: 16,
@@ -161,7 +195,9 @@ const products = [
         skinType: "Mature",
         image: "img/Peptide_Firming_Cream.jpg",
         description: "Firming cream with plant peptides for a lifting effect.",
-        isNew: true
+        isNew: true,
+        ingredients: ["Rose water", "Chamomile extract", "Glycerin", "Aloe vera"],
+        howToUse: "Apply a generous amount to the face and neck after cleansing and serum application. Use morning and night for optimal firming results."
     },
     {
         id: 17,
@@ -171,7 +207,9 @@ const products = [
         skinType: "All types",
         image: "img/Priobiotic_Balacing_Mist.jpg",
         description: "Probiotic spray mist to balance the skin microbiome.",
-        isNew: false
+        isNew: false,
+        ingredients: ["Rose water", "Chamomile extract", "Glycerin", "Aloe vera"],
+        howToUse: "After cleansing, spray the mist onto the face and neck or apply with a cotton pad. Use morning and evening before serum and moisturizer to help balance the skin's microbiome."
     },
     {
         id: 18,
@@ -181,7 +219,9 @@ const products = [
         skinType: "Mature",
         image: "img/gold_infused_SheetMask.jpg",
         description: "Single-use sheet mask with gold particles and collagen.",
-        isNew: false
+        isNew: false,
+        ingredients: ["Rose water", "Chamomile extract", "Glycerin", "Aloe vera"],
+        howToUse: "Unfold the sheet mask and apply it to clean, dry skin, aligning with the eyes, nose, and mouth. Leave on for 15-20 minutes, then remove and gently pat any remaining serum into the skin. Use as needed for an instant boost of radiance."
     },
     {
         id: 19,
@@ -191,7 +231,9 @@ const products = [
         skinType: "Sensitive",
         image: "img/nature-republic-soothing-amp-moisture-aloe-vera-92-soothing-gel.jpg",
         description: "Soothing multipurpose gel for post-sun exposure or irritation.",
-        isNew: false
+        isNew: false,
+        ingredients: ["Rose water", "Chamomile extract", "Glycerin", "Aloe vera"],
+        howToUse: "Apply a generous amount to the face and body as needed, especially after sun exposure or when the skin feels irritated. Can be used as a lightweight moisturizer or a soothing mask by applying a thicker layer and leaving it on for 10-15 minutes before rinsing."
     },
     {
         id: 20,
@@ -201,6 +243,8 @@ const products = [
         skinType: "Dry",
         image: "img/SqualoneFacialOil.jpg",
         description: "Pure olive-derived squalane for hydration without weight.",
-        isNew: false
+        isNew: false,
+        ingredients: ["Rose water", "Chamomile extract", "Glycerin", "Aloe vera"],
+        howToUse: "Apply a few drops to the face and neck after cleansing and serum application. Gently pat until fully absorbed. Use morning and night for optimal hydration without clogging pores."
     }
 ];
