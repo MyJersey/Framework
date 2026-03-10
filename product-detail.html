@@ -105,7 +105,7 @@
             const container = document.getElementById('product-detail-container');
             const product = products.find(p => p.id == productId);
 
-            // 1. Aggiorna Navbar (Badge e Nome Utente)
+            
             updateCartBadge();
 
             // 2. Renderizza Dettaglio Prodotto
@@ -166,7 +166,7 @@
 
             });
 
-        // Funzione dedicata alla pagina dettaglio per mostrare l'alert
+        
         function addToCartDetail(id) {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -184,7 +184,7 @@
                 }
             }
             localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartBadge(); // Aggiorna il badge nella navbar subito
+            updateCartBadge(); 
             alert("Wonderful choice! The product has been added to your cart.");
         }
     </script>

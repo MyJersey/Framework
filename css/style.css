@@ -24,7 +24,7 @@ h3,
 /* Hero Section */
 .hero-section {
     background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
-        url("https://i.postimg.cc/kG77KdhM/Forest-Natural-Skincare-Hero-Image-1.webp") center/cover;
+        url("../img/Forest-Natural-Skincare-Hero-Image-1..jpg") center/cover;
     height: 70vh;
     display: flex;
     align-items: center;

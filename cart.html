@@ -139,7 +139,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             renderCart();
-            // Richiama la funzione universale per mostrare il nome/logout
+            
             if (typeof updateCartBadge === 'function') {
                 updateCartBadge();
             }
@@ -194,7 +194,7 @@
             totalDisplay.innerText = `€ ${total.toFixed(2)}`;
             finalTotalDisplay.innerText = `€ ${total.toFixed(2)}`;
 
-            // Aggiorna anche il badge nella navbar
+            
             const badge = document.getElementById('cart-badge');
             if (badge) badge.innerText = totalItems;
         }

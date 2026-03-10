@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const productGrid = document.getElementById('productGrid');
     const categoryFilter = document.getElementById('categoryFilter');
-    const skinFilters = document.querySelectorAll('.skin-filter'); // Selects all checkboxes
-    const collectionFilters = document.querySelectorAll('.collection-filter'); // Selects collections (Bestsellers, New)
+    const skinFilters = document.querySelectorAll('.skin-filter'); 
+    const collectionFilters = document.querySelectorAll('.collection-filter'); 
     updateCartBadge();
 
     function displayProducts(filteredProducts) {
@@ -46,19 +46,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const filtered = products.filter(product => {
             const matchCategory = selectedCategory === 'all' || selectedCategory === 'All' || product.category === selectedCategory;
 
-            // Logic: If no checkboxes are selected, show all. 
-            // Otherwise, show if product matches selected skin type OR is suitable for "All types"
             const matchSkin = activeSkinFilters.length === 0 ||
                 activeSkinFilters.includes(product.skinType) ||
                 product.skinType === "All types";
 
             let matchCollection = true;
             if (activeCollectionFilters.length > 0) {
-                // Se c'è almeno un filtro collection attivo, il prodotto deve rispettarlo
                 const isBestsellerChecked = activeCollectionFilters.includes('bestsellers');
                 const isNewChecked = activeCollectionFilters.includes('new');
 
-                // Può soddisfare ENTRAMBI o ALMENO UNO dei criteri selezionati (unione logica)
                 matchCollection = false;
                 if (isBestsellerChecked && product.isBestseller) matchCollection = true;
                 if (isNewChecked && product.isNew) matchCollection = true;
@@ -70,9 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         displayProducts(filtered);
     }
 
-    // Initialization
     if (productGrid) {
-        // Event listeners based on existence
         if (categoryFilter) {
             categoryFilter.addEventListener('change', filterProducts);
         }
@@ -87,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Auto-apply filters on load from URL (es. shop.html?filter=bestsellers)
         const urlParams = new URLSearchParams(window.location.search);
         const filterParam = urlParams.get('filter');
         if (filterParam === 'bestsellers') {
@@ -102,7 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Call filter once initially to apply URL params or default view
         filterProducts();
     }
     updateCartBadge();
@@ -134,7 +126,6 @@ function addToCart(event, id) {
 
 
 function updateCartBadge() {
-    // 1. Gestione del numero nel Carrello
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const badge = document.getElementById('cart-badge');
     if (badge) {
@@ -142,34 +133,28 @@ function updateCartBadge() {
         badge.innerText = totalItems;
     }
 
-    // 2. Gestione della Navbar (Login vs Saluto)
     const user = localStorage.getItem('userName');
     const loginIcon = document.getElementById('login-icon');
     const greeting = document.getElementById('user-greeting');
 
     if (user && greeting && loginIcon) {
-        // Se l'utente è loggato
-        loginIcon.style.setProperty('display', 'none', 'important'); // Nasconde l'icona omino
-        greeting.style.display = 'block'; // Mostra il contenitore del saluto
+        loginIcon.style.setProperty('display', 'none', 'important'); 
+        greeting.style.display = 'block'; 
 
-        // Inseriamo il nome con un cursore a puntatore per far capire che è cliccabile (per il logout)
         greeting.innerHTML = `
             <span class="text-success fw-bold" style="cursor: pointer;" onclick="logoutUser()">
                 Hi, ${user}
             </span>`;
     } else if (loginIcon && greeting) {
-        // Se non c'è nessun utente loggato
         loginIcon.style.display = 'block';
         greeting.style.display = 'none';
         greeting.innerHTML = '';
     }
 }
 
-// Funzione di Logout per pulire il localStorage e resettare la vista
 function logoutUser() {
     if (confirm("Do you want to log out?")) {
         localStorage.removeItem('userName');
-        // Ricarichiamo la pagina per aggiornare la navbar istantaneamente
         window.location.reload();
     }
 }
