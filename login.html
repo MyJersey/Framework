@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- login.html — Simulated login page.
+     Accepts any name and any password; stores the entered name in localStorage
+     as 'userName' and redirects to the home page. No real authentication is performed. -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | Natural Skincare</title>
+    <!-- Bootstrap CSS for layout and form components -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons icon font -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Google Fonts: Playfair Display and Inter -->
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap"
         rel="stylesheet">
+    <!-- Site-wide custom styles -->
     <link rel="stylesheet" href="css/style.css">
     <style>
+        /* Centres the login card vertically and limits its width */
         .login-container {
             max-width: 400px;
             margin: 100px auto;
@@ -24,6 +32,7 @@
 
 <body class="bg-light">
 
+    <!-- Navbar placeholder — filled dynamically by loader.js -->
     <div id="nav"></div>
 
     <div class="container">
@@ -31,6 +40,7 @@
             <h2 class="text-center fw-bold mb-4">Welcome Back</h2>
             <p class="text-center text-muted mb-4">Please enter your name to start shopping</p>
 
+            <!-- Login form: any name (≥ 2 characters) and any password are accepted -->
             <form id="loginForm">
                 <div class="mb-3">
                     <label for="username" class="form-label">Full Name</label>
@@ -52,6 +62,7 @@
             </div>
         </div>
     </div>
+    <!-- Load shared layout loader (navbar/footer), product catalog, and shop utilities -->
     <script src="js/loader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/product.js"></script>
@@ -62,15 +73,16 @@
 
             const nameInput = document.getElementById('username').value.trim();
 
+            // Reject names that are too short to be valid.
             if (nameInput.length < 2) {
                 alert("Please enter a valid name.");
                 return;
             }
 
-            
+            // Persist the user's name so the navbar can display a personalised greeting.
             localStorage.setItem('userName', nameInput);
 
-            
+            // Redirect to the home page after a successful "login".
             window.location.href = 'index.html';
         });
 

@@ -1,3 +1,16 @@
+// Product catalog — each object represents a single product available in the shop.
+// Fields:
+//   id          — unique numeric identifier used to look up the product
+//   name        — display name shown on cards and the detail page
+//   price       — price in euros
+//   category    — product type (Cleansers, Serums, Creams, Masks)
+//   skinType    — the skin type this product is designed for
+//   image       — path to the product image file
+//   description — short marketing description shown on the detail page
+//   isNew       — true when the product should appear in the "New Arrivals" section
+//   isBestseller — true when the product should appear in the "Bestsellers" section
+//   ingredients — ordered list of key ingredients
+//   howToUse    — application instructions shown on the detail page
 const products = [
     {
         id: 1,

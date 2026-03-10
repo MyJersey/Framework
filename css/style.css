@@ -1,19 +1,23 @@
-/* Variables */
+/* ============================================================
+   style.css — Main stylesheet for the Natural Skincare website
+   ============================================================ */
+
+/* CSS custom properties (variables) shared across the entire stylesheet */
 :root {
     --dark-green: #1b3022;
     --cream: #f9f8f3;
     --text-muted: #6c757d;
 }
 
-/* Base Styles */
+/* Base Styles — applied to every page */
 body {
     font-family: 'Inter', sans-serif;
     background-color: #ffffff;
     color: var(--dark-green);
-    overflow-x: hidden;
-    /* Evita scroll orizzontale */
+    overflow-x: hidden; /* Prevent horizontal scrollbar on all screen sizes */
 }
 
+/* Use the serif Playfair Display font for all headings and the brand name */
 h1,
 h2,
 h3,
@@ -21,7 +25,7 @@ h3,
     font-family: 'Playfair Display', serif;
 }
 
-/* Hero Section */
+/* Hero Section — full-width banner shown at the top of the home page */
 .hero-section {
     background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
         url("../img/Forest-Natural-Skincare-Hero-Image-1..jpg") center/cover;
@@ -33,12 +37,13 @@ h3,
     text-align: center;
 }
 
-/* Features Section */
+/* Features Section — three-column icon row below the hero */
 .features {
     background-color: var(--cream);
     padding: 100px 0;
 }
 
+/* Size and colour for the Lucide SVG icons in the features row */
 .feature-icon {
     width: 42px;
     height: 42px;
@@ -47,28 +52,29 @@ h3,
     margin-bottom: 15px;
 }
 
-/* Product Cards */
+/* Product Cards — used in the shop grid and home-page sections */
 .product-card {
     border: none;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     background-color: var(--cream);
-    border-radius: 0;
-    /* Design più moderno/luxury */
+    border-radius: 0; /* Sharp corners for a modern / luxury look */
     cursor: pointer;
     height: 100%;
 }
 
+/* Lift the card upwards and deepen the shadow on hover */
 .product-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
 }
 
+/* Ensure the "New" badge is always visible on top of the product image */
 .product-card .badge {
-    /* Assicura che la label "New in" sia sempre visibile */
     opacity: 1 !important;
     visibility: visible !important;
 }
 
+/* Wrapper that gives the product image a consistent portrait-ratio frame */
 .product-img-wrapper {
     background-color: #fff;
     padding: 20px;
@@ -81,13 +87,14 @@ h3,
     position: relative;
 }
 
+/* Scale the image smoothly when the card is hovered */
 .product-img-wrapper img {
     max-height: 100%;
     object-fit: contain;
     transition: transform 0.6s ease;
 }
 
-/* Buttons */
+/* Buttons — custom dark-green outlined button variant */
 .btn-outline-dark-green {
     border: 1px solid var(--dark-green);
     color: var(--dark-green);
@@ -100,23 +107,26 @@ h3,
     transition: 0.3s;
 }
 
+/* Fill the button with the dark-green background on hover */
 .btn-outline-dark-green:hover {
     background-color: var(--dark-green);
     color: white;
 }
 
-/* Footer */
+/* Footer — dark green background with muted white text */
 footer {
     background-color: var(--dark-green);
     color: rgba(255, 255, 255, 0.6);
     padding: 80px 0 40px;
 }
 
+/* Give footer headings a slight letter-spacing for a premium feel */
 footer h4,
 footer h6 {
     letter-spacing: 1px;
 }
 
+/* Footer links — subtle colour with a slide-right hover effect */
 .footer-link {
     color: rgba(255, 255, 255, 0.6);
     text-decoration: none;
@@ -130,13 +140,13 @@ footer h6 {
     transform: translateX(5px);
 }
 
-
+/* Cap the width of full-width containers to avoid overly long lines on very wide screens */
 .container-fluid {
     max-width: 1920px;
     margin: 0 auto;
 }
 
-/* Responsive fixes */
+/* Responsive fixes — remove the vertical borders in the features row on small screens */
 @media (max-width: 991px) {
 
     .features .border-start,

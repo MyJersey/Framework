@@ -1,23 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- returns.html — Returns & Refunds policy page.
+     Explains the 30-day return guarantee, the three-step return process,
+     and any exceptions that apply. -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Returns & Refunds | Natural Skincare</title>
 
+    <!-- Bootstrap CSS for responsive layout -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts: Playfair Display and Inter -->
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap"
         rel="stylesheet">
+    <!-- Bootstrap Icons icon font (used for the numbered step icons) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Site-wide custom styles -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
+    <!-- Navbar placeholder — filled dynamically by loader.js -->
    <div id="nav"></div>
 
+    <!-- Page header: title and subtitle -->
     <header class="py-5 bg-light text-center">
         <div class="container py-4">
             <h1 class="display-3 fw-bold mb-3">Returns & Refunds</h1>
@@ -27,11 +36,13 @@
     </header>
 
     <div class="container my-5 py-5 max-w-lg mx-auto" style="max-width: 800px;">
+        <!-- 30-day guarantee description -->
         <h3 class="fw-bold mb-4">Our 30-Day Guarantee</h3>
         <p class="text-muted mb-5">We stand behind the quality of our botanical formulas. If you try a product and it
             isn't the perfect fit for your skin, you can return it within 30 days of purchase for a full refund or
             exchange, even if it's been gently used.</p>
 
+        <!-- Three-step return process: Contact → Get Label → Receive Refund -->
         <div class="row g-4 mb-5">
             <div class="col-md-4 text-center">
                 <div class="bg-light p-4 rounded h-100 border">
@@ -60,6 +71,7 @@
             </div>
         </div>
 
+        <!-- Policy exceptions and fine-print details -->
         <h4 class="fw-bold mt-5 mb-3">Exceptions & Details</h4>
         <ul class="text-muted">
             <li class="mb-2">Original shipping costs are non-refundable.</li>
@@ -70,17 +82,21 @@
         </ul>
     </div>
 
+    <!-- Footer placeholder — filled dynamically by loader.js -->
     <div id="footer"></div>
+    <!-- Load shared layout loader, product catalog, and shop utilities -->
     <script src="js/loader.js"></script>
     <script src="js/product.js"></script>
     <script src="js/shop.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Update the cart badge in the navbar after the page finishes loading.
             if (typeof updateCartBadge === 'function') {
                 updateCartBadge();
             }
         });
     </script>
+    <!-- Bootstrap JS bundle required for responsive navbar toggler -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

@@ -1,44 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- product-detail.html — Individual product detail page.
+     Reads the selected product ID from localStorage (set by goToDetail() in shop.js),
+     finds the matching product in the catalog, and renders full details:
+     image, name, price, description, skin type, ingredients, how-to-use, and an add-to-cart button. -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Details | Natural Skincare</title>
+    <!-- Bootstrap CSS for responsive layout -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts: Playfair Display and Inter -->
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap"
         rel="stylesheet">
+    <!-- Bootstrap Icons icon font -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
+    <!-- Site-wide custom styles -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
+    <!-- Navbar placeholder — filled dynamically by loader.js -->
     <div id="nav"></div>
 
     <div class="container my-5 py-5">
+        <!-- Product detail layout is injected here by the inline script below -->
         <div class="row" id="product-detail-container">
         </div>
     </div>
 
+    <!-- Footer placeholder — filled dynamically by loader.js -->
     <div id = "footer"></div>
 
 
+    <!-- Load shared layout loader, product catalog, and shop utilities -->
     <script src="js/loader.js"></script>
     <script src="js/product.js"></script>
     <script src="js/shop.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Retrieve the product ID that was stored in localStorage when the user clicked a product card.
             const productId = localStorage.getItem('selectedProductId');
             const container = document.getElementById('product-detail-container');
             const product = products.find(p => p.id == productId);
 
-            
+            // Refresh the cart badge in the navbar.
             updateCartBadge();
 
-            // 2. Renderizza Dettaglio Prodotto
+            // Render the product detail layout if a matching product is found.
            if (product) {
     container.innerHTML = `
     <div class="col-md-6 mb-4 text-center">
@@ -47,6 +60,7 @@
         </div>
     </div>
     <div class="col-md-6 px-lg-5">
+        <!-- Breadcrumb navigation: links back to the shop -->
         <nav aria-label="breadcrumb" class="mb-4">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="shop.html" class="text-decoration-none text-muted">Shop</a></li>
@@ -57,6 +71,7 @@
         <h2 class="text-success mb-4 fw-light">€ ${product.price.toFixed(2)}</h2>
         <p class="lead text-muted mb-4">${product.description}</p>
         
+        <!-- Skin type highlight block -->
         <div class="p-3 bg-light border-start border-4 border-success mb-4">
             <small class="text-uppercase fw-bold text-muted d-block">Ideal for:</small>
             <span class="fs-5">${product.skinType} Skin</span>
@@ -80,6 +95,7 @@
             </p>
         </div>
 
+        <!-- Quantity selector: allows the user to choose how many units to add -->
         <div class="d-flex align-items-center mb-4 gap-3">
             <label for="detail-qty" class="fw-bold mb-0">Quantity:</label>
             <input type="number" id="detail-qty" class="form-control rounded-0 text-center" value="1" min="1" max="10" style="width: 80px;">
@@ -91,15 +107,19 @@
     </div>
     `;
 } else {
+    // Show a fallback message if no product ID was found or the ID is invalid.
     container.innerHTML = "<div class='text-center py-5'><h2>Product not found.</h2><a href='shop.html' class='btn btn-outline-dark mt-3'>Back to Shop</a></div>";
 }
 
             });
 
         
+        // Adds the displayed product to the cart with the quantity chosen by the user.
+        // If the product is already in the cart, its quantity is incremented instead of adding a duplicate.
         function addToCartDetail(id) {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+            // Read the selected quantity from the number input; default to 1 if missing or invalid.
             const qtyInput = document.getElementById('detail-qty');
             const quantityToAdd = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
 
