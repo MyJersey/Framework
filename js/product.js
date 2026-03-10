@@ -7,7 +7,9 @@ const products = [
         skinType: "Sensitive",
         image: "img/GentleRose_Cleanser.jpg",
         description: "A delicate rose petal cleanser, perfect for skin that reddens easily.",
-        isNew: true
+        isNew: true,
+        ingredients: ["Rose centifolia oil, Allantoin", "Eriobotrya japonica extract", "Chondrus crispus extract", "Mild cleansing agents, Glycerin"],
+        howToUse: "Apply a small amount to damp skin and massage genlty to remove impuritises. Rinse thoroughly with water"
     },
     {
         id: 2,
