@@ -1,14 +1,21 @@
 // Detect a new Live Server session.
-// When Go Live restarts the server, sessionStorage is empty.
 if (!sessionStorage.getItem("liveServerSession")) {
 
-    // clear persistent memory ONLY once per Live Server start
-    localStorage.removeItem("cart");
-    localStorage.removeItem("selectedProductId");
+    // Controlliamo se esiste un utente loggato
+    const userIsLoggedIn = localStorage.getItem('userName');
 
+    // Se l'utente NON è loggato (userIsLoggedIn è null), svuotiamo il carrello
+    if (!userIsLoggedIn) {
+        localStorage.removeItem("cart");
+        localStorage.removeItem("selectedProductId");
+        console.log("Live Server: Nessun utente loggato, carrello resettato.");
+    } else {
+        console.log("Live Server: Utente " + userIsLoggedIn + " loggato, carrello mantenuto.");
+    }
+
+    // Segniamo che la sessione di Live Server è iniziata
     sessionStorage.setItem("liveServerSession", "true");
 }
-
 
 
 // Fetches an HTML file from the given URL and injects it into the element with the given ID.
