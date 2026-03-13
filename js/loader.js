@@ -1,3 +1,4 @@
+// Fetches an HTML file from the given URL and injects it into the element with the given ID.
 async function loadComponent(url, elementId) {
     const response = await fetch(url);
     if (!response.ok) {
@@ -7,12 +8,14 @@ async function loadComponent(url, elementId) {
     document.getElementById(elementId).innerHTML = html;
 }
 
+// Loads the shared navbar and footer components, then updates the cart badge and active nav link.
 async function initLayout() {
     await Promise.all([
         loadComponent('navbar.html', 'nav'),
         loadComponent('footer.html', 'footer')
     ]);
 
+    // Update the cart item count shown in the navbar badge after components are loaded.
     if (typeof updateCartBadge === 'function') {
         updateCartBadge();
     }
@@ -20,6 +23,7 @@ async function initLayout() {
     setActiveNavLink();
 }
 
+// Highlights the navbar link that matches the current page by adding the "active" class.
 function setActiveNavLink() {
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     document.querySelectorAll('#nav .nav-link').forEach(link => {
@@ -28,4 +32,5 @@ function setActiveNavLink() {
     });
 }
 
+// Initialise the shared layout (navbar + footer) once the DOM is fully loaded.
 document.addEventListener('DOMContentLoaded', initLayout);

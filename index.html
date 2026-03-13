@@ -1,24 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- index.html — Home page for the Natural Skincare e-commerce website.
+     Displays a hero banner, three feature highlights, and three product sections
+     (New Arrivals, Bestsellers, Featured Products) populated dynamically from product.js. -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Natural Skincare | Premium Organic Beauty</title>
 
+    <!-- Bootstrap CSS for responsive layout and utility classes -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts: Playfair Display (headings) and Inter (body text) -->
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap"
         rel="stylesheet">
+    <!-- Bootstrap Icons icon font -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Lucide icon library (used for feature section SVG icons) -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Site-wide custom styles -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
+    <!-- Navbar placeholder — filled dynamically by loader.js -->
     <div id="nav"></div>
 
+    <!-- Hero section: full-viewport banner with a call-to-action button -->
     <header class="hero-section">
         <div class="container">
             <h1 class="display-2 fw-bold mb-3">Natural Skincare</h1>
@@ -27,6 +37,7 @@
         </div>
     </header>
 
+    <!-- Features row: three brand value highlights with icons -->
     <section class="features text-center">
         <div class="container">
             <div class="row g-4 justify-content-center">
@@ -49,9 +60,11 @@
         </div>
     </section>
 
+    <!-- New Arrivals section: grid of products with isNew === true (max 4) -->
     <section class="py-5 bg-light" id="new-arrivals">
         <div class="container my-5">
             <h2 class="text-center mb-5 display-5 fw-bold">New Arrivals</h2>
+            <!-- Cards are injected here by the inline script below -->
             <div class="row g-4 justify-content-center" id="new-arrivals-grid">
             
             </div>
@@ -61,9 +74,11 @@
         </div>
     </section>
 
+    <!-- Bestsellers section: grid of products with isBestseller === true and isNew === false (max 4) -->
     <section class="py-5" id="bestsellers">
         <div class="container my-5">
             <h2 class="text-center mb-5 display-5 fw-bold">Bestsellers</h2>
+            <!-- Cards are injected here by the inline script below -->
             <div class="row g-4 justify-content-center" id="bestseller-grid">
                 
             </div>
@@ -73,9 +88,11 @@
         </div>
     </section>
 
+    <!-- Featured Products section: products that are neither New nor Bestsellers (max 4) -->
     <section class="py-5 bg-light" id="featured-products">
         <div class="container my-5">
             <h2 class="text-center mb-5 display-5 fw-bold">Featured Products</h2>
+            <!-- Cards are injected here by the inline script below -->
             <div class="row g-4 justify-content-center" id="featured-grid">
                 
             </div>
@@ -85,8 +102,13 @@
         </div>
     </section>
 
+    <!-- Footer placeholder — filled dynamically by loader.js -->
     <div id="footer"></div>
 
+<<<<<<< HEAD
+=======
+    <!-- Load the shared layout loader, product catalog, and shop utilities -->
+>>>>>>> sergio
     <script src="js/loader.js"></script>
     <script src="js/product.js"></script>
 
@@ -95,12 +117,13 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
+            // Initialise Lucide SVG icons after the DOM is ready.
             if (typeof lucide !== 'undefined') lucide.createIcons();
 
-            
+            // Refresh the cart badge in the navbar.
             updateCartBadge();
 
-            
+            // Populate the New Arrivals grid with up to 4 new products.
             const newArrivalsGrid = document.getElementById('new-arrivals-grid');
             if (newArrivalsGrid && typeof products !== 'undefined') {
                 const newArrivals = products.filter(p => p.isNew).slice(0, 4);
@@ -120,7 +143,7 @@
                 });
             }
 
-            
+            // Populate the Bestsellers grid with up to 4 bestseller-only products.
             const bestsellerGrid = document.getElementById('bestseller-grid');
             if (bestsellerGrid && typeof products !== 'undefined') {
                 const bestsellers = products.filter(p => p.isBestseller && !p.isNew).slice(0, 4);
@@ -139,6 +162,7 @@
                 });
             }
 
+            // Populate the Featured Products grid with up to 4 products that are neither new nor bestsellers.
             const featuredGrid = document.getElementById('featured-grid');
             if (featuredGrid && typeof products !== 'undefined') {
                 const featured = products.filter(p => !p.isBestseller && !p.isNew).slice(0, 4);
@@ -158,6 +182,7 @@
             }
         });
 
+        // Saves the clicked product's ID to localStorage and navigates to the detail page.
         function goToDetail(id) {
             localStorage.setItem('selectedProductId', id);
             window.location.href = 'product-detail.html';
@@ -166,6 +191,7 @@
         
     
     </script>
+    <!-- Bootstrap JS bundle (includes Popper) required for navbar toggler and other components -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
