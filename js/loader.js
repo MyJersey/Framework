@@ -1,22 +1,23 @@
 // Detect a new Live Server session.
+// When Live Server restarts or the tab is newly opened, sessionStorage is empty.
 if (!sessionStorage.getItem("liveServerSession")) {
 
-    // Controlliamo se esiste un utente loggato
+    // Check if a user is currently logged in by looking for 'userName' in localStorage.
     const userIsLoggedIn = localStorage.getItem('userName');
 
-    // Se l'utente NON è loggato (userIsLoggedIn è null), svuotiamo il carrello
+    // If NO user is logged in (userIsLoggedIn is null), reset the cart data.
     if (!userIsLoggedIn) {
         localStorage.removeItem("cart");
         localStorage.removeItem("selectedProductId");
-        console.log("Live Server: Nessun utente loggato, carrello resettato.");
+        console.log("Live Server: No user logged in, cart has been reset.");
     } else {
-        console.log("Live Server: Utente " + userIsLoggedIn + " loggato, carrello mantenuto.");
+        // If a user is logged in, preserve the cart data for a seamless experience.
+        console.log("Live Server: User '" + userIsLoggedIn + "' is logged in, cart preserved.");
     }
 
-    // Segniamo che la sessione di Live Server è iniziata
+    // Mark the Live Server session as initialized to prevent resets on simple page refreshes.
     sessionStorage.setItem("liveServerSession", "true");
 }
-
 
 // Fetches an HTML file from the given URL and injects it into the element with the given ID.
 async function loadComponent(url, elementId) {

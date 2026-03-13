@@ -180,6 +180,8 @@ function updateCartBadge() {
 function logoutUser() {
     if (confirm("Do you want to log out?")) {
         localStorage.removeItem('userName');
+        localStorage.removeItem('cart'); 
         window.location.reload();
     }
 }
+
