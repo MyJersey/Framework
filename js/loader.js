@@ -1,3 +1,16 @@
+// Detect a new Live Server session.
+// When Go Live restarts the server, sessionStorage is empty.
+if (!sessionStorage.getItem("liveServerSession")) {
+
+    // clear persistent memory ONLY once per Live Server start
+    localStorage.removeItem("cart");
+    localStorage.removeItem("selectedProductId");
+
+    sessionStorage.setItem("liveServerSession", "true");
+}
+
+
+
 // Fetches an HTML file from the given URL and injects it into the element with the given ID.
 async function loadComponent(url, elementId) {
     const response = await fetch(url);
