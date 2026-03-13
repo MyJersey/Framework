@@ -1,23 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- shipping.html — Shipping policy page.
+     Lists domestic and international shipping options, estimated delivery times, costs,
+     and the brand's eco-packaging commitment. -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shipping Policy | Natural Skincare</title>
 
+    <!-- Bootstrap CSS for responsive layout and table styling -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts: Playfair Display and Inter -->
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap"
         rel="stylesheet">
+    <!-- Bootstrap Icons icon font (used for the packaging icon) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Site-wide custom styles -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
+    <!-- Navbar placeholder — filled dynamically by loader.js -->
     <div id="nav"></div>
 
+    <!-- Page header: title and subtitle -->
     <header class="py-5 bg-light text-center">
         <div class="container py-4">
             <h1 class="display-3 fw-bold mb-3">Shipping Rates & Policies</h1>
@@ -27,6 +36,7 @@
     </header>
 
     <div class="container my-5 py-5 max-w-lg mx-auto" style="max-width: 800px;">
+        <!-- Domestic shipping options table -->
         <h3 class="fw-bold mb-4">Domestic Shipping Options</h3>
         <p class="text-muted mb-4">We ship all domestic orders via eco-friendly carriers to ensure the lowest carbon
             footprint possible. You will receive a tracking number as soon as your order leaves our warehouse.</p>
@@ -53,6 +63,7 @@
             </tbody>
         </table>
 
+        <!-- International shipping options list -->
         <h3 class="fw-bold mb-4">International Shipping</h3>
         <p class="text-muted mb-4">We are thrilled to send our skincare across Europe and select international
             destinations. Delivery times and customs duties may vary based on your location.</p>
@@ -76,6 +87,7 @@
             </li>
         </ul>
 
+        <!-- Eco-packaging commitment callout box -->
         <div class="p-4 bg-light border-start border-4 border-success mt-4">
             <h5 class="fw-bold"><i class="bi bi-box-seam text-success me-2"></i> Our Packaging Commitment</h5>
             <p class="text-muted mb-0 mt-2">All our shipping materials are composed of 100% recycled fibers and are
@@ -83,18 +95,22 @@
         </div>
     </div>
 
+    <!-- Footer placeholder — filled dynamically by loader.js -->
     <div id="footer"></div>
-    <script src="loader.js"></script>
+    <!-- Load shared layout loader, product catalog, and shop utilities -->
+    <script src="js/loader.js"></script>
 
     <script src="js/product.js"></script>
     <script src="js/shop.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Update the cart badge in the navbar after the page finishes loading.
             if (typeof updateCartBadge === 'function') {
                 updateCartBadge();
             }
         });
     </script>
+    <!-- Bootstrap JS bundle required for responsive navbar toggler -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

@@ -1,27 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- cart.html — Shopping cart page.
+     Displays all items currently stored in localStorage, allows quantity adjustments,
+     removal of items, and a simulated checkout flow. -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Cart | Natural Skincare</title>
+    <!-- Bootstrap CSS for responsive layout and table styling -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons icon font (used for the trash icon on remove buttons) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Google Fonts: Playfair Display and Inter -->
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap"
         rel="stylesheet">
+    <!-- Site-wide custom styles -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-
+    <!-- Navbar placeholder — filled dynamically by loader.js -->
     <div id="nav"></div>
 
     <div class="container my-5 py-5">
         <h2 class="display-5 mb-5">Your Shopping Cart</h2>
 
         <div class="row">
+            <!-- Left column: cart items table -->
             <div class="col-lg-8">
                 <div class="table-responsive">
                     <table class="table align-middle">
@@ -33,12 +41,14 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
+                        <!-- Cart rows are injected here by renderCart() -->
                         <tbody id="cart-items-container">
                         </tbody>
                     </table>
                 </div>
             </div>
 
+            <!-- Right column: order summary and checkout button -->
             <div class="col-lg-4">
                 <div class="p-4 bg-light border">
                     <h4 class="fw-bold mb-4">Summary</h4>
@@ -61,15 +71,18 @@
         </div>
     </div>
 
-        <div id="footer"></div>
+    <!-- Footer placeholder — filled dynamically by loader.js -->
+    <div id="footer"></div>
         
-        <script src="loader.js"></script>
+    <!-- Load shared layout loader, product catalog, and shop utilities -->
+    <script src="js/loader.js"></script>
 
     <script src="js/product.js"></script>
     <script src="js/shop.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Render the cart table and update the navbar badge on page load.
             renderCart();
             
             if (typeof updateCartBadge === 'function') {
@@ -77,6 +90,8 @@
             }
         });
 
+        // Reads the cart from localStorage and rebuilds the entire table,
+        // recalculating the subtotal and updating both total display elements.
         function renderCart() {
             const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
             const container = document.getElementById('cart-items-container');
@@ -88,6 +103,7 @@
             let totalItems = 0;
 
             if (cartItems.length === 0) {
+                // Show an empty-state message with a link back to the shop.
                 container.innerHTML = '<tr><td colspan="4" class="text-center py-5">Your cart is empty. <a href="shop.html">Back to shop</a></td></tr>';
             } else {
                 cartItems.forEach((product, index) => {
@@ -107,6 +123,7 @@
                             </td>
                             <td>€ ${product.price.toFixed(2)}</td>
                             <td>
+                                <!-- Quantity controls: decrementing to 0 removes the item -->
                                 <div class="btn-group btn-group-sm" role="group">
                                     <button type="button" class="btn btn-outline-secondary" onclick="updateQuantity(${index}, -1)">-</button>
                                     <button type="button" class="btn btn-outline-secondary px-3" disabled>${quantity}</button>
@@ -114,6 +131,7 @@
                                 </div>
                             </td>
                             <td>
+                                <!-- Remove button: deletes the item from the cart entirely -->
                                 <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${index})" title="Remove item">
                                     <i class="bi bi-trash"></i>
                                 </button>
@@ -126,11 +144,13 @@
             totalDisplay.innerText = `€ ${total.toFixed(2)}`;
             finalTotalDisplay.innerText = `€ ${total.toFixed(2)}`;
 
-            
+            // Sync the navbar badge with the updated item count.
             const badge = document.getElementById('cart-badge');
             if (badge) badge.innerText = totalItems;
         }
 
+        // Adjusts the quantity of a cart item by the given change (+1 or -1).
+        // Removes the item automatically if the resulting quantity would drop below 1.
         function updateQuantity(index, change) {
             let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
             let currentQuantity = cartItems[index].quantity || 1;
@@ -147,6 +167,7 @@
             if (typeof updateCartBadge === 'function') updateCartBadge();
         }
 
+        // Removes the item at the given index from the cart and re-renders the table.
         function removeFromCart(index) {
             let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
             cartItems.splice(index, 1);
@@ -154,6 +175,8 @@
             renderCart();
         }
 
+        // Simulates the checkout process: validates the cart is not empty,
+        // shows a confirmation message, clears the cart, and refreshes the view.
         function checkout() {
             if ((JSON.parse(localStorage.getItem('cart')) || []).length === 0) {
                 alert("Your cart is empty!");
@@ -164,6 +187,7 @@
             renderCart();
         }
     </script>
+    <!-- Bootstrap JS bundle required for responsive navbar toggler -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
