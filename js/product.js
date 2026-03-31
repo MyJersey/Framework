@@ -1,3 +1,9 @@
+/**
+ * product.js
+ * Product catalog data contains all 20 products with their details:
+ * name, price, category, skin type, ingredients, etc.
+ */
+
 const products = [
     {
         id: 1,

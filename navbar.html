@@ -1,11 +1,12 @@
-<!-- navbar.html — Shared navigation bar loaded into every page by loader.js.
-     Contains the brand logo, main navigation links, a login/user-greeting icon, and a cart badge. -->
+<!-- navbar.html
+     Shared navigation bar loaded into every page by loader.js
+-->
 <nav id="nav" class="navbar navbar-expand-lg navbar-light bg-white py-3 sticky-top shadow-sm">
         <div class="container-fluid px-lg-5">
-            <!-- Brand logo / home link -->
+            <!-- Brand logo -->
             <a class="navbar-brand fs-3 m-0" href="index.html">Natural Skincare</a>
 
-            <!-- Collapsible navigation links (collapses to a hamburger menu on small screens) -->
+            <!-- Collapse menu to an hamburger menu on small screens -->
             <div class="collapse navbar-collapse justify-content-center order-lg-2" id="navbarNav">
                 <ul class="navbar-nav gap-3">
                     <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
@@ -15,14 +16,14 @@
                 </ul>
             </div>
 
-            <!-- Right-side icons: login/greeting, cart badge, and hamburger toggle -->
+            <!-- Right-side icons -->
             <div class="d-flex align-items-center gap-3 order-lg-3 ms-auto ms-lg-0">
-                <!-- Login icon: hidden when a user is logged in (replaced by the greeting below) -->
+                <!-- Login icon is replaced by the greeting -->
                 <a href="login.html" class="text-dark" id="login-icon">
                     <i class="bi bi-person fs-4"></i>
                 </a>
 
-                <!-- Personalised greeting shown when a userName is stored in localStorage -->
+                <!-- Personalised greeting -->
                 <div id="user-greeting"></div>
 
                 <!-- Cart icon with a badge showing the total number of items in the cart -->
@@ -32,7 +33,7 @@
                         class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
                 </a>
 
-                <!-- Hamburger button: toggles the collapsed nav links on mobile -->
+                <!-- Hamburger menu button on mobile -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
