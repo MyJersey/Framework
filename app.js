@@ -66,13 +66,6 @@ app.get('/categories', (req, res) => {
     res.json(categories);
 });
 
-// catagorize
-app.get('/products/category/:category', (req, res) => {
-    const data = JSON.parse(fs.readFileSync(PRODUCTS_FILE));
-    const filtered = data.filter(p => p.category === req.params.category);
-
-    res.json(filtered);
-});
 
 
 // BASKET API
