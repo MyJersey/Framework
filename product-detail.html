@@ -5,6 +5,7 @@
      Reads the selected product ID from localStorage (set by goToDetail() in shop.js),
      finds the matching product in the catalog, and renders full details:
      image, name, price, description, skin type, ingredients, how-to-use, and an add-to-cart button. -->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,108 +35,113 @@
     </div>
 
     <!-- Footer placeholder — filled dynamically by loader.js -->
-    <div id = "footer"></div>
+    <div id="footer"></div>
 
 
     <!-- Load shared layout loader, product catalog, and shop utilities -->
     <script src="js/loader.js"></script>
-    <script src="js/product.js"></script>
+    <!-- <script src="js/product.js"></script> -->
     <script src="js/shop.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Retrieve the product ID that was stored in localStorage when the user clicked a product card.
+
             const productId = localStorage.getItem('selectedProductId');
             const container = document.getElementById('product-detail-container');
-            const product = products.find(p => p.id == productId);
 
-            // Refresh the cart badge in the navbar.
             updateCartBadge();
 
-            // Render the product detail layout if a matching product is found.
-           if (product) {
-    container.innerHTML = `
-    <div class="col-md-6 mb-4 text-center">
-        <div class="bg-light p-4 rounded shadow-sm d-flex align-items-center justify-content-center" style="height: 500px;">
-            <img src="${product.image}" class="img-fluid" style="max-height: 100%; object-fit: contain;" alt="${product.name}">
-        </div>
-    </div>
-    <div class="col-md-6 px-lg-5">
-        <!-- Breadcrumb navigation: links back to the shop -->
-        <nav aria-label="breadcrumb" class="mb-4">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="shop.html" class="text-decoration-none text-muted">Shop</a></li>
-                <li class="breadcrumb-item active">${product.category}</li>
-            </ol>
-        </nav>
-        <h1 class="display-4 fw-bold mb-3">${product.name}</h1>
-        <h2 class="text-success mb-4 fw-light">€ ${product.price.toFixed(2)}</h2>
-        <p class="lead text-muted mb-4">${product.description}</p>
-        
-        <!-- Skin type highlight block -->
-        <div class="p-3 bg-light border-start border-4 border-success mb-4">
-            <small class="text-uppercase fw-bold text-muted d-block">Ideal for:</small>
-            <span class="fs-5">${product.skinType} Skin</span>
-        </div>
-
-        <!-- Displaying Ingredients -->
-        <div class="mb-4">
-            <h5 class="fw-bold">Ingredients:</h5>
-            <p class="text-muted small">
-                ${Array.isArray(product.ingredients) && product.ingredients.length > 0 
-                    ? product.ingredients.join(', ') 
-                    : 'Natural botanical extracts.'}
-            </p>
-        </div>
-
-        <!-- Displaying How to Use -->
-        <div class="mb-4">
-            <h5 class="fw-bold">How to Use:</h5>
-            <p class="text-muted small">
-                ${product.howToUse || 'Apply uniformly to skin as needed.'}
-            </p>
-        </div>
-
-        <!-- Quantity selector: allows the user to choose how many units to add -->
-        <div class="d-flex align-items-center mb-4 gap-3">
-            <label for="detail-qty" class="fw-bold mb-0">Quantity:</label>
-            <input type="number" id="detail-qty" class="form-control rounded-0 text-center" value="1" min="1" max="10" style="width: 80px;">
-        </div>
-
-        <button class="btn btn-dark btn-lg w-100 py-3 rounded-0 shadow" onclick="addToCartDetail(${product.id})">
-            ADD TO CART
-        </button>
-    </div>
-    `;
-} else {
-    // Show a fallback message if no product ID was found or the ID is invalid.
-    container.innerHTML = "<div class='text-center py-5'><h2>Product not found.</h2><a href='shop.html' class='btn btn-outline-dark mt-3'>Back to Shop</a></div>";
-}
-
-            });
-
-        
-        // Adds the displayed product to the cart with the quantity chosen by the user.
-        // If the product is already in the cart, its quantity is incremented instead of adding a duplicate.
-        function addToCartDetail(id) {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-            // Read the selected quantity from the number input; default to 1 if missing or invalid.
-            const qtyInput = document.getElementById('detail-qty');
-            const quantityToAdd = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
-
-            const existingIndex = cart.findIndex(p => p.id === id);
-            if (existingIndex > -1) {
-                cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + quantityToAdd;
-            } else {
-                const product = products.find(p => p.id === id);
-                if (product) {
-                    product.quantity = quantityToAdd;
-                    cart.push(product);
-                }
+            if (!productId) {
+                container.innerHTML = "<h2>No product selected</h2>";
+                return;
             }
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartBadge(); 
-            alert("Wonderful choice! The product has been added to your cart.");
+
+            // ✅ 用 API 获取 product
+            fetch(`/products/${productId}`)
+                .then(res => {
+                    if (!res.ok) throw new Error("Product not found");
+                    return res.json();
+                })
+                .then(product => {
+
+                    container.innerHTML = `
+            <div class="col-md-6 mb-4 text-center">
+                <div class="bg-light p-4 rounded shadow-sm d-flex align-items-center justify-content-center" style="height: 500px;">
+                    <img src="${product.image}" class="img-fluid" style="max-height: 100%; object-fit: contain;" alt="${product.name}">
+                </div>
+            </div>
+
+            <div class="col-md-6 px-lg-5">
+                <nav aria-label="breadcrumb" class="mb-4">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="shop.html" class="text-decoration-none text-muted">Shop</a></li>
+                        <li class="breadcrumb-item active">${product.category}</li>
+                    </ol>
+                </nav>
+
+                <h1 class="display-4 fw-bold mb-3">${product.name}</h1>
+                <h2 class="text-success mb-4 fw-light">€ ${product.price.toFixed(2)}</h2>
+                <p class="lead text-muted mb-4">${product.description}</p>
+
+                <div class="p-3 bg-light border-start border-4 border-success mb-4">
+                    <small class="text-uppercase fw-bold text-muted d-block">Ideal for:</small>
+                    <span class="fs-5">${product.skinType} Skin</span>
+                </div>
+
+                <div class="mb-4">
+                    <h5 class="fw-bold">Ingredients:</h5>
+                    <p class="text-muted small">
+                        ${Array.isArray(product.ingredients)
+                            ? product.ingredients.join(', ')
+                            : product.ingredients}
+                    </p>
+                </div>
+
+                <div class="mb-4">
+                    <h5 class="fw-bold">How to Use:</h5>
+                    <p class="text-muted small">
+                        ${product.howToUse}
+                    </p>
+                </div>
+
+                <div class="d-flex align-items-center mb-4 gap-3">
+                    <label for="detail-qty" class="fw-bold mb-0">Quantity:</label>
+                    <input type="number" id="detail-qty" class="form-control rounded-0 text-center" value="1" min="1" max="10" style="width: 80px;">
+                </div>
+
+                <button class="btn btn-dark btn-lg w-100 py-3 rounded-0 shadow"
+                    onclick="addToCartDetail(${product.id})">
+                    ADD TO CART
+                </button>
+            </div>
+            `;
+                })
+                .catch(() => {
+                    container.innerHTML = "<h2>Product not found</h2>";
+                });
+        });
+
+
+        function addToCartDetail(productId) {
+
+            const user = localStorage.getItem('userName') || 'guest';
+
+            const qtyInput = document.getElementById('detail-qty');
+            const quantity = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
+
+            const requests = [];
+
+            for (let i = 0; i < quantity; i++) {
+                requests.push(
+                    fetch(`/cart/${user}/${productId}`, {
+                        method: 'POST'
+                    })
+                );
+            }
+
+            Promise.all(requests).then(() => {
+                updateCartBadge();
+                alert("Wonderful choice! The product has been added to your cart.");
+            });
         }
     </script>
 </body>

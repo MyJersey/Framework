@@ -1,20 +1,87 @@
-// Initialise the shop page once the DOM is ready: set up filters, read URL params, and render products.
 document.addEventListener('DOMContentLoaded', () => {
     const productGrid = document.getElementById('productGrid');
     const categoryFilter = document.getElementById('categoryFilter');
-    const skinFilters = document.querySelectorAll('.skin-filter'); 
-    const collectionFilters = document.querySelectorAll('.collection-filter'); 
+    const skinFilters = document.querySelectorAll('.skin-filter');
+    const collectionFilters = document.querySelectorAll('.collection-filter');
+
     updateCartBadge();
 
-    // Renders a list of product cards into the product grid.
-    // Clears previous content and shows a "no results" message when the list is empty.
-    function displayProducts(filteredProducts) {
+    // select collection filter
+    applyInitialUrlFilters();
+
+    loadCategories().then(() => {
+        fetchProductsWithFilters();
+    });
+
+
+    if (categoryFilter) {
+        categoryFilter.addEventListener('change', fetchProductsWithFilters);
+    }
+
+    if (skinFilters.length > 0) {
+        skinFilters.forEach(filter => {
+            filter.addEventListener('change', fetchProductsWithFilters);
+        });
+    }
+
+    if (collectionFilters.length > 0) {
+        collectionFilters.forEach(filter => {
+            filter.addEventListener('change', fetchProductsWithFilters);
+        });
+    }
+
+    function applyInitialUrlFilters() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const filterParam = urlParams.get('filter');
+
+        if (filterParam === 'bestsellers') {
+            const bestsellerCheckbox = document.getElementById('colBestsellers');
+            if (bestsellerCheckbox) bestsellerCheckbox.checked = true;
+        } else if (filterParam === 'new') {
+            const newCheckbox = document.getElementById('colNewArrivals');
+            if (newCheckbox) newCheckbox.checked = true;
+        }
+    }
+
+    function loadCategories() {
+        if (!categoryFilter) return Promise.resolve();
+
+        return fetch('/categories')
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('Failed to load categories');
+                }
+                return res.json();
+            })
+            .then(categories => {
+                categoryFilter.innerHTML = '<option value="all">All Products</option>';
+
+                categories.forEach(cat => {
+                    categoryFilter.innerHTML += `
+                        <option value="${cat}">${cat}</option>
+                    `;
+                });
+            })
+            .catch(err => {
+                console.error('Failed to load categories:', err);
+            });
+    }
+
+    function displayProducts(products) {
+        if (!productGrid) return;
+
         productGrid.innerHTML = '';
-        if (filteredProducts.length === 0) {
-            productGrid.innerHTML = '<div class="col-12 text-center my-5"><h5>No products found.</h5></div>';
+
+        if (!products || products.length === 0) {
+            productGrid.innerHTML = `
+                <div class="col-12 text-center my-5">
+                    <h5>No products found.</h5>
+                </div>
+            `;
             return;
         }
-        filteredProducts.forEach(product => {
+
+        products.forEach(product => {
             productGrid.innerHTML += `
                 <div class="col-md-4 mb-4">
                     <div class="product-card p-3 shadow-sm h-100" onclick="goToDetail(${product.id})">
@@ -31,144 +98,126 @@ document.addEventListener('DOMContentLoaded', () => {
                             </button>
                         </div>
                     </div>
-                </div>`;
+                </div>
+            `;
         });
     }
 
-    // Reads the current values of all filter controls and re-renders only the matching products.
-    function filterProducts() {
-        if (!categoryFilter) return;
-        const selectedCategory = categoryFilter.value;
+    function fetchProductsWithFilters() {
+        const params = new URLSearchParams();
 
-        // Collect all checked skin-type checkboxes.
-        const activeSkinFilters = Array.from(skinFilters)
-            .filter(input => input.checked)
-            .map(input => input.value);
-
-        // Collect all checked collection checkboxes (Bestsellers / New Arrivals).
-        const activeCollectionFilters = Array.from(collectionFilters || [])
-            .filter(input => input.checked)
-            .map(input => input.value);
-
-        const filtered = products.filter(product => {
-            // Match category: show all when "all" is selected, otherwise check exact match.
-            const matchCategory = selectedCategory === 'all' || selectedCategory === 'All' || product.category === selectedCategory;
-
-            // Match skin type: show all products when no filter is checked,
-            // always show products labelled "All types".
-            const matchSkin = activeSkinFilters.length === 0 ||
-                activeSkinFilters.includes(product.skinType) ||
-                product.skinType === "All types";
-
-            // Match collection: show all when nothing is checked, otherwise require
-            // at least one matching collection flag.
-            let matchCollection = true;
-            if (activeCollectionFilters.length > 0) {
-                const isBestsellerChecked = activeCollectionFilters.includes('bestsellers');
-                const isNewChecked = activeCollectionFilters.includes('new');
-
-                matchCollection = false;
-                if (isBestsellerChecked && product.isBestseller) matchCollection = true;
-                if (isNewChecked && product.isNew) matchCollection = true;
-            }
-
-            return matchCategory && matchSkin && matchCollection;
-        });
-
-        displayProducts(filtered);
-    }
-
-    // Attach change listeners to all filter controls so the grid updates automatically.
-    if (productGrid) {
+        // category
         if (categoryFilter) {
-            categoryFilter.addEventListener('change', filterProducts);
-        }
-        if (skinFilters.length > 0) {
-            skinFilters.forEach(filter => {
-                filter.addEventListener('change', filterProducts);
-            });
-        }
-        if (collectionFilters && collectionFilters.length > 0) {
-            collectionFilters.forEach(filter => {
-                filter.addEventListener('change', filterProducts);
-            });
-        }
-
-        // Pre-apply a filter when the page is opened with a "?filter=..." URL parameter
-        // (e.g. clicking "Shop All Bestsellers" from the home page).
-        const urlParams = new URLSearchParams(window.location.search);
-        const filterParam = urlParams.get('filter');
-        if (filterParam === 'bestsellers') {
-            const bestsellerCheckbox = document.getElementById('colBestsellers');
-            if (bestsellerCheckbox) {
-                bestsellerCheckbox.checked = true;
-            }
-        } else if (filterParam === 'new') {
-            const newCheckbox = document.getElementById('colNewArrivals');
-            if (newCheckbox) {
-                newCheckbox.checked = true;
+            const selectedCategory = categoryFilter.value;
+            if (selectedCategory && selectedCategory !== 'all') {
+                params.append('category', selectedCategory);
             }
         }
 
-        // Perform the initial render after all filters have been configured.
-        filterProducts();
+        // skin
+        const selectedSkins = Array.from(skinFilters)
+            .filter(input => input.checked)
+            .map(input => input.value);
+
+        if (selectedSkins.length > 0) {
+            params.append('skin', selectedSkins.join(','));
+        }
+
+        // collection
+        const selectedCollections = Array.from(collectionFilters)
+            .filter(input => input.checked)
+            .map(input => input.value);
+
+        if (selectedCollections.length > 0) {
+            params.append('collection', selectedCollections.join(','));
+        }
+
+        const queryString = params.toString();
+        const url = queryString ? `/products?${queryString}` : '/products';
+
+        fetch(url)
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('Failed to load products');
+                }
+                return res.json();
+            })
+            .then(data => {
+                displayProducts(data);
+            })
+            .catch(err => {
+                console.error('Failed to load products:', err);
+                displayProducts([]);
+            });
     }
-    updateCartBadge();
 });
 
-// Saves the selected product's ID to localStorage and navigates to the detail page.
 function goToDetail(id) {
     localStorage.setItem('selectedProductId', id);
     window.location.href = 'product-detail.html';
 }
 
-// Adds the chosen product to the cart (stored in localStorage).
-// Increments quantity if the product is already in the cart; otherwise adds a new entry.
-// Stops the click event from bubbling up to the parent card (which would open the detail page).
-function addToCart(event, id) {
+function addToCart(event, productId) {
     event.stopPropagation();
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const existingIndex = cart.findIndex(p => p.id === id);
-    if (existingIndex > -1) {
-        cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + 1;
-    } else {
-        const product = products.find(p => p.id === id);
-        if (product) {
-            product.quantity = 1;
-            cart.push(product);
-        }
-    }
-    localStorage.setItem('cart', JSON.stringify(cart));
-    updateCartBadge();
-    alert("Product added to cart!");
+
+    const user = localStorage.getItem('userName') || 'guest';
+
+    fetch(`/cart/${user}/${productId}`, {
+        method: 'POST'
+    })
+        .then(res => {
+            if (!res.ok) {
+                throw new Error('Failed to add product to cart');
+            }
+            return res.text();
+        })
+        .then(() => {
+            updateCartBadge();
+            alert('Product added to cart!');
+        })
+        .catch(err => {
+            console.error('Add to cart failed:', err);
+            alert('Failed to add product to cart.');
+        });
 }
 
-
-
-// Updates the cart badge in the navbar with the total number of items currently in the cart.
-// Also shows a personalised greeting when the user is logged in, hiding the login icon.
 function updateCartBadge() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const badge = document.getElementById('cart-badge');
-    if (badge) {
-        const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-        badge.innerText = totalItems;
-    }
+    const user = localStorage.getItem('userName') || 'guest';
 
-    // Check if a user name was saved during login.
-    const user = localStorage.getItem('userName');
+    fetch(`/cart/${user}`)
+        .then(res => {
+            if (!res.ok) {
+                throw new Error('Failed to load cart');
+            }
+            return res.json();
+        })
+        .then(cart => {
+            const badge = document.getElementById('cart-badge');
+            if (!badge) return;
+
+            const totalItems = cart.reduce((sum, item) => {
+                return sum + item.quantity;
+            }, 0);
+
+            badge.innerText = totalItems;
+        })
+        .catch(err => {
+            console.error('Failed to load cart:', err);
+        });
+
+    const userName = localStorage.getItem('userName');
     const loginIcon = document.getElementById('login-icon');
     const greeting = document.getElementById('user-greeting');
 
-    if (user && greeting && loginIcon) {
-        // Hide the login icon and show a clickable greeting that triggers logout.
-        loginIcon.style.setProperty('display', 'none', 'important'); 
-        greeting.style.display = 'block'; 
+    if (userName && greeting && loginIcon) {
+        loginIcon.style.setProperty('display', 'none', 'important');
+        greeting.style.display = 'block';
 
         greeting.innerHTML = `
             <span class="text-success fw-bold" style="cursor: pointer;" onclick="logoutUser()">
-                Hi, ${user}
-            </span>`;
+                Hi, ${userName}
+            </span>
+        `;
     } else if (loginIcon && greeting) {
         loginIcon.style.display = 'block';
         greeting.style.display = 'none';
@@ -176,12 +225,9 @@ function updateCartBadge() {
     }
 }
 
-// Asks the user to confirm, then clears the stored user name and reloads the page to log out.
 function logoutUser() {
-    if (confirm("Do you want to log out?")) {
+    if (confirm('Do you want to log out?')) {
         localStorage.removeItem('userName');
-        localStorage.removeItem('cart'); 
         window.location.reload();
     }
 }
-

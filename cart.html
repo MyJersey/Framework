@@ -4,6 +4,7 @@
 <!-- cart.html — Shopping cart page.
      Displays all items currently stored in localStorage, allows quantity adjustments,
      removal of items, and a simulated checkout flow. -->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -73,118 +74,135 @@
 
     <!-- Footer placeholder — filled dynamically by loader.js -->
     <div id="footer"></div>
-        
+
     <!-- Load shared layout loader, product catalog, and shop utilities -->
     <script src="js/loader.js"></script>
 
-    <script src="js/product.js"></script>
     <script src="js/shop.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Render the cart table and update the navbar badge on page load.
             renderCart();
-            
             if (typeof updateCartBadge === 'function') {
                 updateCartBadge();
             }
         });
 
-        // Reads the cart from localStorage and rebuilds the entire table,
-        // recalculating the subtotal and updating both total display elements.
-        function renderCart() {
-            const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+        async function renderCart() {
+
+            const user = localStorage.getItem('userName') || 'guest';
+
             const container = document.getElementById('cart-items-container');
             const totalDisplay = document.getElementById('cart-total');
             const finalTotalDisplay = document.getElementById('final-total');
 
             container.innerHTML = '';
+
             let total = 0;
             let totalItems = 0;
 
-            if (cartItems.length === 0) {
-                // Show an empty-state message with a link back to the shop.
-                container.innerHTML = '<tr><td colspan="4" class="text-center py-5">Your cart is empty. <a href="shop.html">Back to shop</a></td></tr>';
-            } else {
-                cartItems.forEach((product, index) => {
-                    const quantity = product.quantity || 1;
-                    total += product.price * quantity;
-                    totalItems += quantity;
-                    container.innerHTML += `
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <img src="${product.image}" alt="${product.name}" style="width: 60px; height: 80px; object-fit: cover;" class="me-3">
-                                    <div>
-                                        <h6 class="mb-0 fw-bold">${product.name}</h6>
-                                        <small class="text-muted">${product.category}</small>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>€ ${product.price.toFixed(2)}</td>
-                            <td>
-                                <!-- Quantity controls: decrementing to 0 removes the item -->
-                                <div class="btn-group btn-group-sm" role="group">
-                                    <button type="button" class="btn btn-outline-secondary" onclick="updateQuantity(${index}, -1)">-</button>
-                                    <button type="button" class="btn btn-outline-secondary px-3" disabled>${quantity}</button>
-                                    <button type="button" class="btn btn-outline-secondary" onclick="updateQuantity(${index}, 1)">+</button>
-                                </div>
-                            </td>
-                            <td>
-                                <!-- Remove button: deletes the item from the cart entirely -->
-                                <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${index})" title="Remove item">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    `;
-                });
+            const cart = await fetch(`/cart/${user}`).then(r => r.json());
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+            <tr>
+                <td colspan="4" class="text-center py-5">
+                    Your cart is empty. <a href="shop.html">Back to shop</a>
+                </td>
+            </tr>`;
+                return;
+            }
+
+            for (let item of cart) {
+
+                const product = await fetch(`/products/${item.productId}`)
+                    .then(r => r.json());
+
+                const quantity = item.quantity;
+
+                total += product.price * quantity;
+                totalItems += quantity;
+
+                container.innerHTML += `
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <img src="${product.image}" 
+                             style="width: 60px; height: 80px; object-fit: cover;" 
+                             class="me-3">
+                        <div>
+                            <h6 class="mb-0 fw-bold">${product.name}</h6>
+                            <small class="text-muted">${product.category}</small>
+                        </div>
+                    </div>
+                </td>
+
+                <td>€ ${product.price.toFixed(2)}</td>
+
+                <td>
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-secondary"
+                            onclick="changeQuantity(${product.id}, -1)">-</button>
+
+                        <button class="btn btn-outline-secondary px-3" disabled>
+                            ${quantity}
+                        </button>
+
+                        <button class="btn btn-outline-secondary"
+                            onclick="changeQuantity(${product.id}, 1)">+</button>
+                    </div>
+                </td>
+
+                <td>
+                    <button class="btn btn-sm btn-outline-danger"
+                        onclick="removeFromCart(${product.id})">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        `;
             }
 
             totalDisplay.innerText = `€ ${total.toFixed(2)}`;
             finalTotalDisplay.innerText = `€ ${total.toFixed(2)}`;
 
-            // Sync the navbar badge with the updated item count.
             const badge = document.getElementById('cart-badge');
             if (badge) badge.innerText = totalItems;
         }
 
-        // Adjusts the quantity of a cart item by the given change (+1 or -1).
-        // Removes the item automatically if the resulting quantity would drop below 1.
-        function updateQuantity(index, change) {
-            let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-            let currentQuantity = cartItems[index].quantity || 1;
-            currentQuantity += change;
 
-            if (currentQuantity < 1) {
-                removeFromCart(index);
-                return;
-            }
+        function changeQuantity(productId, change) {
 
-            cartItems[index].quantity = currentQuantity;
-            localStorage.setItem('cart', JSON.stringify(cartItems));
-            renderCart();
-            if (typeof updateCartBadge === 'function') updateCartBadge();
+            const user = localStorage.getItem('userName') || 'guest';
+
+            const method = change > 0 ? 'POST' : 'DELETE';
+
+            fetch(`/cart/${user}/${productId}`, {
+                method: method
+            })
+                .then(() => {
+                    renderCart();
+                    updateCartBadge();
+                });
         }
 
-        // Removes the item at the given index from the cart and re-renders the table.
-        function removeFromCart(index) {
-            let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-            cartItems.splice(index, 1);
-            localStorage.setItem('cart', JSON.stringify(cartItems));
-            renderCart();
+
+        function removeFromCart(productId) {
+
+            const user = localStorage.getItem('userName') || 'guest';
+
+            fetch(`/cart/${user}/${productId}/all`, {
+                method: 'DELETE'
+            })
+                .then(() => {
+                    renderCart();
+                    updateCartBadge();
+                });
         }
 
-        // Simulates the checkout process: validates the cart is not empty,
-        // shows a confirmation message, clears the cart, and refreshes the view.
+
         function checkout() {
-            if ((JSON.parse(localStorage.getItem('cart')) || []).length === 0) {
-                alert("Your cart is empty!");
-                return;
-            }
-            alert("Thank you for your order! (Checkout simulated)");
-            localStorage.removeItem('cart');
-            renderCart();
+            alert("Checkout not implemented yet.");
         }
     </script>
     <!-- Bootstrap JS bundle required for responsive navbar toggler -->
