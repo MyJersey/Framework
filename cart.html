@@ -86,7 +86,7 @@
 
     <!-- Footer placeholder loaded by loader.js -->
     <div id="footer"></div>
-        
+
     <!-- Load services first -->
     <script src="js/services/StorageService.js"></script>
     <script src="js/services/AuthService.js"></script>
@@ -99,22 +99,23 @@
     <script src="js/shop.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             // Render the cart table and update the navbar
-            UIManager.renderCart(CartService.getCart());
-            UIManager.refreshNavbar();
+            await UIManager.renderCart();
+            await UIManager.refreshNavbar();
         });
 
         // Simulation of checkout
-        function checkout() {
-            if (CartService.getCart().length === 0) {
+        async function checkout() {
+            const cart = await CartService.getCart();
+            if (cart.length === 0) {
                 alert("Your cart is empty!");
                 return;
             }
             alert("Thank you for your order! (Checkout simulated)");
-            CartService.clear();
-            UIManager.renderCart([]);
-            UIManager.refreshNavbar();
+            await CartService.clear();
+            await UIManager.renderCart();
+            await UIManager.refreshNavbar();
         }
     </script>
     <!-- Bootstrap JS bundle required for responsive navbar toggler -->

@@ -1,11 +1,11 @@
 /**
  * shop.js
  * Handles product shop page functionality: filtering, rendering, and cart operations
- * Manages product filters and handles product/cart interactions
+ * Fetches products from the Node.js backend API and delegates rendering to UIManager
  */
 
 /**
- * Sets up filters, reads URL parameters, renders products, and attaches event listeners
+ * Sets up filters, reads URL parameters, fetches products from API, and attaches event listeners
  */
 document.addEventListener('DOMContentLoaded', () => {
     const productGrid = document.getElementById('productGrid');
@@ -13,79 +13,89 @@ document.addEventListener('DOMContentLoaded', () => {
     const skinFilters = document.querySelectorAll('.skin-filter');
     const collectionFilters = document.querySelectorAll('.collection-filter');
 
-    UIManager.refreshNavbar();
-
-    /**
-     * Filters products based on current filter control values
-     * Returns products matching all selected criteria (category AND skin type AND collection)
-     * @returns {Array} array of product objects that match all active filters
-     */
-    function getFilteredProducts() {
-        // Get selected category from dropdown, default to 'all' if element doesn't exist
-        const selectedCategory = categoryFilter ? categoryFilter.value : 'all'
-
-        // Collect all checked skin-type checkboxes
-        const activeSkinFilters = Array.from(skinFilters)
-            .filter(input => input.checked)
-            .map(input => input.value);
-
-        // Collect all checked collection checkboxes
-        const activeCollectionFilters = Array.from(collectionFilters || [])
-            .filter(input => input.checked)
-            .map(input => input.value);
-
-        return products.filter(product => {
-            // Match category: show all when "all" is selected, otherwise check exact match
-            const matchCategory = selectedCategory === 'all' || product.category === selectedCategory;
-
-            // Match skin type: show all products when no filter is checked,
-            // always show products labelled "All types"
-            const matchSkin = activeSkinFilters.length === 0 ||
-                              activeSkinFilters.includes(product.skinType) ||
-                              product.skinType === "All types";
-
-            // Match collection: show all when nothing checked, or if product matches selected collections
-            const isBestsellerChecked = activeCollectionFilters.includes('bestsellers');
-            const isNewChecked = activeCollectionFilters.includes('new');
-            const matchCollection = activeCollectionFilters.length === 0 ||
-                                    (isBestsellerChecked && product.isBestseller) ||
-                                    (isNewChecked && product.isNew);
-
-            return matchCategory && matchSkin && matchCollection;
-        });
-    }
-
-    /**
-     * Gets filtered products and renders them
-     */
-    function onFilterChange() {
-        const filtered = getFilteredProducts();
-        UIManager.renderProductGrid(filtered);
-    }
-
-    // Attach change listeners to all filter controls
-    if (categoryFilter) categoryFilter.addEventListener('change', onFilterChange);
-    skinFilters.forEach(filter => filter.addEventListener('change', onFilterChange));
-    collectionFilters.forEach(filter => filter.addEventListener('change', onFilterChange));
-
     // Pre-apply a filter when the page is opened with a "?filter=..." URL parameter
     // Example: clicking "Shop All Bestsellers" from the home page passes ?filter=bestsellers
     const urlParams = new URLSearchParams(window.location.search);
     const filterParam = urlParams.get('filter');
     if (filterParam === 'bestsellers') {
         const bestsellerCheckbox = document.getElementById('colBestsellers');
-        if (bestsellerCheckbox) {
-            bestsellerCheckbox.checked = true;
-        }
+        if (bestsellerCheckbox) bestsellerCheckbox.checked = true;
     } else if (filterParam === 'new') {
         const newCheckbox = document.getElementById('colNewArrivals');
-        if (newCheckbox) {
-            newCheckbox.checked = true;
+        if (newCheckbox) newCheckbox.checked = true;
+    }
+
+    // Load categories from API into the dropdown and then render products
+    loadCategories().then(() => fetchAndRenderProducts());
+
+    // Attach change listeners to all filter controls
+    if (categoryFilter) categoryFilter.addEventListener('change', fetchAndRenderProducts);
+    skinFilters.forEach(filter => filter.addEventListener('change', fetchAndRenderProducts));
+    collectionFilters.forEach(filter => filter.addEventListener('change', fetchAndRenderProducts));
+
+    /**
+     * Loads product categories from the API and populates the category dropdown
+     */
+    async function loadCategories() {
+        if (!categoryFilter) return;
+
+        try {
+            const res = await fetch('/categories');
+            if (!res.ok) throw new Error('Failed to load categories');
+            const categories = await res.json();
+            categoryFilter.innerHTML = '<option value="all">All Products</option>';
+            categories.forEach(cat => {
+                categoryFilter.innerHTML += `<option value="${cat}">${cat}</option>`;
+            });
+        } catch (err) {
+            console.error('Failed to load categories:', err);
         }
     }
 
-    // Recall the render on filters
-    onFilterChange();
+    /**
+     * Builds query params from current filter values, fetches products from API,
+     * and renders them using UIManager
+     */
+    async function fetchAndRenderProducts() {
+        const params = new URLSearchParams();
+
+        // Category filter
+        if (categoryFilter) {
+            const selectedCategory = categoryFilter.value;
+            if (selectedCategory && selectedCategory !== 'all') {
+                params.append('category', selectedCategory);
+            }
+        }
+
+        // Skin type filters
+        const selectedSkins = Array.from(skinFilters)
+            .filter(input => input.checked)
+            .map(input => input.value);
+        if (selectedSkins.length > 0) {
+            params.append('skin', selectedSkins.join(','));
+        }
+
+        // Collection filters
+        const selectedCollections = Array.from(collectionFilters)
+            .filter(input => input.checked)
+            .map(input => input.value);
+        if (selectedCollections.length > 0) {
+            params.append('collection', selectedCollections.join(','));
+        }
+
+        const queryString = params.toString();
+        const url = queryString ? `/products?${queryString}` : '/products';
+
+        try {
+            const res = await fetch(url);
+            if (!res.ok) throw new Error('Failed to load products');
+            const data = await res.json();
+            UIManager.renderProductGrid(data);
+        } catch (err) {
+            console.error('Failed to load products:', err);
+            UIManager.renderProductGrid([]);
+        }
+    }
 });
 
 /**
@@ -99,51 +109,46 @@ function goToDetail(id) {
 }
 
 /**
- * Adds a product to the cart with the specified quantity
+ * Adds a product to the cart via CartService API
  * @param {Event|null} event
- * @param {number} id
+ * @param {number} productId
  * @param {number} quantity (default: 1)
  */
-function addToCart(event, id, quantity = 1) {
+async function addToCart(event, productId, quantity = 1) {
     if (event) {
         event.stopPropagation();
     }
 
-    if (CartService.addItem(id, quantity)) {
-        UIManager.refreshNavbar();
+    const success = await CartService.addItem(productId, quantity);
+    if (success) {
+        await UIManager.refreshNavbar();
         alert("Product added to cart!");
-    }
-}
-
-/**
- * Removes an item from the cart by index
- * Updates the cart display and navbar badge
- * @param {number} index of the item
- */
-function removeFromCart(index) {
-    CartService.removeItem(index);
-    UIManager.renderCart(CartService.getCart());
-    UIManager.refreshNavbar();
-}
-
-/**
- * Updates the quantity of a cart item by a given change amount
- * If quantity drops below 1, the item is removed from the cart
- * Updates the cart display and navbar badge
- * @param {number} index of the item in the cart
- * @param {number} change
- */
-function updateQuantity(index, change) {
-    const cart = CartService.getCart();
-    const currentQuantity = (cart[index].quantity || 1) + change;
-
-    if (currentQuantity < 1) {
-        removeFromCart(index);
     } else {
-        CartService.updateQuantity(index, currentQuantity);
-        UIManager.renderCart(CartService.getCart());
-        UIManager.refreshNavbar();
+        alert("Failed to add product to cart.");
     }
+}
+
+/**
+ * Changes the quantity of a cart item by +1 or -1 via CartService API
+ * Re-renders the cart and refreshes the navbar badge
+ * @param {number} productId
+ * @param {number} change +1 or -1
+ */
+async function changeQuantity(productId, change) {
+    await CartService.changeQuantity(productId, change);
+    await UIManager.renderCart();
+    await UIManager.refreshNavbar();
+}
+
+/**
+ * Removes all units of a product from the cart via CartService API
+ * Re-renders the cart and refreshes the navbar badge
+ * @param {number} productId
+ */
+async function removeFromCart(productId) {
+    await CartService.removeItem(productId);
+    await UIManager.renderCart();
+    await UIManager.refreshNavbar();
 }
 
 /**

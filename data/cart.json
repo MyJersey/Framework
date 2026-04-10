@@ -1,0 +1,18 @@
+{
+  "guest": [
+    {
+      "productId": 1,
+      "quantity": 3
+    }
+  ],
+  "jersey": [
+    {
+      "productId": 2,
+      "quantity": 3
+    },
+    {
+      "productId": 1,
+      "quantity": 13
+    }
+  ]
+}

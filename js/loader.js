@@ -44,7 +44,7 @@ async function initLayout() {
         loadComponent('footer.html', 'footer')
     ]);
 
-    UIManager.refreshNavbar();
+    await UIManager.refreshNavbar();
     setActiveNavLink();
 }
 

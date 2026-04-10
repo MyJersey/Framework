@@ -3,7 +3,7 @@
 
 <!-- product-detail.html
      Reads the selected product ID from localStorage,
-     finds the matching product in the catalog, and renders full details
+     fetches the matching product from the API, and renders full details
 -->
 <head>
     <meta charset="UTF-8">
@@ -34,8 +34,7 @@
     </div>
 
     <!-- Footer placeholder filled by loader.js -->
-    <div id = "footer"></div>
-
+    <div id="footer"></div>
 
     <!-- Load services first -->
     <script src="js/services/StorageService.js"></script>
@@ -48,16 +47,25 @@
     <script src="js/product.js"></script>
     <script src="js/shop.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             // Retrieve the product ID stored in storage when the user clicked a product card
             const productId = StorageService.getSelectedProductId();
             const container = document.getElementById('product-detail-container');
-            const product = products.find(p => p.id == productId);
 
-            UIManager.refreshNavbar();
+            await UIManager.refreshNavbar();
 
-            // Render the product detail layout
-            if (product) {
+            if (!productId) {
+                container.innerHTML = "<div class='text-center py-5'><h2>Product not found.</h2><a href='shop.html' class='btn btn-outline-dark mt-3'>Back to Shop</a></div>";
+                return;
+            }
+
+            // Fetch product details from the API
+            try {
+                const res = await fetch(`/products/${productId}`);
+                if (!res.ok) throw new Error("Product not found");
+                const product = await res.json();
+
+                // Render the product detail layout
                 container.innerHTML = `
                 <div class="col-md-6 mb-4 text-center">
                     <div class="bg-light p-4 rounded shadow-sm d-flex align-items-center justify-content-center" style="height: 500px;">
@@ -75,7 +83,7 @@
                     <h1 class="display-4 fw-bold mb-3">${product.name}</h1>
                     <h2 class="text-success mb-4 fw-light">€ ${product.price.toFixed(2)}</h2>
                     <p class="lead text-muted mb-4">${product.description}</p>
-                    
+
                     <!-- Skin type highlight block -->
                     <div class="p-3 bg-light border-start border-4 border-success mb-4">
                         <small class="text-uppercase fw-bold text-muted d-block">Ideal for:</small>
@@ -86,8 +94,8 @@
                     <div class="mb-4">
                         <h5 class="fw-bold">Ingredients:</h5>
                         <p class="text-muted small">
-                            ${Array.isArray(product.ingredients) && product.ingredients.length > 0 
-                                ? product.ingredients.join(', ') 
+                            ${Array.isArray(product.ingredients) && product.ingredients.length > 0
+                                ? product.ingredients.join(', ')
                                 : 'Natural botanical extracts.'}
                         </p>
                     </div>
@@ -111,19 +119,18 @@
                     </button>
                 </div>
                 `;
-            } else {
+            } catch {
                 // Show a fallback message if no product ID was found or the ID is invalid.
                 container.innerHTML = "<div class='text-center py-5'><h2>Product not found.</h2><a href='shop.html' class='btn btn-outline-dark mt-3'>Back to Shop</a></div>";
             }
         });
 
-        // Adds the displayed product to the cart
-        function addToCartDetail(id) {
+        // Adds the displayed product to the cart with the selected quantity
+        async function addToCartDetail(id) {
             const qtyInput = document.getElementById('detail-qty');
             const quantity = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
 
-            addToCart(null, id, quantity);
-            alert("Wonderful choice! The product has been added to your cart.");
+            await addToCart(null, id, quantity);
         }
     </script>
 </body>

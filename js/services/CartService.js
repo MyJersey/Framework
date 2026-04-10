@@ -1,100 +1,89 @@
 /**
  * CartService.js
- * Handles all cart-related business logic
+ * Handles all cart-related business logic via the Node.js backend API
  * Separates cart operations from UI concerns
  */
 
 class CartService {
 
     /**
-     * Adds an item to the cart or increases its quantity if already present
+     * Returns the current user identifier for API calls
+     * @returns {string} user name or 'guest'
+     */
+    static _getUser() {
+        return StorageService.getUser() || 'guest'
+    }
+
+    /**
+     * Adds an item to the cart (one or more units) via API
      * @param {number} productId
      * @param {number} quantity default: 1
-     * @returns {boolean} true if successful, false if product not found
+     * @returns {Promise<boolean>} true if all requests succeeded
      */
-    static addItem(productId, quantity = 1) {
-        const cart = StorageService.getCart()
-        const product = products.find(p => p.id === productId)
-
-        // Product doesn't exist
-        if (!product) return false
-
-        const existingIndex = cart.findIndex(p => p.id === productId)
-        if (existingIndex > -1) {
-            // Product already in cart - increase quantity
-            cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + quantity
-        } else {
-            // New product - add to cart
-            const cartItem = { ...product, quantity }
-            cart.push(cartItem)
+    static async addItem(productId, quantity = 1) {
+        const user = this._getUser()
+        const requests = []
+        for (let i = 0; i < quantity; i++) {
+            requests.push(
+                fetch(`/cart/${user}/${productId}`, { method: 'POST' })
+            )
         }
-
-        StorageService.setCart(cart)
-        return true
+        const results = await Promise.all(requests)
+        return results.every(r => r.ok)
     }
 
     /**
-     * Removes an item from the cart by index
-     * @param {number} index of the item to remove
+     * Removes all units of a product from the cart via API
+     * @param {number} productId
      */
-    static removeItem(index) {
-        const cart = StorageService.getCart()
-        if (index >= 0 && index < cart.length) {
-            cart.splice(index, 1)
-            StorageService.setCart(cart)
-        }
+    static async removeItem(productId) {
+        const user = this._getUser()
+        await fetch(`/cart/${user}/${productId}/all`, { method: 'DELETE' })
     }
 
     /**
-     * Updates the quantity of a cart item
-     * If quantity drops below 1, item is removed
-     * @param {number} index of the item
-     * @param {number} quantity
+     * Changes the quantity of a cart item by +1 or -1 via API
+     * POST adds one unit, DELETE removes one unit
+     * @param {number} productId
+     * @param {number} change +1 or -1
      */
-    static updateQuantity(index, quantity) {
-        const cart = StorageService.getCart()
-        if (index < 0 || index >= cart.length) return
-
-        if (quantity < 1) {
-            this.removeItem(index)
-        } else {
-            cart[index].quantity = quantity
-            StorageService.setCart(cart)
-        }
+    static async changeQuantity(productId, change) {
+        const user = this._getUser()
+        const method = change > 0 ? 'POST' : 'DELETE'
+        await fetch(`/cart/${user}/${productId}`, { method })
     }
 
     /**
-     * Clears the entire cart
+     * Clears the entire cart by removing all items via API
      */
-    static clear() {
-        StorageService.clearCart()
+    static async clear() {
+        const cart = await this.getCart()
+        const user = this._getUser()
+        await Promise.all(
+            cart.map(item =>
+                fetch(`/cart/${user}/${item.productId}/all`, { method: 'DELETE' })
+            )
+        )
     }
 
     /**
-     * Calculates the total price of all items in the cart
-     * @returns {number} total price and quantities
+     * Gets the full cart data from the API
+     * Each item has { productId, quantity }
+     * @returns {Promise<Array>} array of cart items
      */
-    static getTotal() {
-        return StorageService.getCart().reduce((sum, item) => {
-            return sum + (item.price * (item.quantity || 1))
-        }, 0)
+    static async getCart() {
+        const user = this._getUser()
+        const res = await fetch(`/cart/${user}`)
+        if (!res.ok) return []
+        return res.json()
     }
 
     /**
      * Calculates the total number of items in the cart
-     * @returns {number} total item count
+     * @returns {Promise<number>} total item count
      */
-    static getItemCount() {
-        return StorageService.getCart().reduce((sum, item) => {
-            return sum + (item.quantity || 1)
-        }, 0)
-    }
-
-    /**
-     * Gets the full cart data
-     * @returns {Array} of cart items
-     */
-    static getCart() {
-        return StorageService.getCart()
+    static async getItemCount() {
+        const cart = await this.getCart()
+        return cart.reduce((sum, item) => sum + item.quantity, 0)
     }
 }

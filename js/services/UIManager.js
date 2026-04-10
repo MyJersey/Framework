@@ -7,12 +7,16 @@
 class UIManager {
 
     /**
-     * Updates the cart badge count in the navbar
+     * Updates the cart badge count in the navbar via CartService API
      */
-    static updateCartBadge() {
+    static async updateCartBadge() {
         const badge = document.getElementById('cart-badge')
-        if (badge) {
-            badge.innerText = CartService.getItemCount()
+        if (!badge) return
+        try {
+            const count = await CartService.getItemCount()
+            badge.innerText = count
+        } catch {
+            badge.innerText = 0
         }
     }
 
@@ -45,10 +49,10 @@ class UIManager {
     }
 
     /**
-     * Refreshes the entire navbar
+     * Refreshes the entire navbar (cart badge + user greeting)
      */
-    static refreshNavbar() {
-        this.updateCartBadge()
+    static async refreshNavbar() {
+        await this.updateCartBadge()
         this.updateUserGreeting()
     }
 
@@ -89,10 +93,10 @@ class UIManager {
     }
 
     /**
-     * Renders the shopping cart table with all items
-     * @param {Array} cartItems array of items currently in the cart
+     * Renders the shopping cart table by fetching cart data from the API
+     * Retrieves product details for each cart item to display full info
      */
-    static renderCart(cartItems) {
+    static async renderCart() {
         const container = document.getElementById('cart-items-container')
         const totalDisplay = document.getElementById('cart-total')
         const finalTotalDisplay = document.getElementById('final-total')
@@ -101,7 +105,9 @@ class UIManager {
 
         container.innerHTML = ''
 
-        if (!cartItems || cartItems.length === 0) {
+        const cart = await CartService.getCart()
+
+        if (!cart || cart.length === 0) {
             container.innerHTML = '<tr><td colspan="4" class="text-center py-5">Your cart is empty. <a href="shop.html">Back to shop</a></td></tr>'
             if (totalDisplay) totalDisplay.innerText = '€ 0.00'
             if (finalTotalDisplay) finalTotalDisplay.innerText = '€ 0.00'
@@ -109,8 +115,11 @@ class UIManager {
         }
 
         let total = 0
-        cartItems.forEach((product, index) => {
-            const quantity = product.quantity || 1
+        for (const item of cart) {
+            const res = await fetch(`/products/${item.productId}`)
+            if (!res.ok) continue
+            const product = await res.json()
+            const quantity = item.quantity
             total += product.price * quantity
 
             container.innerHTML += `
@@ -127,18 +136,18 @@ class UIManager {
                     <td>€ ${product.price.toFixed(2)}</td>
                     <td>
                         <div class="btn-group btn-group-sm" role="group">
-                            <button type="button" class="btn btn-outline-secondary" onclick="updateQuantity(${index}, -1)">-</button>
+                            <button type="button" class="btn btn-outline-secondary" onclick="changeQuantity(${product.id}, -1)">-</button>
                             <button type="button" class="btn btn-outline-secondary px-3" disabled>${quantity}</button>
-                            <button type="button" class="btn btn-outline-secondary" onclick="updateQuantity(${index}, 1)">+</button>
+                            <button type="button" class="btn btn-outline-secondary" onclick="changeQuantity(${product.id}, 1)">+</button>
                         </div>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${index})" title="Remove item">
+                        <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${product.id})" title="Remove item">
                             <i class="bi bi-trash"></i>
                         </button>
                     </td>
                 </tr>`
-        })
+        }
 
         if (totalDisplay) totalDisplay.innerText = `€ ${total.toFixed(2)}`
         if (finalTotalDisplay) finalTotalDisplay.innerText = `€ ${total.toFixed(2)}`
