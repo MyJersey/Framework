@@ -1,0 +1,24 @@
+{
+  "name": "naturalskincare",
+  "version": "1.0.0",
+  "description": "Natural Skincare e-commerce website",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MyJersey/Framework.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/MyJersey/Framework/issues"
+  },
+  "homepage": "https://github.com/MyJersey/Framework#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
