@@ -5,21 +5,6 @@
  */
 
 /**
- * Handle Live Server session management
- */
-if (!StorageService.getLiveServerSession()) {
-    const currentUser = AuthService.getCurrentUser();
-    if (currentUser) {
-        console.log("Live Server: User '" + currentUser + "' is logged in.");
-    } else {
-        console.log("Live Server: No user logged in.");
-    }
-
-    // Mark the Live Server session as initialized to prevent resets on refreshes
-    StorageService.setLiveServerSession("true");
-}
-
-/**
  * Fetches an HTML file from the given URL and injects it into the specified element
  * @param {string} url of the HTML file to fetch
  * @param {string} elementId of the DOM element where content will be injected

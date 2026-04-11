@@ -111,13 +111,12 @@
     <script src="js/services/CartService.js"></script>
     <script src="js/services/UIManager.js"></script>
 
-    <!-- Load the shared layout loader, product catalog, and shop utilities -->
+    <!-- Load the shared layout loader and shop utilities -->
     <script src="js/loader.js"></script>
-    <script src="js/product.js"></script>
     <script src="js/shop.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
 
             // Initialise Lucide SVG icons
             if (typeof lucide !== 'undefined') lucide.createIcons();
@@ -125,11 +124,14 @@
             // Refresh the navbar
             UIManager.refreshNavbar();
 
-            // Populate the New Arrivals grid with up to 4 new products.
+            // Fetch all products from API
+            const res = await fetch('/products');
+            const products = res.ok ? await res.json() : [];
+
+            // Populate the New Arrivals grid with up to 4 new products
             const newArrivalsGrid = document.getElementById('new-arrivals-grid');
-            if (newArrivalsGrid && typeof products !== 'undefined') {
-                const newArrivals = products.filter(p => p.isNew).slice(0, 4);
-                newArrivals.forEach(p => {
+            if (newArrivalsGrid) {
+                products.filter(p => p.isNew).slice(0, 4).forEach(p => {
                     newArrivalsGrid.innerHTML += `
                         <div class="col-md-3">
                             <div class="product-card p-3 shadow-sm bg-white h-100" onclick="goToDetail(${p.id})">
@@ -145,11 +147,10 @@
                 });
             }
 
-            // Populate the Bestsellers grid with up to 4 bestseller products.
+            // Populate the Bestsellers grid with up to 4 bestseller products
             const bestsellerGrid = document.getElementById('bestseller-grid');
-            if (bestsellerGrid && typeof products !== 'undefined') {
-                const bestsellers = products.filter(p => p.isBestseller && !p.isNew).slice(0, 4);
-                bestsellers.forEach(p => {
+            if (bestsellerGrid) {
+                products.filter(p => p.isBestseller && !p.isNew).slice(0, 4).forEach(p => {
                     bestsellerGrid.innerHTML += `
                         <div class="col-md-3">
                             <div class="product-card p-3 shadow-sm bg-white h-100" onclick="goToDetail(${p.id})">
@@ -164,11 +165,10 @@
                 });
             }
 
-            // Populate the Featured Products grid with up to 4 products that are neither new nor bestsellers.
+            // Populate the Featured Products grid with up to 4 products that are neither new nor bestsellers
             const featuredGrid = document.getElementById('featured-grid');
-            if (featuredGrid && typeof products !== 'undefined') {
-                const featured = products.filter(p => !p.isBestseller && !p.isNew).slice(0, 4);
-                featured.forEach(p => {
+            if (featuredGrid) {
+                products.filter(p => !p.isBestseller && !p.isNew).slice(0, 4).forEach(p => {
                     featuredGrid.innerHTML += `
                         <div class="col-md-3">
                             <div class="product-card p-3 shadow-sm bg-white h-100" onclick="goToDetail(${p.id})">
@@ -183,15 +183,6 @@
                 });
             }
         });
-
-        // Saves the clicked product's ID to storage and navigates to the detail page
-        function goToDetail(id) {
-            StorageService.setSelectedProductId(id);
-            window.location.href = 'product-detail.html';
-        }
-
-        
-    
     </script>
     <!-- Bootstrap JS bundle required for navbar toggler and other components -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

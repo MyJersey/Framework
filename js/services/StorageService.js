@@ -7,29 +7,6 @@
 class StorageService {
 
     /**
-     * Retrieves the current cart from storage
-     * @returns {Array} array of cart items
-     */
-    static getCart() {
-        return JSON.parse(localStorage.getItem('cart')) || []
-    }
-
-    /**
-     * Saves the cart to storage
-     * @param {Array} cart array of cart items
-     */
-    static setCart(cart) {
-        localStorage.setItem('cart', JSON.stringify(cart))
-    }
-
-    /**
-     * Clears the entire cart from storage
-     */
-    static clearCart() {
-        localStorage.removeItem('cart')
-    }
-
-    /**
      * Retrieves the currently logged-in user name
      * @returns {string|null} user name if logged in, null otherwise
      */
@@ -75,19 +52,4 @@ class StorageService {
         localStorage.removeItem('selectedProductId')
     }
 
-    /**
-     * Checks if a Live Server session exists
-     * @returns {string|null} session flag if set, null otherwise
-     */
-    static getLiveServerSession() {
-        return sessionStorage.getItem("liveServerSession")
-    }
-
-    /**
-     * Sets the Live Server session flag
-     * @param {string} value value to set
-     */
-    static setLiveServerSession(value) {
-        sessionStorage.setItem("liveServerSession", value)
-    }
 }
