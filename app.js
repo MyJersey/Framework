@@ -66,6 +66,22 @@ app.get('/categories', (req, res) => {
     res.json(categories);
 });
 
+// Get products for a specific category
+app.get('/categories/:category/products', (req, res) => {
+    const data = JSON.parse(fs.readFileSync(PRODUCTS_FILE));
+
+    const category = req.params.category;
+
+    // allow /categories/all/products to mean "all"
+    if (category === 'all') {
+        return res.json(data);
+    }
+
+    // filter by category
+    const filtered = data.filter(p => p.category === category);
+
+    res.json(filtered);
+});
 
 
 // BASKET API
