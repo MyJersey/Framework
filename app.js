@@ -73,17 +73,16 @@ app.get('/categories', (_req, res) => {
 
 // Get products for a specific category
 app.get('/categories/:category/products', (req, res) => {
-    const data = JSON.parse(fs.readFileSync(PRODUCTS_FILE));
-
+    const db = readData();
     const category = req.params.category;
 
     // allow /categories/all/products to mean "all"
     if (category === 'all') {
-        return res.json(data);
+        return res.json(db.product);
     }
 
     // filter by category
-    const filtered = data.filter(p => p.category === category);
+    const filtered = db.products.filter(p => p.category === category);
 
     res.json(filtered);
 });
