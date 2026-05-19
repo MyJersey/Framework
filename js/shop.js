@@ -59,14 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
     async function fetchAndRenderProducts() {
         const params = new URLSearchParams();
 
-        // Category filter
-        if (categoryFilter) {
-            const selectedCategory = categoryFilter.value;
-            if (selectedCategory && selectedCategory !== 'all') {
-                params.append('category', selectedCategory);
-            }
-        }
-
         // Skin type filters
         const selectedSkins = Array.from(skinFilters)
             .filter(input => input.checked)
@@ -83,8 +75,14 @@ document.addEventListener('DOMContentLoaded', () => {
             params.append('collection', selectedCollections.join(','));
         }
 
+        // Choose endpoint based on category selection
+        const selectedCategory = categoryFilter ? categoryFilter.value : 'all';
+        const basePath = selectedCategory && selectedCategory !== 'all'
+            ? `/categories/${encodeURIComponent(selectedCategory)}/products`
+            : '/products';
+
         const queryString = params.toString();
-        const url = queryString ? `/products?${queryString}` : '/products';
+        const url = queryString ? `${basePath}?${queryString}` : basePath;
 
         try {
             const res = await fetch(url);
