@@ -1,0 +1,14 @@
+{
+  "name": "naturalskincare",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n server,client -c green,cyan \"npm --prefix server start\" \"npm --prefix client run dev\"",
+    "dev:server": "npm --prefix server start",
+    "dev:client": "npm --prefix client run dev",
+    "build": "npm --prefix client run build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
