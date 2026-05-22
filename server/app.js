@@ -7,6 +7,7 @@ const cartRouter = require('./cart/cart.router');
 const app = express();
 const PORT = 3000;
 
+// parse incoming JSON request bodies (required for POST/PUT endpoints)
 app.use(express.json());
 
 app.use('/products', productsRouter);

@@ -12,6 +12,7 @@ const COLLECTIONS = [
 ]
 
 export default function Shop() {
+  // Read the URL query string so links like /shop?filter=new pre-tick the right checkbox.
   const [searchParams] = useSearchParams()
   const initialCollection = searchParams.get('filter')
 
@@ -19,16 +20,21 @@ export default function Shop() {
   const [category, setCategory] = useState('all')
   const [skins, setSkins] = useState<string[]>([])
   const [collections, setCollections] = useState<string[]>(
+    // pre-select the collection from the URL on first render only
     initialCollection === 'bestsellers' || initialCollection === 'new'
       ? [initialCollection]
       : []
   )
   const [products, setProducts] = useState<Product[]>([])
 
+  // Categories only need to be fetched once — they don't change with filters.
   useEffect(() => {
     getCategories().then(setCategories).catch(() => setCategories([]))
   }, [])
 
+  // Re-fetch products whenever a filter changes.
+  // Using the category endpoint when a category is selected is more accurate
+  // than filtering on the client side.
   useEffect(() => {
     const filters = {
       skin: skins.length ? skins.join(',') : undefined,
@@ -40,6 +46,7 @@ export default function Shop() {
     request.then(setProducts).catch(() => setProducts([]))
   }, [category, skins, collections])
 
+  // Toggle helpers: if the value is already selected, remove it; otherwise add it.
   function toggleSkin(value: string) {
     setSkins(prev =>
       prev.includes(value) ? prev.filter(s => s !== value) : [...prev, value]

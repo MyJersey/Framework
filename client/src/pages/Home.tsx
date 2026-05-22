@@ -9,19 +9,23 @@ export default function Home() {
   const { user } = useAuth()
   const [products, setProducts] = useState<Product[]>([])
 
+  // Fetch all products once when the page loads — no filters needed for the home page.
   useEffect(() => {
     getAllProducts().then(setProducts).catch(() => setProducts([]))
   }, [])
 
+  // Split the full product list into three groups for the three home sections.
+  // slice(0, 4) limits each section to four cards maximum.
   const newArrivals = products.filter(p => p.isNew).slice(0, 4)
   const bestsellers = products.filter(p => p.isBestseller && !p.isNew).slice(0, 4)
-  const featured = products.filter(p => !p.isBestseller && !p.isNew).slice(0, 4)
+  const featured    = products.filter(p => !p.isBestseller && !p.isNew).slice(0, 4)
 
   return (
     <>
       <header className="hero-section">
         <div className="container">
           <h1 className="display-2 fw-bold mb-3">Natural Skincare</h1>
+          {/* personalised greeting visible only after registration */}
           {user && (
             <p className="lead mb-2 fs-5">Welcome back, {user.firstName}!</p>
           )}
@@ -78,6 +82,8 @@ export default function Home() {
   )
 }
 
+// ProductSection is defined here instead of in its own file because it's
+// only used by Home. Keeping it local avoids an unnecessary extra file.
 interface ProductSectionProps {
   title: string
   products: Product[]

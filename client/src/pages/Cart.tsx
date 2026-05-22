@@ -16,8 +16,13 @@ export default function Cart() {
   const { refresh: refreshNavbar } = useCart()
   const [rows, setRows] = useState<CartRow[]>([])
 
+  // useCallback prevents loadCart from being recreated on every render,
+  // which would cause the useEffect below to loop indefinitely.
   const loadCart = useCallback(async () => {
     const items = await getCart(CART_USER)
+    // The cart only stores productId + quantity, not the full product data.
+    // We fetch each product in parallel with Promise.all to avoid waiting
+    // for each request one by one.
     const loaded = await Promise.all(
       items.map(async (item) => ({
         product: await getProductById(item.productId),
@@ -55,6 +60,7 @@ export default function Cart() {
       return
     }
     alert('Thank you for your order! (Checkout simulated)')
+    // Remove all items in parallel — order doesn't matter here
     await Promise.all(rows.map(r => removeAll(CART_USER, r.product.id)))
     await loadCart()
     await refreshNavbar()
@@ -113,6 +119,7 @@ export default function Cart() {
                             className="btn btn-outline-secondary"
                             onClick={() => handleMinus(product.id)}
                           >-</button>
+                          {/* disabled button used purely to display the current quantity */}
                           <button
                             type="button"
                             className="btn btn-outline-secondary px-3"

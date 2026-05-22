@@ -15,9 +15,19 @@ import Returns from './pages/Returns'
 export default function App() {
   return (
     <BrowserRouter>
+      {/*
+        Providers are placed outside Routes so that every page — and Layout
+        itself — can read auth and cart state via useAuth() and useCart().
+        The order matters: CartProvider is inside AuthProvider because in a
+        future version the cart might depend on who is logged in.
+      */}
       <AuthProvider>
         <CartProvider>
           <Routes>
+            {/*
+              All routes share a single Layout (Navbar + Footer).
+              Outlet inside Layout is where the matched child route renders.
+            */}
             <Route element={<Layout />}>
               <Route path="/" element={<Home />} />
               <Route path="/shop" element={<Shop />} />

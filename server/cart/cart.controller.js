@@ -12,6 +12,7 @@ function addToCart(req, res) {
     const user = req.params.user;
     const productId = parseInt(req.params.productId);
 
+    // auto-create the cart if this user has never had one
     if (!db.carts[user]) {
         db.carts[user] = [];
     }
@@ -19,8 +20,10 @@ function addToCart(req, res) {
     const existing = db.carts[user].find(item => item.productId === productId);
 
     if (existing) {
+        // product already in cart: increment quantity
         existing.quantity += 1;
     } else {
+        // first time this product is added
         db.carts[user].push({ productId, quantity: 1 });
     }
 
@@ -30,6 +33,7 @@ function addToCart(req, res) {
 
 function getCart(req, res) {
     const db = readData();
+    // return empty array if the cart doesn't exist yet
     res.json(db.carts[req.params.user] || []);
 }
 
@@ -49,8 +53,10 @@ function removeOneFromCart(req, res) {
     }
 
     if (item.quantity > 1) {
+        // still has more than one unit: just decrement
         item.quantity -= 1;
     } else {
+        // last unit: remove the entry entirely
         db.carts[user] = db.carts[user].filter(p => p.productId !== productId);
     }
 

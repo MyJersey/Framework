@@ -31,6 +31,11 @@ export default function AppNavbar() {
           <ul className="navbar-nav gap-3">
             {NAV_LINKS.map(({ to, label, end }) => (
               <li key={to} className="nav-item">
+                {/*
+                  NavLink automatically adds the 'active' class when the current
+                  URL matches the 'to' prop. The 'end' prop is needed for '/'
+                  so it doesn't stay active on every page (since every URL starts with /).
+                */}
                 <NavLink
                   end={end}
                   className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}
@@ -46,6 +51,7 @@ export default function AppNavbar() {
 
         <div className="d-flex align-items-center gap-3 order-lg-3 ms-auto ms-lg-0">
           {user ? (
+            // registered: show the name as a clickable logout button
             <button
               className="btn btn-link text-dark p-0 text-decoration-none"
               onClick={handleLogout}
@@ -53,6 +59,7 @@ export default function AppNavbar() {
               Hi, {user.firstName}
             </button>
           ) : (
+            // anonymous: person icon links to the registration page
             <Link to="/register" className="text-dark">
               <i className="bi bi-person fs-4" />
             </Link>
@@ -60,6 +67,7 @@ export default function AppNavbar() {
 
           <Link to="/cart" className="text-dark position-relative me-2">
             <i className="bi bi-bag fs-5" />
+            {/* badge only renders when there is at least one item */}
             {itemCount > 0 && (
               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                 {itemCount}
@@ -67,6 +75,7 @@ export default function AppNavbar() {
             )}
           </Link>
 
+          {/* toggles the mobile menu open/closed */}
           <button
             className="navbar-toggler"
             type="button"

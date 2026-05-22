@@ -11,6 +11,10 @@ interface AuthContextValue {
 const AuthContext = createContext<AuthContextValue | null>(null)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  // Passing getStoredUser (without calling it) is "lazy initialisation":
+  // React calls the function once on mount to set the initial state.
+  // This means if the user registered in a previous session, they're
+  // immediately recognised when the page loads.
   const [user, setUser] = useState<RegisteredUser | null>(getStoredUser)
 
   function register(u: RegisteredUser) {
@@ -21,6 +25,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   function logout() {
     removeUser()
     setUser(null)
+    // note: the cart is intentionally NOT cleared on logout
   }
 
   return (
@@ -30,6 +35,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   )
 }
 
+// Custom hook so components don't need to import AuthContext directly.
+// The error ensures this is never called outside of AuthProvider.
 export function useAuth() {
   const ctx = useContext(AuthContext)
   if (!ctx) throw new Error('useAuth must be used within AuthProvider')

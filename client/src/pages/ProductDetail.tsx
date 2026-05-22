@@ -6,6 +6,7 @@ import { CART_USER, useCart } from '../contexts/CartContext'
 import type { Product } from '../types'
 
 export default function ProductDetail() {
+  // useParams reads the ':id' segment from the current URL (defined in App.tsx)
   const { id } = useParams<{ id: string }>()
   const { refresh } = useCart()
   const [product, setProduct] = useState<Product | null>(null)
@@ -21,6 +22,9 @@ export default function ProductDetail() {
 
   async function handleAddToCart() {
     if (!product) return
+    // addItem adds +1 unit per call, so we loop to match the selected quantity.
+    // Calls are sequential (await inside the loop) to avoid race conditions
+    // where concurrent writes could corrupt the cart state on the server.
     for (let i = 0; i < quantity; i++) {
       await addItem(CART_USER, product.id)
     }
@@ -37,6 +41,7 @@ export default function ProductDetail() {
     )
   }
 
+  // product is null while the fetch is in progress
   if (!product) {
     return <div className="container my-5 py-5 text-center">Loading...</div>
   }

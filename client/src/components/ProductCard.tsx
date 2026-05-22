@@ -8,12 +8,15 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   return (
     <div className="col-md-3">
+      {/* Wrapping the whole card in a Link means clicking anywhere on it navigates to the detail page */}
       <Link to={`/product/${product.id}`} className="text-decoration-none text-reset">
         <div className="product-card p-3 shadow-sm bg-white h-100">
           <div className="product-img-wrapper position-relative">
             {product.isNew && (
               <span className="badge bg-success position-absolute top-0 start-0 m-2">New</span>
             )}
+            {/* The leading slash makes this an absolute path from the server root.
+                Images live in client/public/img/ and Vite serves public/ at '/'. */}
             <img src={`/${product.image}`} className="img-fluid" alt={product.name} />
           </div>
           <h6 className="mb-1 fw-bold">{product.name}</h6>
