@@ -8,7 +8,7 @@ import { useAuth } from '../contexts/AuthContext'
 // so we don't have to write the interface separately.
 const schema = z.object({
   firstName:       z.string().min(2, 'First name must be at least 2 characters'),
-  familyName:      z.string().min(2, 'Family name must be at least 2 characters'),
+  familyName:      z.string().min(2, 'Last name must be at least 2 characters'),
   email:           z.email('Please enter a valid email address'),
   password:        z.string().min(8, 'Password must be at least 8 characters'),
   confirmPassword: z.string(),
@@ -77,7 +77,7 @@ export default function Register() {
             </div>
 
             <div className="mb-3">
-              <label htmlFor="familyName" className="form-label">Family Name</label>
+              <label htmlFor="familyName" className="form-label">Last Name</label>
               <input
                 type="text"
                 id="familyName"
