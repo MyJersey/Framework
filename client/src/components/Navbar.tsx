@@ -59,8 +59,8 @@ export default function AppNavbar() {
               Hi, {user.firstName}
             </button>
           ) : (
-            // anonymous: person icon links to the registration page
-            <Link to="/register" className="text-dark">
+            // anonymous: person icon links to the login page
+            <Link to="/login" className="text-dark">
               <i className="bi bi-person fs-4" />
             </Link>
           )}
