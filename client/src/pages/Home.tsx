@@ -24,11 +24,11 @@ export default function Home() {
     <>
       <header className="hero-section">
         <div className="container">
-          <h1 className="display-2 fw-bold mb-3">Natural Skincare</h1>
           {/* personalised greeting visible only after registration */}
           {user && (
             <p className="lead mb-2 fs-5">Welcome back, {user.firstName}!</p>
           )}
+          <h1 className="display-2 fw-bold mb-3">Natural Skincare</h1>
           <p className="lead mb-4 fs-4">Pure formulas, clinically proven results for your skin.</p>
           <Link to="/shop" className="btn btn-outline-light px-5 py-3 rounded-0">
             DISCOVER THE COLLECTION
