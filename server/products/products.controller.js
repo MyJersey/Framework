@@ -1,22 +1,24 @@
 const { readData } = require('../data/dataAccess');
 
+// Returns all products, optionally filtered by skin type and/or collection.
+// Query params:
+//   skin       - comma-separated skin types (e.g. "Dry,Oily")
+//   collection - comma-separated collection names (e.g. "bestsellers,new")
 function getAllProducts(req, res) {
     const db = readData();
     let products = db.products;
 
     const { skin, collection } = req.query;
 
-    // ?skin= accepts a comma-separated list, e.g. ?skin=Dry,Sensitive
+    // Filter by skin type; products tagged "All types" always pass through
     if (skin) {
         const skins = skin.split(',');
-        // "All types" products are returned regardless of which skin is filtered
         products = products.filter(p =>
             skins.includes(p.skinType) || p.skinType === 'All types'
         );
     }
 
-    // ?collection= accepts "bestsellers", "new", or both comma-separated.
-    // Multiple collections are OR-ed: a product matches if it fits any of them.
+    // Filter by collection; a product matches if it belongs to any of the requested collections
     if (collection) {
         const cols = collection.split(',');
         products = products.filter(p => {
@@ -30,10 +32,13 @@ function getAllProducts(req, res) {
     res.json(products);
 }
 
+// Returns a single product by its numeric ID.
+// Responds with 404 if no product with that ID exists.
 function getProductById(req, res) {
     const db = readData();
-    // == instead of === because req.params.id is a string and p.id is a number
-    const product = db.products.find(p => p.id == req.params.id);
+
+    // req.params.id is always a string; parseInt ensures a strict numeric comparison
+    const product = db.products.find(p => p.id === parseInt(req.params.id, 10));
 
     if (!product) {
         return res.status(404).json({ error: 'Product not found' });

@@ -1,24 +1,31 @@
 const { readData } = require('../data/dataAccess');
 
-// _req signals intentionally unused parameter (Express always passes req and res)
+// Returns the list of unique category names derived from all products.
+// _req is prefixed with underscore to signal that the request object is intentionally unused.
 function getCategories(_req, res) {
     const db = readData();
-    // Set removes duplicates; spread converts it back to an array
+    // Set automatically removes duplicate category names; spread converts it back to an array
     const categories = [...new Set(db.products.map(p => p.category))];
     res.json(categories);
 }
 
+// Returns all products belonging to a given category, optionally filtered by skin type and/or collection.
+// Route param:
+//   category   - a category name, or "all" to return products from every category
+// Query params:
+//   skin       - comma-separated skin types (e.g. "Dry,Oily")
+//   collection - comma-separated collection names (e.g. "bestsellers,new")
 function getProductsByCategory(req, res) {
     const db = readData();
     const category = req.params.category;
     const { skin, collection } = req.query;
 
-    // "all" is a special value used by the client when no category is selected
+    // "all" is a special value used by the client when no category filter is active
     let products = category === 'all'
         ? db.products
         : db.products.filter(p => p.category === category);
 
-    // same skin and collection filter logic as in products.controller.js
+    // Filter by skin type; products tagged "All types" always pass through
     if (skin) {
         const skins = skin.split(',');
         products = products.filter(p =>
@@ -26,6 +33,7 @@ function getProductsByCategory(req, res) {
         );
     }
 
+    // Filter by collection; a product matches if it belongs to any of the requested collections
     if (collection) {
         const cols = collection.split(',');
         products = products.filter(p => {
