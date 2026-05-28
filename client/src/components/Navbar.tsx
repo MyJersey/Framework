@@ -25,7 +25,7 @@ export default function AppNavbar() {
         <Link className="navbar-brand fs-3 m-0" to="/">Natural Skincare</Link>
 
         <div
-          className={`collapse navbar-collapse justify-content-center order-lg-2${expanded ? ' show' : ''}`}
+          className={`collapse navbar-collapse justify-content-center${expanded ? ' show' : ''}`}
           id="navbarNav"
         >
           <ul className="navbar-nav gap-3">
@@ -49,7 +49,7 @@ export default function AppNavbar() {
           </ul>
         </div>
 
-        <div className="d-flex align-items-center gap-3 order-lg-3 ms-auto ms-lg-0">
+        <div className="d-flex align-items-center gap-3 ms-auto">
           {user ? (
             // registered: show the name as a clickable logout button
             <button
