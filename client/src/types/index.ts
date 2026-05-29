@@ -21,10 +21,6 @@ export interface CartItem {
   quantity: number;
 }
 
-export interface Category {
-  name: string;
-}
-
 export interface RegisteredUser {
   firstName: string;
   familyName: string;

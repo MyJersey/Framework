@@ -26,33 +26,35 @@ export function removeUser(): void {
   localStorage.removeItem(SESSION_KEY);
 }
 
-// Credentials: permanent record that survives logout, used by login to verify.
-export function isEmailRegistered(email: string): boolean {
+// Credentials: permanent array that survives logout, used by login to verify.
+// Stored as an array so multiple users can register independently.
+function readAllCredentials(): StoredCredentials[] {
   const raw = localStorage.getItem(CREDENTIALS_KEY);
-  if (!raw) return false;
+  if (!raw) return [];
   try {
-    const creds = JSON.parse(raw) as StoredCredentials;
-    return creds.email === email;
+    const parsed = JSON.parse(raw);
+    // Handle old format: a single credentials object instead of an array.
+    if (!Array.isArray(parsed)) return [parsed as StoredCredentials];
+    return parsed as StoredCredentials[];
   } catch {
-    return false;
+    return [];
   }
 }
 
+export function isEmailRegistered(email: string): boolean {
+  return readAllCredentials().some(c => c.email === email);
+}
+
 export function storeCredentials(user: RegisteredUser, password: string): void {
-  const creds: StoredCredentials = { ...user, password };
+  const creds = readAllCredentials();
+  creds.push({ ...user, password });
   localStorage.setItem(CREDENTIALS_KEY, JSON.stringify(creds));
 }
 
 export function checkCredentials(email: string, password: string): RegisteredUser | null {
-  const raw = localStorage.getItem(CREDENTIALS_KEY);
-  if (!raw) return null;
-  try {
-    const creds = JSON.parse(raw) as StoredCredentials;
-    if (creds.email === email && creds.password === password) {
-      return { firstName: creds.firstName, familyName: creds.familyName, email: creds.email };
-    }
-    return null;
-  } catch {
-    return null;
-  }
+  const match = readAllCredentials().find(
+    c => c.email === email && c.password === password
+  );
+  if (!match) return null;
+  return { firstName: match.firstName, familyName: match.familyName, email: match.email };
 }

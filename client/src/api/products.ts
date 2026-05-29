@@ -14,6 +14,7 @@ export async function getAllProducts(filters: ProductFilters = {}): Promise<Prod
 
   const query = params.toString();
   const res = await fetch(`/products${query ? '?' + query : ''}`);
+  if (!res.ok) throw new Error(`Failed to fetch products: ${res.status}`);
   return res.json();
 }
 
