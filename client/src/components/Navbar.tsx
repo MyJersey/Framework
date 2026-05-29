@@ -2,7 +2,15 @@ import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { useCart } from '../contexts/CartContext'
+/*
+    useState: For managing the mobile menu's expanded/collapsed state.
+    Link, NavLink: Components from react-router-dom for internal navigation.
+    useAuth: Custom context hook to access the current user and logout function.
+    useCart: Custom context hook to access the number of items in the cart.
+*/
 
+//navigation links for the navbar, they are rendered in a loop as nav_links elements. 
+//The end={end} prop ensures that the "Home" link only appears active on the home page.
 const NAV_LINKS = [
   { to: '/', label: 'Home', end: true },
   { to: '/shop', label: 'Shop', end: false },
@@ -11,10 +19,22 @@ const NAV_LINKS = [
 ]
 
 export default function AppNavbar() {
+  // Get user info and logout function from custom Auth context
   const { user, logout } = useAuth()
-  const { itemCount } = useCart()
-  const [expanded, setExpanded] = useState(false)
 
+  // Get the current cart item count from custom Cart context
+  const { itemCount } = useCart()
+
+  // Track if the mobile menu is expanded (open) or collapsed
+  const [isMenuExpanded, setIsMenuExpanded] = useState(false)
+
+  // Handle user logout; show a confirmation dialog before logging out
+  /*
+    If a user is logged in (user exists):
+        Their first name is displayed as a button—which when clicked, triggers logout after confirmation.
+    If not logged in:
+        A user icon is shown, linking to the login page.
+ */
   function handleLogout() {
     if (window.confirm('Log out?')) logout()
   }
@@ -25,7 +45,7 @@ export default function AppNavbar() {
         <Link className="navbar-brand fs-3 m-0" to="/">Natural Skincare</Link>
 
         <div
-          className={`collapse navbar-collapse justify-content-center order-lg-2${expanded ? ' show' : ''}`}
+          className={`collapse navbar-collapse justify-content-center order-lg-2${isMenuExpanded ? ' show' : ''}`}
           id="navbarNav"
         >
           <ul className="navbar-nav gap-3">
@@ -40,7 +60,7 @@ export default function AppNavbar() {
                   end={end}
                   className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}
                   to={to}
-                  onClick={() => setExpanded(false)}
+                  onClick={() => setIsMenuExpanded(false)}
                 >
                   {label}
                 </NavLink>
@@ -80,8 +100,8 @@ export default function AppNavbar() {
             className="navbar-toggler"
             type="button"
             aria-controls="navbarNav"
-            aria-expanded={expanded}
-            onClick={() => setExpanded(e => !e)}
+            aria-expanded={isMenuExpanded}
+            onClick={() => setIsMenuExpanded(prevState => !prevState)}
           >
             <span className="navbar-toggler-icon" />
           </button>
