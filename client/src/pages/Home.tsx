@@ -61,21 +61,21 @@ export default function Home() {
       <ProductSection
         title="New Arrivals"
         products={newArrivals}
-        ctaTo="/shop?filter=new"
-        ctaLabel="Discover New in"
+        buttonLink="/shop?filter=new"
+        buttonText="Discover New in"
         bgClass="bg-light"
       />
       <ProductSection
         title="Bestsellers"
         products={bestsellers}
-        ctaTo="/shop?filter=bestsellers"
-        ctaLabel="Shop All Bestsellers"
+        buttonLink="/shop?filter=bestsellers"
+        buttonText="Shop All Bestsellers"
       />
       <ProductSection
         title="Featured Products"
         products={featured}
-        ctaTo="/shop"
-        ctaLabel="View All Products"
+        buttonLink="/shop"
+        buttonText="View All Products"
         bgClass="bg-light"
       />
     </>
@@ -87,12 +87,12 @@ export default function Home() {
 interface ProductSectionProps {
   title: string
   products: Product[]
-  ctaTo: string
-  ctaLabel: string
+  buttonLink: string
+  buttonText: string
   bgClass?: string
 }
 
-function ProductSection({ title, products, ctaTo, ctaLabel, bgClass = '' }: ProductSectionProps) {
+function ProductSection({ title, products, buttonLink, buttonText, bgClass = '' }: ProductSectionProps) {
   return (
     <section className={`py-5 ${bgClass}`}>
       <div className="container my-5">
@@ -101,7 +101,7 @@ function ProductSection({ title, products, ctaTo, ctaLabel, bgClass = '' }: Prod
           {products.map(p => <ProductCard key={p.id} product={p} />)}
         </div>
         <div className="text-center mt-5">
-          <Link to={ctaTo} className="btn btn-outline-dark px-4 py-2">{ctaLabel}</Link>
+          <Link to={buttonLink} className="btn btn-outline-dark px-4 py-2">{buttonText}</Link>
         </div>
       </div>
     </section>
