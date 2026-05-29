@@ -111,11 +111,7 @@ The home page opens with a full-width hero section featuring a botanical photogr
 <!-- INSERT SCREENSHOT: home page -->
 ![Figure 1 — Home page](./images/home.png)
 
-*Figure 1a - Home page layout (hero section)*
-
-![Figure 1b — Home page](./images/home1.png)
-
-*Figure 1b - Home page layout (product sections)*
+*Figure 1 - Home page layout (hero section)*
 
 ---
 
@@ -158,13 +154,12 @@ A centred registration form collects first name, last name, email, password, and
 
 The login page allows returning users to sign in with their email and password. Both pages are accessible from the user icon in the navbar.
 
-![Figure 5 — Login page](./images/login.png)
-
-*Figure 5 - Login page layout*
-
-![Figure 6 — Registration page](./images/register.png)
-
-*Figure 6 - Registration page layout*
+<table>
+<tr>
+<td align="center"><img src="./images/login.png" /><br/><em>Figure 5 - Login page layout</em></td>
+<td align="center"><img src="./images/register.png" /><br/><em>Figure 6 - Registration page layout</em></td>
+</tr>
+</table>
 
 ---
 

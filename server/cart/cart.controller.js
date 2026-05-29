@@ -1,4 +1,4 @@
-const { readCarts, writeCarts } = require('../data/dataAccess');
+const { readData, readCarts, writeCarts } = require('../data/dataAccess');
 
 function createCart(req, res) {
     const carts = readCarts();
@@ -11,6 +11,17 @@ function addToCart(req, res) {
     const carts = readCarts();
     const user = req.params.user;
     const productId = parseInt(req.params.productId);
+
+    // reject non-numeric IDs before touching any data
+    if (isNaN(productId)) {
+        return res.status(400).send('Invalid product ID');
+    }
+
+    // reject IDs that don't exist in the catalogue
+    const product = readData().products.find(p => p.id === productId);
+    if (!product) {
+        return res.status(404).send('Product not found');
+    }
 
     // auto-create the cart if this user has never had one
     if (!carts[user]) {
@@ -42,14 +53,18 @@ function removeOneFromCart(req, res) {
     const user = req.params.user;
     const productId = parseInt(req.params.productId);
 
+    if (isNaN(productId)) {
+        return res.status(400).send('Invalid product ID');
+    }
+
     if (!carts[user]) {
-        return res.send('Cart not found');
+        return res.status(404).send('Cart not found');
     }
 
     const item = carts[user].find(p => p.productId === productId);
 
     if (!item) {
-        return res.send('Product not in cart');
+        return res.status(404).send('Product not in cart');
     }
 
     if (item.quantity > 1) {
@@ -68,6 +83,10 @@ function removeAllFromCart(req, res) {
     const carts = readCarts();
     const user = req.params.user;
     const productId = parseInt(req.params.productId);
+
+    if (isNaN(productId)) {
+        return res.status(400).send('Invalid product ID');
+    }
 
     if (carts[user]) {
         carts[user] = carts[user].filter(p => p.productId !== productId);
