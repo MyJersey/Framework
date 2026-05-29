@@ -1,3 +1,10 @@
+/*
+    useState: Tracks the login error state (if authentication fails).
+    useNavigate, Link: Handles SPA navigation and links.
+    useForm: Manages form state and validation.
+    zodResolver/z: Strong form validation schema.
+    useAuth: Hook to get the login function from context.
+ */
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
