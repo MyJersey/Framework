@@ -3,24 +3,31 @@ import { Link } from 'react-router-dom'
 import type { Product } from '../types'
 import { addItem } from '../api/cart'
 import { useCart, CART_USER } from '../contexts/CartContext'
+/*
+    useState: Manages the local loading state for the Add to Cart operation.
+    Link: Enables navigation to the product detail page.
+    Product: TypeScript type for a product (enforces prop type).
+    addItem: API call to add an item to the cart.
+    useCart, CART_USER: Access to cart context and identifier for the cart.
+*/
 
 interface ProductCardProps {
   product: Product
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const { refresh } = useCart()
-  const [adding, setAdding] = useState(false)
+  const { refresh } = useCart() //refresh cart items
+  const [addingToCart, setAddingToCart] = useState(false)
 
   async function handleAddToCart(e: React.MouseEvent) {
     // Stop the click from reaching the <Link> so the page doesn't navigate.
-    e.stopPropagation()
+    e.stopPropagation() // Prevent navigating to the product page
     e.preventDefault()
-    if (adding) return
-    setAdding(true)
-    await addItem(CART_USER, product.id)
-    await refresh()
-    setAdding(false)
+    if (addingToCart) return // Prevent multiple clicks while adding
+    setAddingToCart(true)
+    await addItem(CART_USER, product.id) // Perform the add to cart action
+    await refresh() // Refresh cart state to reflect the new item
+    setAddingToCart(false)
   }
 
   return (
@@ -43,10 +50,10 @@ export default function ProductCard({ product }: ProductCardProps) {
             <button
               className="btn btn-sm btn-outline-success"
               onClick={handleAddToCart}
-              disabled={adding}
+              disabled={addingToCart}
               title="Add to cart"
             >
-              {adding ? '…' : '+'}
+              {addingToCart ? '…' : '+'}
             </button>
           </div>
         </div>
