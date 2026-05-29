@@ -8,9 +8,11 @@ export default defineConfig({
     // This avoids CORS errors: the browser sees everything on port 5173,
     // but Vite silently forwards /products, /categories, /cart to port 3000.
     proxy: {
-      '/products':   'http://localhost:3000',
-      '/categories': 'http://localhost:3000',
-      '/cart':       'http://localhost:3000',
+      '/products':    'http://localhost:3000',
+      '/categories':  'http://localhost:3000',
+      // '^/cart/' matches /cart/guest, /cart/guest/1, etc.
+      // but NOT /cart alone, which is a React route and must reach index.html
+      '^/cart/': 'http://localhost:3000',
     },
   },
 })

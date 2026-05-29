@@ -26,5 +26,8 @@ dist-ssr
 *.sln
 *.sw?
 
+# Cart state - runtime data
+server/data/carts.json
+
 # Documentation
 /docs

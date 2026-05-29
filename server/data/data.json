@@ -75,7 +75,7 @@
         "Glycerin",
         "Aloe Extract"
       ],
-      "howToUse": "Apply an even layer to clean skin. Leave on 10–15 minutes, then rinse thoroughly with warm water."
+      "howToUse": "Apply an even layer to clean skin. Leave on 10\u201315 minutes, then rinse thoroughly with warm water."
     },
     {
       "id": 5,
@@ -95,7 +95,7 @@
         "Rosehip Oil",
         "Tocopherol (Vitamin E)"
       ],
-      "howToUse": "Apply 2–3 drops to clean skin at night. Gently press into face and neck as the last step of your evening skincare routine."
+      "howToUse": "Apply 2\u20133 drops to clean skin at night. Gently press into face and neck as the last step of your evening skincare routine."
     },
     {
       "id": 6,
@@ -176,7 +176,7 @@
         "Water",
         "Cleansing agents"
       ],
-      "howToUse": "Apply a small amount to damp skin and massage gently in circular motions, avoiding the eye area. Rinse thoroughly with warm water. Use 2–3 times per week."
+      "howToUse": "Apply a small amount to damp skin and massage gently in circular motions, avoiding the eye area. Rinse thoroughly with warm water. Use 2\u20133 times per week."
     },
     {
       "id": 10,
@@ -236,7 +236,7 @@
         "Glycerin",
         "Water"
       ],
-      "howToUse": "Apply 2–3 drops to clean skin before moisturizer. Use morning and night."
+      "howToUse": "Apply 2\u20133 drops to clean skin before moisturizer. Use morning and night."
     },
     {
       "id": 13,
@@ -255,7 +255,7 @@
         "Conditioning agents",
         "Plant extracts"
       ],
-      "howToUse": "Apply to clean skin. Leave on for 5–10 minutes, then rinse thoroughly."
+      "howToUse": "Apply to clean skin. Leave on for 5\u201310 minutes, then rinse thoroughly."
     },
     {
       "id": 14,
@@ -352,7 +352,7 @@
         "Botanical extracts",
         "Hydrating serum base"
       ],
-      "howToUse": "Place the mask on clean skin and leave on for 15–20 minutes. Remove and gently massage the remaining serum into the skin."
+      "howToUse": "Place the mask on clean skin and leave on for 15\u201320 minutes. Remove and gently massage the remaining serum into the skin."
     },
     {
       "id": 19,
@@ -390,31 +390,7 @@
         "Vitamin E",
         "Botanical oils"
       ],
-      "howToUse": "Apply 2–3 drops to face after serum or moisturizer to seal in hydration."
+      "howToUse": "Apply 2\u20133 drops to face after serum or moisturizer to seal in hydration."
     }
-  ],
-  "carts": {
-    "123": [
-      {
-        "productId": 1,
-        "quantity": 5
-      }
-    ],
-    "guest": [
-      {
-        "productId": 1,
-        "quantity": 3
-      }
-    ],
-    "jersey": [
-      {
-        "productId": 2,
-        "quantity": 3
-      },
-      {
-        "productId": 1,
-        "quantity": 14
-      }
-    ]
-  }
+  ]
 }

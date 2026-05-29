@@ -7,9 +7,14 @@ import { useAuth } from '../contexts/AuthContext'
 // Schema defines the validation rules. Zod also infers the TypeScript type,
 // so we don't have to write the interface separately.
 const schema = z.object({
-  firstName:  z.string().min(2, 'First name must be at least 2 characters'),
-  familyName: z.string().min(2, 'Family name must be at least 2 characters'),
-  email:      z.email('Please enter a valid email address'),
+  firstName:       z.string().min(2, 'First name must be at least 2 characters'),
+  familyName:      z.string().min(2, 'Last name must be at least 2 characters'),
+  email:           z.email('Please enter a valid email address'),
+  password:        z.string().min(8, 'Password must be at least 8 characters'),
+  confirmPassword: z.string(),
+}).refine(d => d.password === d.confirmPassword, {
+  message: 'Passwords do not match',
+  path: ['confirmPassword'],
 })
 
 type FormData = z.infer<typeof schema>
@@ -23,6 +28,7 @@ export default function Register() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isValid },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -32,7 +38,12 @@ export default function Register() {
   })
 
   function onSubmit(data: FormData) {
-    registerUser(data)
+    const { password, confirmPassword: _, ...user } = data
+    const ok = registerUser(user, password)
+    if (!ok) {
+      setError('email', { message: 'This email is already registered' })
+      return
+    }
     navigate('/')
   }
 
@@ -66,7 +77,7 @@ export default function Register() {
             </div>
 
             <div className="mb-3">
-              <label htmlFor="familyName" className="form-label">Family Name</label>
+              <label htmlFor="familyName" className="form-label">Last Name</label>
               <input
                 type="text"
                 id="familyName"
@@ -78,7 +89,7 @@ export default function Register() {
               )}
             </div>
 
-            <div className="mb-4">
+            <div className="mb-3">
               <label htmlFor="email" className="form-label">Email</label>
               <input
                 type="email"
@@ -88,6 +99,32 @@ export default function Register() {
               />
               {errors.email && (
                 <div className="invalid-feedback">{errors.email.message}</div>
+              )}
+            </div>
+
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">Password</label>
+              <input
+                type="password"
+                id="password"
+                className={`form-control rounded-0 ${errors.password ? 'is-invalid' : ''}`}
+                {...register('password')}
+              />
+              {errors.password && (
+                <div className="invalid-feedback">{errors.password.message}</div>
+              )}
+            </div>
+
+            <div className="mb-4">
+              <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                className={`form-control rounded-0 ${errors.confirmPassword ? 'is-invalid' : ''}`}
+                {...register('confirmPassword')}
+              />
+              {errors.confirmPassword && (
+                <div className="invalid-feedback">{errors.confirmPassword.message}</div>
               )}
             </div>
 

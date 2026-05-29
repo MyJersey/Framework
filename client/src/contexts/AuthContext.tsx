@@ -1,25 +1,35 @@
 import { createContext, useContext, useState } from 'react'
 import type { RegisteredUser } from '../types'
-import { getStoredUser, storeUser, removeUser } from '../utils/storage'
+import { getStoredUser, storeUser, removeUser, storeCredentials, checkCredentials, isEmailRegistered } from '../utils/storage'
 
 interface AuthContextValue {
   user: RegisteredUser | null
-  register: (user: RegisteredUser) => void
+  register: (user: RegisteredUser, password: string) => boolean
+  login: (email: string, password: string) => boolean
   logout: () => void
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  // Passing getStoredUser (without calling it) is "lazy initialisation":
-  // React calls the function once on mount to set the initial state.
-  // This means if the user registered in a previous session, they're
-  // immediately recognised when the page loads.
   const [user, setUser] = useState<RegisteredUser | null>(getStoredUser)
 
-  function register(u: RegisteredUser) {
+  function register(u: RegisteredUser, password: string): boolean {
+    if (isEmailRegistered(u.email)) return false
+    storeCredentials(u, password)
     storeUser(u)
     setUser(u)
+    return true
+  }
+
+  function login(email: string, password: string): boolean {
+    const found = checkCredentials(email, password)
+    if (found) {
+      storeUser(found)
+      setUser(found)
+      return true
+    }
+    return false
   }
 
   function logout() {
@@ -29,7 +39,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, register, logout }}>
+    <AuthContext.Provider value={{ user, register, login, logout }}>
       {children}
     </AuthContext.Provider>
   )

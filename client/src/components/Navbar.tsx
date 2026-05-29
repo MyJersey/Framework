@@ -69,7 +69,7 @@ export default function AppNavbar() {
           </ul>
         </div>
 
-        <div className="d-flex align-items-center gap-3 order-lg-3 ms-auto ms-lg-0">
+        <div className="d-flex align-items-center gap-3 ms-auto">
           {user ? (
             // registered: show the name as a clickable logout button
             <button
@@ -79,8 +79,8 @@ export default function AppNavbar() {
               Hi, {user.firstName}
             </button>
           ) : (
-            // anonymous: person icon links to the registration page
-            <Link to="/register" className="text-dark">
+            // anonymous: person icon links to the login page
+            <Link to="/login" className="text-dark">
               <i className="bi bi-person fs-4" />
             </Link>
           )}
