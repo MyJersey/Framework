@@ -1,3 +1,11 @@
+/*
+    useEffect, useState: For managing side effects and local state.
+    useSearchParams: To read filter values from the URL (e.g., /shop?filter=new).
+    getAllProducts, getProductsByCategory: APIs for product data, supporting filters.
+    getCategories: API to fetch product categories for the sidebar filter.
+    ProductCard: UI component used for rendering each product.
+    Product: TypeScript type for strong typing.
+*/
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { getAllProducts } from '../api/products'
