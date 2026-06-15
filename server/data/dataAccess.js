@@ -1,21 +1,21 @@
 const fs = require('fs');
 const path = require('path');
 
-const DATA_FILE  = path.join(__dirname, 'data.json');
+const DATA_FILE  = path.join(__dirname, 'data.json');  //__dirname global variable 
 const CARTS_FILE = path.join(__dirname, 'carts.json');
 
-// Reads the whole file from disk every time it's called.
+// Reads the whole file from disk every time it's called
 // This is intentional: if one request writes a cart update,
-// the next request needs to see that change, not a cached copy.
+// the next request needs to see that change
 function readData() {
     return JSON.parse(fs.readFileSync(DATA_FILE));
 }
 
-// Reads cart state from the separate carts.json file.
+// Reads cart state from the separate carts.json file
 // Returns an empty object if the file doesn't exist yet
-// (e.g. first time the server runs on a new machine).
+// (e.g. first time the server runs on a new machine)
 function readCarts() {
-    if (!fs.existsSync(CARTS_FILE)) return {};
+    if (!fs.existsSync(CARTS_FILE)) return {};  // first time access: empty cart
     try {
         return JSON.parse(fs.readFileSync(CARTS_FILE));
     } catch {
@@ -23,8 +23,9 @@ function readCarts() {
     }
 }
 
-// Writes cart state back to carts.json.
-// null, 2 makes the JSON human-readable (pretty-printed).
+// Writes cart state back to carts.json
+// null, 2 makes the JSON human-readable (pretty-printed):
+// not one-line but multiline structured
 function writeCarts(carts) {
     fs.writeFileSync(CARTS_FILE, JSON.stringify(carts, null, 2));
 }

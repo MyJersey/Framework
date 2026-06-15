@@ -6,7 +6,7 @@ import { CART_USER, useCart } from '../contexts/CartContext'
 import type { Product } from '../types'
 
 export default function ProductDetail() {
-  // useParams reads the ':id' segment from the current URL (defined in App.tsx)
+  // useParams reads the ':id' segment from the current URL defined in App.tsx
   const { id } = useParams<{ id: string }>()
   const { refresh } = useCart()
   const [product, setProduct] = useState<Product | null>(null)
@@ -15,16 +15,15 @@ export default function ProductDetail() {
 
   useEffect(() => {
     if (!id) return
-    getProductById(Number(id))
+    getProductById(Number(id)) // string -> number
       .then(setProduct)
-      .catch(() => setNotFound(true))
+      .catch(() => setNotFound(true))  // 4xx
   }, [id])
 
   async function handleAddToCart() {
     if (!product) return
-    // addItem adds +1 unit per call, so we loop to match the selected quantity.
+    // addItem adds +1 unit per call, so we loop to match the selected quantity
     // Calls are sequential (await inside the loop) to avoid race conditions
-    // where concurrent writes could corrupt the cart state on the server.
     for (let i = 0; i < quantity; i++) {
       await addItem(CART_USER, product.id)
     }
@@ -74,7 +73,7 @@ export default function ProductDetail() {
           </nav>
 
           <h1 className="display-4 fw-bold mb-3">{product.name}</h1>
-          <h2 className="text-success mb-4 fw-light">€ {product.price.toFixed(2)}</h2>
+          <h2 className="text-success mb-4 fw-light">€ {product.price.toFixed(2)}</h2>  {/* Convert into number with two decimals */}
           <p className="lead text-muted mb-4">{product.description}</p>
 
           <div className="p-3 bg-light border-start border-4 border-success mb-4">
@@ -86,7 +85,7 @@ export default function ProductDetail() {
             <h5 className="fw-bold">Ingredients:</h5>
             <p className="text-muted small">
               {product.ingredients.length > 0
-                ? product.ingredients.join(', ')
+                ? product.ingredients.join(', ')  //array into string with commas
                 : 'Natural botanical extracts.'}
             </p>
           </div>
@@ -107,7 +106,7 @@ export default function ProductDetail() {
               value={quantity}
               min={1}
               max={10}
-              onChange={e => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+              onChange={e => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}  // default min 1
               style={{ width: 80 }}
             />
           </div>

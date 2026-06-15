@@ -17,7 +17,7 @@ function addToCart(req, res) {
         return res.status(400).send('Invalid product ID');
     }
 
-    // reject IDs that don't exist in the catalogue
+    // reject IDs that doesn't exist in the catalogue
     const product = readData().products.find(p => p.id === productId);
     if (!product) {
         return res.status(404).send('Product not found');

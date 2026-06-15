@@ -1,10 +1,10 @@
-import type { FormEvent } from 'react'
+import type { FormEvent } from 'react'  // deprecated
 
 export default function Contact() {
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     alert('Message sent successfully! We will get back to you shortly.')
-    e.currentTarget.reset()
+    e.currentTarget.reset()  // reset empty fields
   }
 
   return (

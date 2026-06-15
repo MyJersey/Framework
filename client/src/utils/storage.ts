@@ -32,10 +32,7 @@ function readAllCredentials(): StoredCredentials[] {
   const raw = localStorage.getItem(CREDENTIALS_KEY);
   if (!raw) return [];
   try {
-    const parsed = JSON.parse(raw);
-    // Handle old format: a single credentials object instead of an array.
-    if (!Array.isArray(parsed)) return [parsed as StoredCredentials];
-    return parsed as StoredCredentials[];
+    return JSON.parse(raw) as StoredCredentials[];
   } catch {
     return [];
   }
@@ -47,7 +44,7 @@ export function isEmailRegistered(email: string): boolean {
 
 export function storeCredentials(user: RegisteredUser, password: string): void {
   const creds = readAllCredentials();
-  creds.push({ ...user, password });
+  creds.push({ ...user, password });  // create new object -- spread operator
   localStorage.setItem(CREDENTIALS_KEY, JSON.stringify(creds));
 }
 

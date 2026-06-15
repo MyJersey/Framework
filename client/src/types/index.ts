@@ -1,7 +1,5 @@
 // These interfaces describe the shape of data coming from the server.
-// TypeScript uses them to catch mistakes at compile time — for example,
-// if you try to access product.titel instead of product.title, the build fails.
-
+// TypeScript uses them to catch mistakes at compile time.
 export interface Product {
   id: number;
   name: string;

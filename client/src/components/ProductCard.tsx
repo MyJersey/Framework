@@ -9,18 +9,18 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const { refresh } = useCart()
-  const [adding, setAdding] = useState(false)
+  const { refresh } = useCart()  // destructuring 
+  const [adding, setAdding] = useState(false)  // local state
 
   async function handleAddToCart(e: React.MouseEvent) {
-    // Stop the click from reaching the <Link> so the page doesn't navigate.
+    // Stop the click from reaching the <Link> so the page doesn't navigate
     e.stopPropagation()
     e.preventDefault()
     if (adding) return
-    setAdding(true)
+    setAdding(true)   // avoid double-click, operation running
     await addItem(CART_USER, product.id)
-    await refresh()
-    setAdding(false)
+    await refresh()   // itemCount into Provider
+    setAdding(false)  // operation completed
   }
 
   return (
@@ -32,8 +32,8 @@ export default function ProductCard({ product }: ProductCardProps) {
             {product.isNew && (
               <span className="badge bg-success position-absolute top-0 start-0 m-2">New</span>
             )}
-            {/* The leading slash makes this an absolute path from the server root.
-                Images live in client/public/img/ and Vite serves public/ at '/'. */}
+            {/* The leading slash makes this an absolute path from the server root
+                Images live in client/public/img/ and Vite serves public/ at '/' */}
             <img src={`/${product.image}`} className="img-fluid" alt={product.name} />
           </div>
           <h6 className="mb-1 fw-bold">{product.name}</h6>
@@ -43,7 +43,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             <button
               className="btn btn-sm btn-outline-success"
               onClick={handleAddToCart}
-              disabled={adding}
+              disabled={adding} // changes on operation state T/F
               title="Add to cart"
             >
               {adding ? '…' : '+'}

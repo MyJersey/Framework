@@ -1,11 +1,10 @@
 import { useNavigate } from 'react-router-dom'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { useForm } from 'react-hook-form'  // library handles data form
+import { zodResolver } from '@hookform/resolvers/zod'  // bridge react-zod
+import { z } from 'zod'  // validate date
 import { useAuth } from '../contexts/AuthContext'
 
-// Schema defines the validation rules. Zod also infers the TypeScript type,
-// so we don't have to write the interface separately.
+// schema defines the validation rules
 const schema = z.object({
   firstName:       z.string().min(2, 'First name must be at least 2 characters'),
   familyName:      z.string().min(2, 'Last name must be at least 2 characters'),
@@ -17,28 +16,28 @@ const schema = z.object({
   path: ['confirmPassword'],
 })
 
+// Zod also infers the TypeScript type, no need of separate interface
 type FormData = z.infer<typeof schema>
 
 export default function Register() {
-  // AuthContext's register function is renamed here to avoid clashing with
-  // react-hook-form's register function, which is also used below.
+  // AuthContext's register function is renamed to avoid conflict with
+  // react-hook-form's register function
   const { register: registerUser } = useAuth()
   const navigate = useNavigate()
 
   const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors, isValid },
+    register,      // react-hook-form's register function
+    handleSubmit,  // validates fields with zod schema
+    setError,      // set unknown errors
+    formState: { errors, isValid }, // destructuring
   } = useForm<FormData>({
     resolver: zodResolver(schema),
-    // 'onChange' validates on every keystroke so the button activates
-    // the moment all three fields are valid — no need to blur or submit first.
+    // 'onChange' validates on every keystroke
     mode: 'onChange',
   })
 
   function onSubmit(data: FormData) {
-    const { password, confirmPassword: _, ...user } = data
+    const { password, confirmPassword: _, ...user } = data  // all data except password and confirmPassword
     const ok = registerUser(user, password)
     if (!ok) {
       setError('email', { message: 'This email is already registered' })
@@ -60,7 +59,7 @@ export default function Register() {
           </p>
 
           {/* noValidate disables the browser's built-in validation so
-              only our Zod rules are shown, not the browser's default popups. */}
+              only our Zod rules are shown, not the browser's default ones */}
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="mb-3">
               <label htmlFor="firstName" className="form-label">First Name</label>

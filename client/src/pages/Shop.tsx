@@ -12,7 +12,7 @@ const COLLECTIONS = [
 ]
 
 export default function Shop() {
-  // Read the URL query string so links like /shop?filter=new pre-tick the right checkbox.
+  // read the URL query string so links like /shop?filter=new pre-tick the right checkbox
   const [searchParams] = useSearchParams()
   const initialCollection = searchParams.get('filter')
 
@@ -27,14 +27,14 @@ export default function Shop() {
   )
   const [products, setProducts] = useState<Product[]>([])
 
-  // Categories only need to be fetched once — they don't change with filters.
+  // categories only need to be fetched once, they don't change with filters
   useEffect(() => {
     getCategories().then(setCategories).catch(() => setCategories([]))
   }, [])
 
-  // Re-fetch products whenever a filter changes.
+  // Re-fetch products whenever a filter changes
   // Using the category endpoint when a category is selected is more accurate
-  // than filtering on the client side.
+  // than filtering on the client side
   useEffect(() => {
     const filters = {
       skin: skins.length ? skins.join(',') : undefined,
@@ -46,11 +46,13 @@ export default function Shop() {
     request.then(setProducts).catch(() => setProducts([]))
   }, [category, skins, collections])
 
-  // Toggle helpers: if the value is already selected, remove it; otherwise add it.
+  // handle checkbox, toggle helpers:
+  // 1. new array with all elements diff from value
+  // 2. new array with same elements + value
   function toggleSkin(value: string) {
     setSkins(prev =>
       prev.includes(value) ? prev.filter(s => s !== value) : [...prev, value]
-    )
+    ) 
   }
 
   function toggleCollection(value: string) {
@@ -87,8 +89,8 @@ export default function Shop() {
                     className="form-check-input"
                     type="checkbox"
                     id={`skin-${type}`}
-                    checked={skins.includes(type)}
-                    onChange={() => toggleSkin(type)}
+                    checked={skins.includes(type)}     // link checkbox with filters
+                    onChange={() => toggleSkin(type)}  // update checkbox
                   />
                   <label className="form-check-label" htmlFor={`skin-${type}`}>
                     {type === 'All types' ? type : `${type} Skin`}

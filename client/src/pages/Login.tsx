@@ -5,9 +5,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useAuth } from '../contexts/AuthContext'
 
+// run on keystroke [see 27]
 const schema = z.object({
-  email:    z.email('Please enter a valid email address'),
-  password: z.string().min(1, 'Password is required'),
+  email:    z.email('Please enter a valid email address'),  // implicit regex
+  password: z.string().min(1, 'Password is required'),      // check only if it's empty
 })
 
 type FormData = z.infer<typeof schema>
@@ -53,7 +54,7 @@ export default function Login() {
               <input
                 type="email"
                 id="email"
-                className={`form-control rounded-0 ${errors.email ? 'is-invalid' : ''}`}
+                className={`form-control rounded-0 ${errors.email ? 'is-invalid' : ''}`}  // is-invalid sets red borders
                 {...register('email', { onChange: () => setLoginError(false) })}
               />
               {errors.email && (

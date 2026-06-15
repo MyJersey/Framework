@@ -1,4 +1,4 @@
-import type { CartItem } from '../types';
+import type { CartItem } from '../types';   // .. means parent folder
 
 export async function createCart(user: string): Promise<void> {
   const res = await fetch(`/cart/${user}`, { method: 'POST' });

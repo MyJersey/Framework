@@ -15,9 +15,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<RegisteredUser | null>(getStoredUser)
 
   function register(u: RegisteredUser, password: string): boolean {
-    if (isEmailRegistered(u.email)) return false
+    if (isEmailRegistered(u.email)) return false  // already registered
     storeCredentials(u, password)
-    storeUser(u)
+    storeUser(u)  // save session
     setUser(u)
     return true
   }
@@ -25,7 +25,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   function login(email: string, password: string): boolean {
     const found = checkCredentials(email, password)
     if (found) {
-      storeUser(found)
+      storeUser(found)  // save session
       setUser(found)
       return true
     }
@@ -45,8 +45,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   )
 }
 
-// Custom hook so components don't need to import AuthContext directly.
-// The error ensures this is never called outside of AuthProvider.
+// custom hook so components don't need to import AuthContext directly
+// the error ensures this is never called outside of AuthProvider
 export function useAuth() {
   const ctx = useContext(AuthContext)
   if (!ctx) throw new Error('useAuth must be used within AuthProvider')

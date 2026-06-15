@@ -1,16 +1,17 @@
 const { readData } = require('../data/dataAccess');
 
-// Returns all products, optionally filtered by skin type and/or collection.
+// Returns all products, optionally filtered by skin type and/or collection
 // Query params:
 //   skin       - comma-separated skin types (e.g. "Dry,Oily")
 //   collection - comma-separated collection names (e.g. "bestsellers,new")
 function getAllProducts(req, res) {
     const db = readData();
-    let products = db.products;
+    let products = db.products;  // JSON access
 
     const { skin, collection } = req.query;
 
-    // Filter by skin type; products tagged "All types" always pass through
+    // filter by skin type
+    // products tagged "All types" always pass through
     if (skin) {
         const skins = skin.split(',');
         products = products.filter(p =>
@@ -18,7 +19,7 @@ function getAllProducts(req, res) {
         );
     }
 
-    // Filter by collection; a product matches if it belongs to any of the requested collections
+    // filter by collection
     if (collection) {
         const cols = collection.split(',');
         products = products.filter(p => {
@@ -32,12 +33,12 @@ function getAllProducts(req, res) {
     res.json(products);
 }
 
-// Returns a single product by its numeric ID.
-// Responds with 404 if no product with that ID exists.
+// returns a single product by its numeric ID
+// responds with 404 if no product with that ID exists
 function getProductById(req, res) {
     const db = readData();
 
-    // req.params.id is always a string; parseInt ensures a strict numeric comparison
+    // req.params.id is a string; parseInt ensures a strict decimal numeric comparison
     const product = db.products.find(p => p.id === parseInt(req.params.id, 10));
 
     if (!product) {

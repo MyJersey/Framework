@@ -34,6 +34,7 @@ export default function AppFooter() {
           <div className="col-lg-4 col-md-4 mb-4">
             <h6 className="text-white fw-bold mb-4 text-uppercase small">Follow Us</h6>
             <div className="d-flex gap-3">
+              {/* href for external sites */}
               <a href="#" className="footer-link fs-5"><i className="bi bi-instagram" /></a>
               <a href="#" className="footer-link fs-5"><i className="bi bi-facebook" /></a>
               <a href="#" className="footer-link fs-5"><i className="bi bi-twitter-x" /></a>

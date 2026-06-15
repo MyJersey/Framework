@@ -1,20 +1,20 @@
 const { readData } = require('../data/dataAccess');
 
-// Returns the list of unique category names derived from all products.
-// _req is prefixed with underscore to signal that the request object is intentionally unused.
+// Returns the list of unique category names derived from all products
+// _req is intentionally unused
 function getCategories(_req, res) {
     const db = readData();
-    // Set automatically removes duplicate category names; spread converts it back to an array
+    // Set removes duplicate category names; spread converts it back to an array
     const categories = [...new Set(db.products.map(p => p.category))];
     res.json(categories);
 }
 
-// Returns all products belonging to a given category, optionally filtered by skin type and/or collection.
+// Returns all products belonging to a given category, optionally filtered by skin type and/or collection
 // Route param:
 //   category   - a category name, or "all" to return products from every category
 // Query params:
-//   skin       - comma-separated skin types (e.g. "Dry,Oily")
-//   collection - comma-separated collection names (e.g. "bestsellers,new")
+//   skin       - comma-separated skin types
+//   collection - comma-separated collection names
 function getProductsByCategory(req, res) {
     const db = readData();
     const category = req.params.category;
@@ -25,7 +25,7 @@ function getProductsByCategory(req, res) {
         ? db.products
         : db.products.filter(p => p.category === category);
 
-    // Filter by skin type; products tagged "All types" always pass through
+    // filter by skin type; products tagged "All types" always pass through
     if (skin) {
         const skins = skin.split(',');
         products = products.filter(p =>
@@ -33,7 +33,7 @@ function getProductsByCategory(req, res) {
         );
     }
 
-    // Filter by collection; a product matches if it belongs to any of the requested collections
+    // filter by collection
     if (collection) {
         const cols = collection.split(',');
         products = products.filter(p => {

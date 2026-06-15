@@ -20,25 +20,29 @@ export default function AppNavbar() {
   }
 
   return (
+    // navbar-expand-lg ensures responsive design
+    // on window with >992px navbar overrides class 'collapse' and 'show'
     <nav className="navbar navbar-expand-lg navbar-light bg-white py-3 sticky-top shadow-sm">
       <div className="container-fluid px-lg-5">
         <Link className="navbar-brand fs-3 m-0" to="/">Natural Skincare</Link>
 
         <div
-          className={`collapse navbar-collapse justify-content-center${expanded ? ' show' : ''}`}
+          // expanded handles the hamburger menu opening/closing
+          className={`collapse navbar-collapse justify-content-center${expanded ? ' show' : ''}`}  // literal for building the class
           id="navbarNav"
         >
           <ul className="navbar-nav gap-3">
             {NAV_LINKS.map(({ to, label, end }) => (
-              <li key={to} className="nav-item">
+              // URL as key because for its uniqueness
+              <li key={to} className="nav-item"> 
                 {/*
-                  NavLink automatically adds the 'active' class when the current
+                  navLink automatically adds the 'active' class when the current
                   URL matches the 'to' prop. The 'end' prop is needed for '/'
-                  so it doesn't stay active on every page (since every URL starts with /).
+                  so it doesn't stay active on every page (since every URL starts with /)
                 */}
                 <NavLink
                   end={end}
-                  className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}
+                  className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}  // function for building the class
                   to={to}
                   onClick={() => setExpanded(false)}
                 >
@@ -79,11 +83,9 @@ export default function AppNavbar() {
           <button
             className="navbar-toggler"
             type="button"
-            aria-controls="navbarNav"
-            aria-expanded={expanded}
-            onClick={() => setExpanded(e => !e)}
+            onClick={() => setExpanded(e => !e)}  // depends on the previous value
           >
-            <span className="navbar-toggler-icon" />
+            <span className="navbar-toggler-icon" />  {/* hamburger menu icon*/}
           </button>
         </div>
       </div>
