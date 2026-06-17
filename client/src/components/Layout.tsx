@@ -8,7 +8,7 @@ export default function Layout() {
     <>
       <AppNavbar />
       <main>
-        {/* Outlet is the point is where React Router renders the matched child route */}
+        {/* Child Route: Outlet is the point is where React Router renders the matched child route */}
         <Outlet />
       </main>
       <AppFooter />
